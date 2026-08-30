@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Project page — CADENCE APP. Copy this file to add another project. -->
+<title>Cadence App — Yuval</title>
+<meta name="description" content="Cadence App — product design, by Yuval.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a class="skip" href="#overview">Skip to overview</a>
+
+<header>
+  <a class="logo" href="index.html">Yuval<b>.</b></a>
+  <nav>
+    <a href="index.html#work">Work</a>
+    <a href="index.html#industries">Industries</a>
+    <a href="index.html#about">About</a>
+    <a href="index.html#contact">Contact</a>
+  </nav>
+</header>
+
+<main class="wrap">
+  <section class="cat-hero">
+    <a class="back mono" href="index.html#work">← Back to work</a>
+    <p class="mono" style="color:var(--mut);margin-bottom:14px">2025 — Product Design</p>
+    <h1 class="cat-title">Cad<i>ence</i></h1>
+    <p class="cat-sub">End-to-end product design for a mobile app — from first sketch to the version that shipped.</p>
+  </section>
+
+  <img class="proj-img" style="aspect-ratio:16/9;margin-bottom:0" src="https://picsum.photos/seed/y62/1280/720" alt="" loading="lazy">
+
+  <section id="overview" class="proj" style="padding-top:clamp(34px,5vw,52px)">
+    <div>
+      <p class="kicker">Overview</p>
+      <h3>The idea</h3>
+      <p class="desc">Write a few sentences about the brief, what you made, and why it worked.</p>
+      <p class="desc">Add a second paragraph on process, results, or what came next.</p>
+    </div>
+    <dl>
+      <div class="credit"><dt>Client</dt><dd>Cadence</dd></div>
+      <div class="credit"><dt>Year</dt><dd>2025</dd></div>
+      <div class="credit"><dt>Role</dt><dd>Product Designer</dd></div>
+      <div class="credit"><dt>Scope</dt><dd>Mobile App</dd></div>
+    </dl>
+  </section>
+</main>
+
+<section class="contact">
+  <div class="wrap">
+    <p class="eyebrow mono">Contact</p>
+    <h2><a href="mailto:hello@yuval.com">Let's<br>make it.</a></h2>
+    <div class="links">
+      <a href="mailto:hello@yuval.com">Email</a>
+      <a href="index.html#work">More work</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span class="mono">© 2026 Yuval</span>
+    <span class="mono">Made by hand</span>
+  </div>
+</footer>
+
+<script>
+  (function(){
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var els = document.querySelectorAll('.proj, .contact h2');
+    els.forEach(function(el){ el.style.opacity=0; el.style.transform='translateY(16px)'; el.style.transition='opacity .6s, transform .6s'; });
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){ if(en.isIntersecting){ en.target.style.opacity=1; en.target.style.transform='none'; io.unobserve(en.target); } });
+    }, {threshold:.12});
+    els.forEach(function(el){ io.observe(el); });
+  })();
+</script>
+</body>
+</html>
