@@ -81,6 +81,21 @@ section{padding:clamp(56px,9vw,110px) 0}
 .eyebrow::after{content:"";flex:1;height:1.5px;background:var(--line)}
 .sec-lead{font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(24px,3.4vw,38px);letter-spacing:-.02em;margin-bottom:34px}
 
+/* ===== featured work (visual cards) ===== */
+.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(18px,3vw,34px)}
+@media(max-width:860px){.feat-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.feat-grid{grid-template-columns:1fr}}
+.feat{display:block}
+.feat-media{display:block;overflow:hidden;border:1.5px solid var(--line);background:var(--wash)}
+.feat-img{width:100%;aspect-ratio:9/7;object-fit:cover;display:block;
+  filter:grayscale(1) contrast(1.05);transition:filter .5s,transform .6s cubic-bezier(.2,.8,.2,1)}
+@media(hover:hover){.feat:hover .feat-img{filter:grayscale(0);transform:scale(1.04)}}
+.feat-meta{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-top:16px}
+.feat-ttl{font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(22px,2.6vw,30px);letter-spacing:-.02em;line-height:1;transition:color .25s}
+.feat-yr{color:var(--mut);font-size:11px;text-align:right;flex-shrink:0}
+@media(hover:hover){.feat:hover .feat-ttl{color:var(--acc)}}
+.feat-hook{display:block;margin-top:8px;color:var(--mut);font-size:clamp(15px,1.7vw,17px);line-height:1.35;max-width:34ch}
+
 /* ===== work index (rows) ===== */
 .row{
   display:grid;grid-template-columns:88px 1fr auto;align-items:center;gap:20px;
@@ -171,6 +186,7 @@ section{padding:clamp(56px,9vw,110px) 0}
 .links{display:flex;flex-wrap:wrap;gap:14px 28px;margin-top:40px}
 .links a{font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:.06em;text-transform:uppercase;padding-bottom:3px;border-bottom:2px solid transparent;transition:border-color .2s,color .2s}
 .links a:hover{border-color:var(--acc);color:var(--acc)}
+.signoff{margin-top:clamp(30px,4vw,48px);color:var(--mut);font-size:13px;letter-spacing:.04em;text-transform:none}
 
 /* ===== marquee strip ===== */
 .marquee{border-top:1.5px solid var(--line);border-bottom:1.5px solid var(--line);overflow:hidden;white-space:nowrap;padding:16px 0;background:var(--bg)}

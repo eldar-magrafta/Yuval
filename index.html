@@ -60,29 +60,32 @@
     </div>
   </section>
 
-  <!-- ===================== WORK / THE INDEX ===================== -->
+  <!-- ===================== FEATURED WORK (visual) ===================== -->
+  <!-- EDIT: each .feat is one project card. Duplicate to add more.
+       Swap the picsum src for a real project image, and rewrite the hook. -->
   <section id="work">
-    <p class="eyebrow mono">Selected Work — an index</p>
-    <p class="sec-lead">A few things I'm proud of.</p>
-    <!-- EDIT: each .row is one project. Duplicate to add more. -->
-    <a class="row" href="northlight.html">
-      <span class="yr">2026</span>
-      <span class="ttl">Northlight</span>
-      <span class="cat">Brand · Web</span>
-      <span class="arrow" aria-hidden="true">→</span>
-    </a>
-    <a class="row" href="cadence.html">
-      <span class="yr">2025</span>
-      <span class="ttl">Cadence App</span>
-      <span class="cat">Product Design</span>
-      <span class="arrow" aria-hidden="true">→</span>
-    </a>
-    <a class="row" href="orbit.html">
-      <span class="yr">2024</span>
-      <span class="ttl">Orbit Studio</span>
-      <span class="cat">Identity</span>
-      <span class="arrow" aria-hidden="true">→</span>
-    </a>
+    <p class="eyebrow mono">Selected Work</p>
+    <p class="sec-lead">Proof, not promises.</p>
+    <div class="feat-grid">
+      <a class="feat" href="northlight.html">
+        <span class="feat-media"><img class="feat-img" src="https://picsum.photos/seed/y61/900/640" alt="Northlight" loading="lazy"></span>
+        <span class="feat-meta"><span class="feat-ttl">Northlight</span><span class="feat-yr mono">2026 · Brand · Web</span></span>
+        <span class="feat-hook">A brand that finally sounds like itself.</span>
+      </a>
+      <a class="feat" href="cadence.html">
+        <!-- Looping video preview (no poster, so no still image flashes first). -->
+        <span class="feat-media"><video class="feat-img" autoplay loop muted playsinline preload="auto">
+          <source src="https://test-videos.co.uk/vids/jellyfish/mp4/h264/720/Jellyfish_720_10s_1MB.mp4" type="video/mp4">
+        </video></span>
+        <span class="feat-meta"><span class="feat-ttl">Cadence App</span><span class="feat-yr mono">2025 · Product Design</span></span>
+        <span class="feat-hook">An app people actually open twice.</span>
+      </a>
+      <a class="feat" href="orbit.html">
+        <span class="feat-media"><img class="feat-img" src="https://picsum.photos/seed/y63/900/640" alt="Orbit Studio" loading="lazy"></span>
+        <span class="feat-meta"><span class="feat-ttl">Orbit Studio</span><span class="feat-yr mono">2024 · Identity</span></span>
+        <span class="feat-hook">One logo, a thousand sizes, zero excuses.</span>
+      </a>
+    </div>
   </section>
 
   <!-- ===================== PROJECTS & INDUSTRIES ===================== -->
@@ -172,6 +175,8 @@
       <a href="#">Instagram</a>
       <a href="#">Résumé</a>
     </div>
+    <!-- EDIT: your personality sign-off -->
+    <p class="signoff mono">That's a wrap 🍾 — bring the weird idea, I'll bring the craft.</p>
   </div>
 </section>
 
