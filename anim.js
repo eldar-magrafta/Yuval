@@ -35,10 +35,46 @@
   })();
 
   // ---------------------------------------------------------
-  // 2. Scroll reveals — blur-to-sharp, gently staggered
+  // 2. Featured cards — fall from the sky in random order
+  //    when the Work section first scrolls into view.
   // ---------------------------------------------------------
   (function () {
-    var sel = '.feat,.row,.ind,.about-grid,.proj,.contact h2,.sec-lead';
+    var cards = Array.prototype.slice.call(document.querySelectorAll('#work .feat'));
+    if (!cards.length) return;
+    if (reduce || !('IntersectionObserver' in window)) return; // leave in place
+
+    // Only on the first visit this session (like the intro curtain) — after
+    // that the cards just sit in place with no drop.
+    try { if (sessionStorage.getItem('yuval-fell')) return; } catch (e) {}
+
+    // Hide them up-front so nothing flashes in position before the drop.
+    cards.forEach(function (c) { c.style.opacity = '0'; c.style.willChange = 'transform,opacity'; });
+
+    var io = new IntersectionObserver(function (entries, obs) {
+      var showing = entries.some(function (en) { return en.isIntersecting; });
+      if (!showing) return;
+      obs.disconnect();
+      try { sessionStorage.setItem('yuval-fell', '1'); } catch (e) {}
+      cards.forEach(function (c) {
+        // random delay → they land a few hundred ms apart, in random order
+        var delay = Math.round(Math.random() * 380);
+        c.style.animation = 'fall 1.1s linear ' + delay + 'ms both';
+        // tidy up once it has landed
+        c.addEventListener('animationend', function () {
+          c.style.animation = '';
+          c.style.opacity = '';
+          c.style.willChange = '';
+        }, { once: true });
+      });
+    }, { threshold: 0.2 });
+    cards.forEach(function (c) { io.observe(c); });
+  })();
+
+  // ---------------------------------------------------------
+  // 3. Scroll reveals — blur-to-sharp, gently staggered
+  // ---------------------------------------------------------
+  (function () {
+    var sel = '.row,.ind,.about-grid,.proj,.contact h2,.sec-lead';
     var els = Array.prototype.slice.call(document.querySelectorAll(sel));
     if (!els.length) return;
     if (reduce || !('IntersectionObserver' in window)) return; // leave visible
