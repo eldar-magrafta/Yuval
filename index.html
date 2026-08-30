@@ -15,6 +15,12 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
+<link rel="icon" href="favicon.svg">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Yuval — Portfolio">
+<meta property="og:description" content="Selected work and projects by Yuval.">
+<meta property="og:image" content="https://picsum.photos/seed/yuvalcard/1200/630">
+<meta name="twitter:card" content="summary_large_image">
 </head>
 <body>
 <a class="skip" href="#work">Skip to work</a>
@@ -22,7 +28,8 @@
 <header>
   <!-- EDIT: your name/initials -->
   <a class="logo" href="index.html">Yuval<b>.</b></a>
-  <nav>
+  <button class="navtoggle" id="navtoggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav">☰</button>
+  <nav id="nav">
     <a href="#work">Work</a>
     <a href="#industries">Industries</a>
     <a href="#about">About</a>
@@ -127,17 +134,51 @@
     <p class="eyebrow mono">About</p>
     <div class="about-grid">
       <div>
+        <!-- EDIT: replace with a real photo of you (drop e.g. me.jpg in this folder and change src). -->
+        <img class="headshot" src="https://picsum.photos/seed/yuvalface/600/750" alt="Portrait of Yuval">
+        <dl class="facts">
+          <!-- EDIT: your quick facts -->
+          <div class="fact"><dt>Based in</dt><dd>Tel Aviv, IL</dd></div>
+          <div class="fact"><dt>Focus</dt><dd>Brand · Product · Web</dd></div>
+          <div class="fact"><dt>Experience</dt><dd>8+ years</dd></div>
+          <div class="fact"><dt>Tools</dt><dd>Figma, Code, Coffee</dd></div>
+        </dl>
+      </div>
+      <div>
+        <!-- EDIT: say plainly what you want — this is the first thing a recruiter reads. -->
+        <p class="looking mono">Open to product &amp; brand design roles — full-time or freelance</p>
         <!-- EDIT: your story -->
         <p>I'm a designer who likes the messy middle — the part where an idea is still figuring out what it wants to be. <b>For the past several years I've worked across brand, product, and the web</b>, for startups, studios, and people with more ambition than budget.</p>
         <p>I care about the small stuff: the weight of a word, the rhythm of a layout, the one detail that makes something feel made rather than generated.</p>
+        <!-- EDIT: point this at your real CV file (drop resume.pdf in this folder). -->
+        <a class="btn" href="resume.pdf" download>↓ Download résumé</a>
       </div>
-      <dl class="facts">
-        <!-- EDIT: your quick facts -->
-        <div class="fact"><dt>Based in</dt><dd>Tel Aviv, IL</dd></div>
-        <div class="fact"><dt>Focus</dt><dd>Brand · Product · Web</dd></div>
-        <div class="fact"><dt>Experience</dt><dd>8+ years</dd></div>
-        <div class="fact"><dt>Tools</dt><dd>Figma, Code, Coffee</dd></div>
-      </dl>
+    </div>
+  </section>
+
+  <!-- ===================== TRUST: TESTIMONIALS + CLIENTS ===================== -->
+  <section id="trust">
+    <p class="eyebrow mono">Kind words</p>
+    <p class="sec-lead">What people say.</p>
+    <div class="quotes">
+      <!-- EDIT: real quotes carry the most weight. Name + role + company. -->
+      <figure class="quote">
+        <blockquote>"Yuval turned a vague brief into something we were proud to ship — fast, and better than we pictured it."</blockquote>
+        <figcaption>Name Surname — Head of Product, Company</figcaption>
+      </figure>
+      <figure class="quote">
+        <blockquote>"Rare mix of taste and follow-through. The kind of designer you want in the room early."</blockquote>
+        <figcaption>Name Surname — Founder, Studio</figcaption>
+      </figure>
+    </div>
+    <!-- EDIT: swap for the names of clients/companies you've worked with. -->
+    <div class="logos" aria-label="Selected clients">
+      <span>Mercedes-Benz</span>
+      <span>Unilever</span>
+      <span>Bitpanda</span>
+      <span>Audi</span>
+      <span>MAN</span>
+      <span>Bionade</span>
     </div>
   </section>
 </main>
@@ -217,5 +258,6 @@
     els.forEach(function(el){ io.observe(el); });
   })();
 </script>
+<script src="site.js"></script>
 </body>
 </html>

@@ -10,13 +10,20 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
+<link rel="icon" href="favicon.svg">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Food &amp; Beverages — Yuval">
+<meta property="og:description" content="Food & beverage work by Yuval.">
+<meta property="og:image" content="https://picsum.photos/seed/yuvalcard/1200/630">
+<meta name="twitter:card" content="summary_large_image">
 </head>
 <body>
 <a class="skip" href="#projects">Skip to projects</a>
 
 <header>
   <a class="logo" href="index.html">Yuval<b>.</b></a>
-  <nav>
+  <button class="navtoggle" id="navtoggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav">☰</button>
+  <nav id="nav">
     <a href="index.html#work">Work</a>
     <a href="index.html#industries">Industries</a>
     <a href="index.html#about">About</a>
@@ -94,5 +101,6 @@
     els.forEach(function(el){ io.observe(el); });
   })();
 </script>
+<script src="site.js"></script>
 </body>
 </html>
