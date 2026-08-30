@@ -1,0 +1,32 @@
+# ---- Editors / IDEs ----
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# ---- OS junk ----
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ---- Tooling / test artifacts ----
+.playwright-mcp/
+playwright-report/
+test-results/
+
+# ---- Test screenshots & scratch (NOT your real site images) ----
+mobile-*.png
+page-*.png
+screenshot-*.png
+
+# ---- Dependencies / build ----
+node_modules/
+dist/
+build/
+.cache/
+
+# ---- Logs & env ----
+*.log
+.env
+.env.*
