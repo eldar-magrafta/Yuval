@@ -11,7 +11,8 @@
   var finePointer = window.matchMedia('(hover:hover) and (pointer:fine)').matches;
 
   // ---------------------------------------------------------
-  // 1. Hero — letters lean gently toward the cursor
+  // 1. Hero — letters near the cursor pick up the accent colour
+  //    (colour only — no tilt/movement)
   // ---------------------------------------------------------
   (function () {
     if (reduce || !finePointer) return;
@@ -25,12 +26,11 @@
         var lr = l.getBoundingClientRect();
         var lc = lr.left - r.left + lr.width / 2;
         var d = (cx - lc) / r.width;            // -1 .. 1
-        l.style.transform = 'translateY(' + (-Math.abs(d) * 10) + 'px) rotate(' + (d * 5) + 'deg)';
         l.style.color = Math.abs(d) < 0.12 ? 'var(--acc)' : '';
       });
     });
     name.addEventListener('pointerleave', function () {
-      letters.forEach(function (l) { l.style.transform = ''; l.style.color = ''; });
+      letters.forEach(function (l) { l.style.color = ''; });
     });
   })();
 
