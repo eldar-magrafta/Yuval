@@ -123,6 +123,92 @@
   })();
 
   // ---------------------------------------------------------
+  // 4a. Contact heading — letters pick up the accent colour
+  //     near the cursor, same idea as the hero name.
+  // ---------------------------------------------------------
+  (function () {
+    if (reduce || !finePointer) return;
+    var link = document.querySelector('.contact h2 a');
+    if (!link) return;
+    var frag = document.createDocumentFragment();
+    Array.prototype.forEach.call(link.childNodes, function (node) {
+      if (node.nodeType === 3) {
+        node.textContent.split('').forEach(function (ch) {
+          var s = document.createElement('span');
+          s.textContent = ch;
+          frag.appendChild(s);
+        });
+      } else {
+        frag.appendChild(node.cloneNode(true));
+      }
+    });
+    link.innerHTML = '';
+    link.appendChild(frag);
+
+    var letters = link.querySelectorAll('span');
+    var radius = 60;
+    link.addEventListener('pointermove', function (e) {
+      letters.forEach(function (l) {
+        var r = l.getBoundingClientRect();
+        var dx = e.clientX - (r.left + r.width / 2);
+        var dy = e.clientY - (r.top + r.height / 2);
+        l.style.color = Math.sqrt(dx * dx + dy * dy) < radius ? 'var(--acc)' : '';
+      });
+    });
+    link.addEventListener('pointerleave', function () {
+      letters.forEach(function (l) { l.style.color = ''; });
+    });
+  })();
+
+  // ---------------------------------------------------------
+  // 4b. Sticky header — shrinks and hides on scroll-down,
+  //     reappears on scroll-up.
+  // ---------------------------------------------------------
+  (function () {
+    var header = document.querySelector('header');
+    if (!header || reduce) return;
+    var lastY = window.scrollY;
+    var ticking = false;
+    window.addEventListener('scroll', function () {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(function () {
+        var y = window.scrollY;
+        header.classList.toggle('is-scrolled', y > 80);
+        if (y > lastY && y > 140) header.classList.add('is-hidden');
+        else header.classList.remove('is-hidden');
+        lastY = y;
+        ticking = false;
+      });
+    });
+  })();
+
+  // ---------------------------------------------------------
+  // 4c. Page transitions — fade to background before an
+  //     internal link navigates to another page.
+  // ---------------------------------------------------------
+  (function () {
+    if (reduce) return;
+    var pt = document.createElement('div');
+    pt.className = 'pt';
+    pt.setAttribute('aria-hidden', 'true');
+    document.body.appendChild(pt);
+
+    document.addEventListener('click', function (e) {
+      if (e.defaultPrevented || e.button !== 0) return;
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      var a = e.target.closest('a');
+      if (!a || a.target === '_blank' || a.hasAttribute('download')) return;
+      var href = a.getAttribute('href');
+      if (!href || href.charAt(0) === '#') return;
+      if (/^(https?:)?\/\//i.test(href) || href.indexOf('mailto:') === 0 || href.indexOf('tel:') === 0) return;
+      e.preventDefault();
+      pt.classList.add('show');
+      setTimeout(function () { location.href = href; }, 280);
+    });
+  })();
+
+  // ---------------------------------------------------------
   // 4. Grain overlay — a still film-grain texture over everything
   // ---------------------------------------------------------
   (function () {

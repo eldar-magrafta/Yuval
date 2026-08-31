@@ -35,7 +35,10 @@ a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid var
 header{position:sticky;top:0;z-index:40;background:var(--bg);
   border-bottom:1.5px solid var(--line);
   display:flex;justify-content:space-between;align-items:center;
-  padding:18px clamp(20px,5vw,64px)}
+  padding:18px clamp(20px,5vw,64px);
+  transition:transform .32s cubic-bezier(.22,.61,.36,1),padding .32s,box-shadow .32s}
+header.is-scrolled{padding:12px clamp(20px,5vw,64px);box-shadow:0 1px 0 var(--line)}
+header.is-hidden{transform:translateY(-100%)}
 .logo{font-family:'Bricolage Grotesque';font-weight:800;font-size:20px;letter-spacing:-.02em}
 .logo b{color:var(--acc)}
 nav{display:flex;gap:26px}
@@ -142,7 +145,7 @@ section{padding:clamp(56px,9vw,110px) 0}
 .ind:last-child{border-bottom:1.5px solid var(--line)}
 .ind .iname{font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(30px,5.2vw,56px);letter-spacing:-.025em;line-height:1;transition:color .3s,transform .3s}
 .ind .brands{font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:.04em;color:var(--mut);margin-top:10px;transition:transform .3s}
-.ind .arrow{color:var(--acc);font-size:26px;transition:transform .3s;flex-shrink:0}
+.ind .arrow{color:var(--acc);font-size:26px;transition:transform .3s;flex-shrink:0;font-variant-emoji:text}
 @media(hover:hover){
   .ind:hover{background:var(--wash);padding-left:26px}
   .ind:hover .iname{color:var(--acc)}
@@ -225,6 +228,15 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
   mix-blend-mode:multiply;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
+
+/* page transition — fades to bg before an internal navigation completes */
+.pt{position:fixed;inset:0;z-index:250;background:var(--bg);opacity:0;pointer-events:none;
+  transition:opacity .3s cubic-bezier(.4,0,.2,1)}
+.pt.show{opacity:1;pointer-events:all}
+@media (prefers-reduced-motion:reduce){.pt{display:none}}
+
+/* contact heading — letters pick up accent colour near the cursor, like the hero name */
+.contact h2 a span{display:inline-block;transition:color .25s}
 
 /* intro curtain (homepage) */
 .intro{position:fixed;inset:0;z-index:200;background:var(--acc);
