@@ -206,6 +206,10 @@
       pt.classList.add('show');
       setTimeout(function () { location.href = href; }, 280);
     });
+
+    // Bfcache restores (e.g. browser Back) bring the page back exactly as it
+    // was at unload — with the overlay still shown — so clear it on pageshow.
+    window.addEventListener('pageshow', function () { pt.classList.remove('show'); });
   })();
 
   // ---------------------------------------------------------
