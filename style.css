@@ -93,6 +93,7 @@ section{padding:clamp(56px,9vw,110px) 0}
 .feat-img{width:100%;aspect-ratio:9/7;object-fit:cover;display:block;
   filter:grayscale(1) contrast(1.05);transition:filter .5s,transform .6s cubic-bezier(.2,.8,.2,1)}
 @media(hover:hover){.feat:hover .feat-img{filter:grayscale(0);transform:scale(1.04)}}
+@media(hover:none){.feat-img{filter:contrast(1.05)}}
 .feat-meta{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-top:16px}
 .feat-ttl{font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(22px,2.6vw,30px);letter-spacing:-.02em;line-height:1;transition:color .25s}
 .feat-yr{color:var(--mut);font-size:11px;text-align:right;flex-shrink:0}
