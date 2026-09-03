@@ -99,18 +99,6 @@ section{padding:clamp(56px,9vw,110px) 0}
 .feat-yr{color:var(--mut);font-size:11px;text-align:right;flex-shrink:0}
 @media(hover:hover){.feat:hover .feat-ttl{color:var(--acc)}}
 .feat-hook{display:block;margin-top:8px;color:var(--mut);font-size:clamp(15px,1.7vw,17px);line-height:1.35;max-width:34ch}
-/* "fall from the sky" — cards drop in with a gravity accelerate + small landing bounce.
-   The delay per card is randomized in anim.js so they land a few hundred ms apart. */
-@keyframes fall{
-  0%{opacity:0;transform:translateY(-620px);animation-timing-function:cubic-bezier(.55,0,.9,.45)}
-  8%{opacity:1}
-  62%{transform:translateY(0);animation-timing-function:cubic-bezier(.3,0,.4,1)}
-  74%{transform:translateY(-26px)}
-  86%{transform:translateY(0)}
-  93%{transform:translateY(-8px)}
-  100%{opacity:1;transform:translateY(0)}
-}
-
 /* ===== work index (rows) ===== */
 .row{
   display:grid;grid-template-columns:88px 1fr auto;align-items:center;gap:20px;
