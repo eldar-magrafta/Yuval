@@ -19,6 +19,7 @@ test-results/
 mobile-*.png
 page-*.png
 screenshot-*.png
+/*.png
 
 # ---- Dependencies / build ----
 node_modules/
