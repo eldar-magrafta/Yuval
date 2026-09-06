@@ -11,6 +11,27 @@
   var finePointer = window.matchMedia('(hover:hover) and (pointer:fine)').matches;
 
   // ---------------------------------------------------------
+  // 0a. Mobile nav — hamburger toggles the dropdown menu.
+  // ---------------------------------------------------------
+  (function () {
+    var toggle = document.querySelector('.nav-toggle');
+    var nav = document.getElementById('site-nav');
+    if (!toggle || !nav) return;
+    function close() {
+      nav.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+      toggle.textContent = '☰';
+    }
+    toggle.addEventListener('click', function () {
+      var open = nav.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      toggle.textContent = open ? '✕' : '☰';
+    });
+    nav.addEventListener('click', function (e) { if (e.target.closest('a')) close(); });
+    window.addEventListener('resize', function () { if (window.innerWidth > 640) close(); });
+  })();
+
+  // ---------------------------------------------------------
   // 0. Grid preview videos — only play the clips actually in view.
   //    Mobile browsers cap how many <video> elements can autoplay
   //    at once; with 12 on one page most just sit frozen on frame 1
