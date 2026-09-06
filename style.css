@@ -150,6 +150,13 @@ section{padding:clamp(19px,3vw,37px) 0 clamp(4px,.67vw,8px)}
   background:var(--wash);filter:grayscale(1) contrast(1.05);transition:filter .5s}
 @media(hover:hover){.media-tile:hover{filter:grayscale(0)}}
 
+/* portrait variant — for pages where every clip is a 9:16 phone video,
+   so cover-cropping a landscape-shaped cell would cut off the shot */
+.media-grid.portrait-grid{grid-template-columns:repeat(4,1fr)}
+.media-grid.portrait-grid .media-tile{aspect-ratio:9/16}
+@media(max-width:860px){.media-grid.portrait-grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:560px){.media-grid.portrait-grid{grid-template-columns:repeat(2,1fr)}}
+
 /* ===== featured work (visual cards) ===== */
 .feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(18px,3vw,34px)}
 @media(max-width:860px){.feat-grid{grid-template-columns:1fr 1fr}}
