@@ -6,7 +6,8 @@
 <!-- ============================================================
      YUVAL — Portfolio (home)
      Shared styling lives in style.css.
-     Each project links to its own page: automotive.html, finance.html, etc.
+     Home is a hero + image grid; each tile links to its own page
+     (about.html, work.html, services.html, more-work.html, contact.html).
      ============================================================ -->
 <title>Yuval — במאית קריאייטיב, תסריטאית וקופירייטרית</title>
 <meta name="description" content="עבודות נבחרות של Yuval — במאית קריאייטיב, תסריטאית וקופירייטרית.">
@@ -23,28 +24,23 @@
   <span class="intro-name" dir="ltr">Yuval<b>.</b></span>
   <span class="intro-tag mono">קריאייטיב, תסריט ובימוי — ולפעמים גם רעיון קצת מוזר</span>
 </div>
-<a class="skip" href="#work">דלגו לעבודות</a>
+<a class="skip" href="#grid">דלגו לתפריט</a>
 
 <header>
   <nav>
-    <a href="#about">עליי</a>
-    <a href="#work">עבודות</a>
-    <a href="#services">שירותים</a>
-    <a href="#industries">עוד עבודות</a>
-    <a href="#contact">צור קשר</a>
+    <a href="about.html">עליי</a>
+    <a href="digital.html">דיגיטל</a>
+    <a href="social.html">סושיאל</a>
+    <a href="services.html">שירותים</a>
+    <a href="contact.html">צרו קשר</a>
   </nav>
   <a class="logo" href="index.html" dir="ltr">Yuval<b>.</b></a>
-  <!-- Page order: Hero → About → Work → Services → More Work → Contact -->
-
 </header>
 
 <main class="wrap">
 
   <!-- ===================== HERO ===================== -->
   <section class="hero">
-    <div class="meta mono">
-      <span>בימוי קריאייטיבי · תסריט · קופירייטינג</span>
-    </div>
     <!-- Each letter reacts to the cursor. -->
     <h1 class="name" id="name" aria-label="Yuval" dir="ltr">
       <span>Y</span><span>u</span><span>v</span><span>a</span><span>l</span>
@@ -56,123 +52,59 @@
     </div>
   </section>
 
-  <!-- ===================== ABOUT ===================== -->
-  <section id="about">
-    <p class="eyebrow mono">מי אני</p>
-    <div class="about-grid" style="grid-template-columns:1fr 1fr">
-      <div>
-        <p>היי אני יובל ואני ביקורתית.<br>כלפי רעיונות, לא אנשים. תרגעו.<br><b>אני אוהבת מילים, הומור, אנרגיה של סט צילומים</b>, לצעוק ״אקשן״, אנשים שמבינים בדיחה מהר, תשבצים, במבה ובמבה נוגט. לא בהכרח בסדר הזה.</p>
-        <p>מה אני עושה? אני לוקחת רעיון ומנסה לגרום לו להיות קצת יותר חד, קצת יותר מצחיק, קצת יותר נכון. לפעמים זה מתחיל בבריף, לפעמים במחשבה, לפעמים ב״אנחנו רוצים משהו מגניב״. משם זה יכול להפוך לקונספט, קופי, תסריט, קמפיין, סרט — או שילוב לא לגמרי חוקי של כל אלה.</p>
-      </div>
-      <div>
-        <p>ואז מגיע הבימוי - השלב שבו אני מנסה לגרום למה שהיה לי בראש לקרות במציאות.<br>אם יש תקציב, נמצא את האנשים הכי טובים ונעשה משהו מעולה.<br>אם אין תקציב, נמצא את האנשים הכי טובים ונעשה משהו מעולה.<br>פשוט נצטרך להיות יותר יצירתיים. מזל שזה המקצוע.</p>
-        <p>אני אוהבת אנשים שכיף לעבוד איתם, סטים עם אנרגיה טובה ורעיונות שעובדים בלי לקחת את עצמם יותר מדי ברצינות.</p>
-      </div>
-    </div>
+  <!-- ===================== HOME MENU (navigation) ===================== -->
+  <section id="grid">
+    <nav class="home-menu">
+      <a href="about.html"><span>עליי</span></a>
+      <a href="digital.html"><span>דיגיטל</span></a>
+      <a href="social.html"><span>סושיאל</span></a>
+      <a href="services.html"><span>שירותים</span></a>
+      <a href="contact.html"><span>צרו קשר</span></a>
+    </nav>
   </section>
 
-  <!-- ===================== SERVICES ===================== -->
-  <section id="services">
-    <p class="eyebrow mono">השירותים שלי</p>
-    <img src="media/toilet.jpg" alt="" style="width:100%;max-width:350px;display:block;margin:0 auto 24px;border:1.5px solid var(--line)" loading="lazy">
-    <p class="sec-lead" style="font-family:'Gladiaclm','Heebo',sans-serif;font-size:clamp(27px,3.9vw,39px);font-weight:700;letter-spacing:-.01em">גם השירותים שלי:</p>
-    <div class="services-grid">
-      <div class="service"><p class="role-big">קריאייטיב</p><p>רעיונות וקונספטים ששווה לעשות מהם משהו.</p></div>
-      <div class="service"><p class="role-big">תסריט</p><p>מפרסומת של 15 שניות ועד סרט של כמה דקות. דיאלוגים, סיטואציות, מבנה, בדיחות וכל מה שצריך כדי להפוך רעיון למשהו שאפשר לצלם.</p></div>
-      <div class="service"><p class="role-big">בימוי</p><p>לקחת את מה שהיה בראש ולהעביר אותו למסך — ליהוק, פרפורמנס, שפה ויזואלית, קצב וכל הדברים הקטנים שעושים הבדל גדול.</p></div>
-      <div class="service"><p class="role-big">קופירייטינג</p><p>מילים, כותרות, קמפיינים, מודעות וטקסטים.</p></div>
-      <div class="service"><p class="role-big">הפקה</p><p>כשצריך, אני גם מרימה את הדבר עצמו — צוותים, ספקים, לוקיישנים וכל מה שנמצא בין ״יש לי רעיון״ ל״איזה סרטון יצא לנו״.</p></div>
+  <!-- ===================== VIDEO GRID (placeholder) ===================== -->
+  <section id="video-grid">
+    <div class="video-grid">
+      <video class="video-tile" autoplay loop muted playsinline preload="metadata">
+        <source src="https://test-videos.co.uk/vids/jellyfish/mp4/h264/720/Jellyfish_720_10s_1MB.mp4" type="video/mp4">
+      </video>
+      <video class="video-tile" autoplay loop muted playsinline preload="metadata">
+        <source src="https://test-videos.co.uk/vids/jellyfish/mp4/h264/720/Jellyfish_720_10s_1MB.mp4" type="video/mp4">
+      </video>
+      <video class="video-tile" autoplay loop muted playsinline preload="metadata">
+        <source src="https://test-videos.co.uk/vids/jellyfish/mp4/h264/720/Jellyfish_720_10s_1MB.mp4" type="video/mp4">
+      </video>
+      <video class="video-tile" autoplay loop muted playsinline preload="metadata">
+        <source src="https://test-videos.co.uk/vids/jellyfish/mp4/h264/720/Jellyfish_720_10s_1MB.mp4" type="video/mp4">
+      </video>
+      <video class="video-tile" autoplay loop muted playsinline preload="metadata">
+        <source src="https://test-videos.co.uk/vids/jellyfish/mp4/h264/720/Jellyfish_720_10s_1MB.mp4" type="video/mp4">
+      </video>
+      <video class="video-tile" autoplay loop muted playsinline preload="metadata">
+        <source src="https://test-videos.co.uk/vids/jellyfish/mp4/h264/720/Jellyfish_720_10s_1MB.mp4" type="video/mp4">
+      </video>
+      <video class="video-tile" autoplay loop muted playsinline preload="metadata">
+        <source src="https://test-videos.co.uk/vids/jellyfish/mp4/h264/720/Jellyfish_720_10s_1MB.mp4" type="video/mp4">
+      </video>
+      <video class="video-tile" autoplay loop muted playsinline preload="metadata">
+        <source src="https://test-videos.co.uk/vids/jellyfish/mp4/h264/720/Jellyfish_720_10s_1MB.mp4" type="video/mp4">
+      </video>
+      <video class="video-tile" autoplay loop muted playsinline preload="metadata">
+        <source src="https://test-videos.co.uk/vids/jellyfish/mp4/h264/720/Jellyfish_720_10s_1MB.mp4" type="video/mp4">
+      </video>
+      <video class="video-tile" autoplay loop muted playsinline preload="metadata">
+        <source src="https://test-videos.co.uk/vids/jellyfish/mp4/h264/720/Jellyfish_720_10s_1MB.mp4" type="video/mp4">
+      </video>
+      <video class="video-tile" autoplay loop muted playsinline preload="metadata">
+        <source src="https://test-videos.co.uk/vids/jellyfish/mp4/h264/720/Jellyfish_720_10s_1MB.mp4" type="video/mp4">
+      </video>
+      <video class="video-tile" autoplay loop muted playsinline preload="metadata">
+        <source src="https://test-videos.co.uk/vids/jellyfish/mp4/h264/720/Jellyfish_720_10s_1MB.mp4" type="video/mp4">
+      </video>
     </div>
-  </section>
-
-  <!-- ===================== FEATURED WORK (visual) ===================== -->
-  <section id="work">
-    <p class="eyebrow mono">עבודות נבחרות</p>
-    <p class="sec-lead">הוכחות, לא הבטחות.</p>
-    <div class="feat-grid">
-      <a class="feat" href="orbit.html">
-        <!-- This clip is much larger than the others, so it gets a poster
-             frame (shows instantly) while it buffers in the background. -->
-        <span class="feat-media"><video class="feat-img" autoplay loop muted playsinline preload="metadata" poster="https://picsum.photos/seed/y63/900/640">
-          <source src="media/orbit-studio2.mp4" type="video/mp4">
-        </video></span>
-        <span class="feat-meta"><span class="feat-ttl">מרמשלו</span></span>
-        <span class="feat-hook">שיר מתוק וממכר, ריקוד וקמפיין טיקטוק צבעוני וקצבי לבנות 8–12.</span>
-      </a>
-      <a class="feat" href="northlight.html">
-        <span class="feat-media"><img class="feat-img" src="https://picsum.photos/seed/y61/900/640" alt="קק&quot;ל ט&quot;ו בשבט 2026" loading="lazy"></span>
-        <span class="feat-meta"><span class="feat-ttl">קק"ל · ט"ו בשבט 2026</span></span>
-        <span class="feat-hook">כי אם כבר מותג לאומי, אז שיהיה שיר לאומי, עם הזמרת הלאומית.</span>
-      </a>
-      <a class="feat" href="cadence.html">
-        <span class="feat-media"><img class="feat-img" src="https://picsum.photos/seed/y62/900/640" alt="ביטוח לאומי" loading="lazy"></span>
-        <span class="feat-meta"><span class="feat-ttl">ביטוח לאומי</span></span>
-        <span class="feat-hook">בוחרים בשיקום. חוזרים למגרש.</span>
-      </a>
-    </div>
-  </section>
-
-  <!-- ===================== MORE WORK ===================== -->
-  <!-- Each row links to its own page. To add a project:
-       1. copy a block below and set the name, tag line, and href
-       2. duplicate one of the project page files (e.g. automotive.html) and rename it -->
-  <section id="industries">
-    <p class="eyebrow mono">עוד עבודות</p>
-    <p class="sec-lead">עוד סיפורים, לפי קמפיין.</p>
-
-    <a class="ind" href="automotive.html">
-      <span>
-        <span class="iname">קק"ל · ט"ו בשבט 2025</span>
-        <span class="brands">אוראל צברי • הגרביים של קק"ל</span>
-      </span>
-      <img class="ind-thumb" src="https://picsum.photos/seed/y11/256/164" alt="" loading="lazy">
-      <span class="arrow" aria-hidden="true">↖︎</span>
-    </a>
-
-    <a class="ind" href="finance.html">
-      <span>
-        <span class="iname">חברת חשמל</span>
-        <span class="brands">נתן תשובה • הצ'אט החדש</span>
-      </span>
-      <img class="ind-thumb" src="https://picsum.photos/seed/y12/256/164" alt="" loading="lazy">
-      <span class="arrow" aria-hidden="true">↖︎</span>
-    </a>
-
-    <a class="ind" href="technology.html">
-      <span>
-        <span class="iname">סושיאל</span>
-        <span class="brands">הדחיין המצוי • אוראל צברי • TikTok Awards</span>
-      </span>
-      <img class="ind-thumb" src="https://picsum.photos/seed/y13/256/164" alt="" loading="lazy">
-      <span class="arrow" aria-hidden="true">↖︎</span>
-    </a>
   </section>
 </main>
-
-<!-- ===================== MARQUEE STRIP ===================== -->
-<!-- Scrolling ticker. Hover to pause. -->
-<div class="marquee" dir="ltr" aria-hidden="true">
-  <div class="marquee-track">
-    <span>קריאייטיב</span><span class="star">✦</span><span>תסריט</span><span class="star">✦</span><span>בימוי</span><span class="star">✦</span><span>קופירייטינג</span><span class="star">✦</span><span>פנויה לעבודה</span><span class="star">✦</span>
-    <span>קריאייטיב</span><span class="star">✦</span><span>תסריט</span><span class="star">✦</span><span>בימוי</span><span class="star">✦</span><span>קופירייטינג</span><span class="star">✦</span><span>פנויה לעבודה</span><span class="star">✦</span>
-  </div>
-</div>
-
-<!-- ===================== CONTACT ===================== -->
-<section class="contact" id="contact">
-  <div class="wrap">
-    <p class="eyebrow mono" style="font-size:clamp(28px,4vw,42px)">צור קשר</p>
-    <!-- EDIT: your email -->
-    <div class="links">
-      <!-- EDIT: your links -->
-      <a href="mailto:hello@yuval.com">אימייל</a>
-      <a href="#">לינקדאין</a>
-      <a href="#">אינסטגרם</a>
-      <a href="#">קורות חיים</a>
-    </div>
-  </div>
-</section>
-
 
 <script src="anim.js"></script>
 </body>
