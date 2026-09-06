@@ -201,13 +201,18 @@ section{padding:clamp(19px,3vw,37px) 0 clamp(4px,.67vw,8px)}
 .fact dd{text-align:right;font-weight:500}
 
 /* ===== contact ===== */
-.contact{border-top:1.5px solid var(--line)}
+.contact{border-top:1.5px solid var(--line);padding-bottom:clamp(40px,6vw,72px)}
 .contact h2{font-family:'Bricolage Grotesque';font-weight:800;font-size:clamp(44px,11vw,150px);line-height:.9;letter-spacing:-.04em}
 .contact h2 a{transition:color .25s}
 .contact h2 a:hover{color:var(--acc)}
-.links{display:flex;flex-wrap:wrap;gap:14px 28px;margin-top:40px}
+.links{display:flex;flex-wrap:wrap;gap:14px 16px;margin-top:40px}
 .links a{font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:.06em;text-transform:uppercase;padding-bottom:3px;border-bottom:2px solid transparent;transition:border-color .2s,color .2s}
 .links a:hover{border-color:var(--acc);color:var(--acc)}
+.icon-link{display:inline-flex;align-items:center;justify-content:center;width:48px;height:48px;
+  border:1.5px solid var(--line);border-radius:50%;color:var(--ink);
+  padding:0;border-bottom:1.5px solid var(--line);transition:background .2s,color .2s,border-color .2s}
+.icon-link svg{width:22px;height:22px}
+.icon-link:hover{background:var(--acc);border-color:var(--acc);color:#fff}
 .signoff{margin-top:clamp(30px,4vw,48px);color:var(--mut);font-size:13px;letter-spacing:.04em;text-transform:none}
 
 /* ===== marquee strip ===== */
@@ -244,7 +249,7 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
 @media (prefers-reduced-motion:reduce){.pt{display:none}}
 
 /* contact heading — letters pick up accent colour near the cursor, like the hero name */
-.contact h2 a span{display:inline-block;transition:color .25s}
+.contact h2 a span{display:inline-block;white-space:pre;transition:color .25s}
 
 /* intro curtain (homepage) */
 .intro{position:fixed;inset:0;z-index:200;background:var(--acc);
