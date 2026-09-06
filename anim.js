@@ -11,6 +11,25 @@
   var finePointer = window.matchMedia('(hover:hover) and (pointer:fine)').matches;
 
   // ---------------------------------------------------------
+  // 0. Grid preview videos — only play the clips actually in view.
+  //    Mobile browsers cap how many <video> elements can autoplay
+  //    at once; with 12 on one page most just sit frozen on frame 1
+  //    unless we play/pause them as they enter/leave the viewport.
+  // ---------------------------------------------------------
+  (function () {
+    var vids = document.querySelectorAll('.video-tile video,.media-tile video');
+    if (!vids.length || !('IntersectionObserver' in window)) return;
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        var v = entry.target;
+        if (entry.isIntersecting) v.play().catch(function () {});
+        else v.pause();
+      });
+    }, { rootMargin: '50px' });
+    vids.forEach(function (v) { io.observe(v); });
+  })();
+
+  // ---------------------------------------------------------
   // 1. Hero — letters near the cursor pick up the accent colour
   //    (colour only — no tilt/movement)
   // ---------------------------------------------------------
