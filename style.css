@@ -149,7 +149,7 @@ section{padding:clamp(19px,3vw,37px) 0 clamp(4px,.67vw,8px)}
 
 /* ===== category (industry) page ===== */
 .cat-hero{padding:clamp(48px,8vw,96px) 0 clamp(24px,4vw,44px)}
-.back{display:inline-flex;align-items:center;gap:8px;color:var(--mut);margin-bottom:34px;transition:color .2s,gap .2s}
+.back{display:inline-flex;align-items:center;gap:8px;color:var(--mut);margin-bottom:34px;font-size:18px;transition:color .2s,gap .2s}
 .back:hover{color:var(--acc);gap:12px}
 .cat-title{font-family:'Assistant';font-weight:800;font-size:clamp(56px,13vw,150px);line-height:.85;letter-spacing:-.04em}
 .cat-title i{color:var(--acc);font-style:normal}
