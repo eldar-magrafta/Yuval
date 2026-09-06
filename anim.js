@@ -177,6 +177,49 @@
   })();
 
   // ---------------------------------------------------------
+  // 4d. Video lightbox — click a grid clip to bring it forward;
+  //     the rest of the page dims/blurs behind it. Close via the
+  //     × button or by clicking the dimmed backdrop.
+  // ---------------------------------------------------------
+  (function () {
+    var tiles = document.querySelectorAll('.media-tile,.video-tile');
+    if (!tiles.length) return;
+
+    var box = document.createElement('div');
+    box.className = 'lightbox';
+    box.innerHTML = '<button class="lightbox-close" type="button" aria-label="סגירה">✕</button><video playsinline></video>';
+    document.body.appendChild(box);
+    var boxVideo = box.querySelector('video');
+    var closeBtn = box.querySelector('.lightbox-close');
+
+    function open(src) {
+      boxVideo.src = src;
+      boxVideo.controls = true;
+      boxVideo.muted = false;
+      boxVideo.loop = true;
+      box.classList.add('show');
+      boxVideo.play().catch(function () {});
+    }
+    function close() {
+      box.classList.remove('show');
+      boxVideo.pause();
+      boxVideo.removeAttribute('src');
+      boxVideo.load();
+    }
+
+    tiles.forEach(function (tile) {
+      tile.addEventListener('click', function () {
+        var src = tile.currentSrc || (tile.querySelector('source') || {}).src;
+        if (!src) return;
+        open(src);
+      });
+    });
+    closeBtn.addEventListener('click', close);
+    box.addEventListener('click', function (e) { if (e.target === box) close(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+  })();
+
+  // ---------------------------------------------------------
   // 4. Grain overlay — a still film-grain texture over everything
   // ---------------------------------------------------------
   (function () {
