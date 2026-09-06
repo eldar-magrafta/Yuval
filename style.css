@@ -57,11 +57,11 @@ header{position:sticky;top:0;z-index:40;background:var(--bg);
   transition:transform .32s cubic-bezier(.22,.61,.36,1),padding .32s,box-shadow .32s}
 header.is-scrolled{padding:12px clamp(20px,5vw,64px);box-shadow:0 1px 0 var(--line)}
 header.is-hidden{transform:translateY(-100%)}
-.logo{order:2;margin-inline-start:auto;font-family:'Assistant';font-weight:800;font-size:20px;letter-spacing:-.02em}
+.logo{order:2;font-family:'Assistant';font-weight:800;font-size:20px;letter-spacing:-.02em}
 .logo b{color:var(--acc)}
-nav{order:1;display:flex;gap:26px}
-nav a{position:relative;font-family:'Gladiaclm','Assistant',sans-serif;font-weight:700;font-size:15px;letter-spacing:-.01em;color:var(--mut);transition:color .3s}
-@media(hover:hover){nav a:hover{color:var(--acc)}}
+header nav{order:1;display:flex;gap:26px}
+header nav a{position:relative;font-family:'Gladiaclm','Assistant',sans-serif;font-weight:700;font-size:15px;letter-spacing:-.01em;color:var(--mut);transition:color .3s}
+@media(hover:hover){header nav a:hover{color:var(--acc)}}
 
 /* ===== mobile nav (hamburger dropdown) ===== */
 .nav-toggle{order:3;display:none;align-items:center;justify-content:center;
@@ -70,14 +70,15 @@ nav a{position:relative;font-family:'Gladiaclm','Assistant',sans-serif;font-weig
   color:var(--ink);font-size:18px;line-height:1;cursor:pointer}
 @media(max-width:640px){
   header{position:relative}
-  .nav-toggle{display:flex}
-  nav{display:none;order:4;position:absolute;top:100%;right:0;left:0;
+  .nav-toggle{display:flex;order:1}
+  .logo{order:2}
+  #site-nav{display:none;order:3;position:absolute;top:100%;right:0;left:0;
     flex-direction:column;gap:0;background:var(--bg);
     border-bottom:1.5px solid var(--line);box-shadow:0 8px 16px rgba(20,17,15,.08)}
-  nav.open{display:flex}
-  nav a{padding:16px clamp(20px,5vw,64px);text-align:center;font-size:19px;
+  #site-nav.open{display:flex}
+  #site-nav a{padding:16px clamp(20px,5vw,64px);text-align:center;font-size:19px;
     border-top:1px solid rgba(20,17,15,.1)}
-  nav a:first-child{border-top:none}
+  #site-nav a:first-child{border-top:none}
 }
 
 /* ===== hero ===== */
