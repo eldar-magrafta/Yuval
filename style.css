@@ -225,6 +225,9 @@ section{padding:clamp(19px,3vw,37px) 0 clamp(4px,.67vw,8px)}
 .back:hover{color:var(--acc);gap:12px}
 .cat-title{font-family:'Gladiaclm','Assistant',sans-serif;font-weight:700;font-size:clamp(56px,13vw,150px);line-height:.85;letter-spacing:-.04em}
 .cat-title i{color:var(--acc);font-style:normal}
+.cat-hero-row{display:flex;align-items:center;justify-content:flex-start;gap:clamp(20px,4vw,48px)}
+.about-photo{width:clamp(120px,18vw,200px);height:clamp(120px,18vw,200px);border-radius:50%;object-fit:cover;flex-shrink:0}
+@media(max-width:600px){.cat-hero-row{flex-direction:column-reverse;align-items:flex-start}}
 .cat-sub{margin-top:20px;max-width:620px;font-size:clamp(17px,2.2vw,21px);color:var(--mut)}
 
 .proj{
