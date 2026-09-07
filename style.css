@@ -254,7 +254,7 @@ section{padding:clamp(19px,3vw,37px) 0 clamp(4px,.67vw,8px)}
 @media(max-width:820px){.svc-sep{border-right:none;padding-right:0}}
 
 /* ===== contact ===== */
-.contact{border-top:1.5px solid var(--line);padding-bottom:clamp(40px,6vw,72px)}
+.contact{padding-bottom:clamp(40px,6vw,72px)}
 .links{display:flex;flex-wrap:wrap;gap:14px 28px;margin-top:40px}
 .links a{font-family:'Assistant',sans-serif;font-size:13px;letter-spacing:.06em;text-transform:uppercase;padding-bottom:3px;border-bottom:2px solid transparent;transition:border-color .2s,color .2s}
 .links a:hover{border-color:var(--acc);color:var(--acc)}
