@@ -227,6 +227,22 @@
   })();
 
   // ---------------------------------------------------------
+  // 4d. Page frame — a thin accent-colour border around the
+  //     whole viewport, fixed on top of everything.
+  // ---------------------------------------------------------
+  (function () {
+    var frame = document.createElement('div');
+    frame.className = 'page-frame';
+    frame.setAttribute('aria-hidden', 'true');
+    ['top', 'right', 'bottom', 'left'].forEach(function (side) {
+      var bar = document.createElement('div');
+      bar.className = 'frame-' + side;
+      frame.appendChild(bar);
+    });
+    document.body.appendChild(frame);
+  })();
+
+  // ---------------------------------------------------------
   // 5. Intro curtain — exit handling (markup lives in index.html)
   //    CSS auto-hides it too, so it works even without JS.
   // ---------------------------------------------------------

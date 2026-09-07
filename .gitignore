@@ -20,6 +20,7 @@ mobile-*.png
 page-*.png
 screenshot-*.png
 /*.png
+!/apple-touch-icon.png
 
 # ---- Dependencies / build ----
 node_modules/
