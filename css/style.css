@@ -18,7 +18,7 @@
   font-weight:300;font-style:normal;font-display:swap;
 }
 :root{
-  --bg: #f8ead1;
+  --bg: #f5ede7;
   --ink:#14110F;
   --acc:#243B8F;   /* electric indigo */
   --acc2:#FF5C38;  /* warm coral      */
@@ -294,3 +294,4 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
 .frame-bottom{bottom:0;left:0;right:0;height:var(--frame)}
 .frame-left{top:0;bottom:0;left:0;width:var(--frame)}
 .frame-right{top:0;bottom:0;right:0;width:var(--frame)}
+@media(max-width:640px){:root{--frame:0px}}
