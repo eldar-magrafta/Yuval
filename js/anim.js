@@ -32,6 +32,34 @@
   })();
 
   // ---------------------------------------------------------
+  // 0b. Pause-all-videos control — the preview grid autoplays
+  //     and loops indefinitely, so WCAG 2.2.2 requires a way to
+  //     stop it. One toggle button controls every clip on the page.
+  // ---------------------------------------------------------
+  var videosUserPaused = false;
+  /*
+  (function () {
+    var vids = document.querySelectorAll('.video-tile video,.media-tile video');
+    if (!vids.length) return;
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'video-pause-toggle mono';
+    btn.setAttribute('aria-pressed', 'false');
+    btn.textContent = 'עצירת סרטונים';
+    btn.addEventListener('click', function () {
+      videosUserPaused = !videosUserPaused;
+      btn.setAttribute('aria-pressed', videosUserPaused ? 'true' : 'false');
+      btn.textContent = videosUserPaused ? 'הפעלת סרטונים' : 'עצירת סרטונים';
+      vids.forEach(function (v) {
+        if (videosUserPaused) v.pause();
+        else v.play().catch(function () {});
+      });
+    });
+    document.body.appendChild(btn);
+  })();
+  */
+
+  // ---------------------------------------------------------
   // 0. Grid preview videos — only play the clips actually in view.
   //    Mobile browsers cap how many <video> elements can autoplay
   //    at once; with 12 on one page most just sit frozen on frame 1
@@ -43,7 +71,7 @@
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         var v = entry.target;
-        if (entry.isIntersecting) v.play().catch(function () {});
+        if (entry.isIntersecting) { if (!videosUserPaused) v.play().catch(function () {}); }
         else v.pause();
       });
     }, { rootMargin: '50px' });
