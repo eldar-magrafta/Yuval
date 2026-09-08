@@ -18,9 +18,9 @@
   font-weight:300;font-style:normal;font-display:swap;
 }
 :root{
-  --bg:#F0F8FF;
+  --bg: #f8ead1;
   --ink:#14110F;
-  --acc:#3B34D6;   /* electric indigo */
+  --acc:#243B8F;   /* electric indigo */
   --acc2:#FF5C38;  /* warm coral      */
   --acc2-text:#C43A1F; /* darker coral — meets 4.5:1 on --bg for small text */
   --mut:#6E6A63;
