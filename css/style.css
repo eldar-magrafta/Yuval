@@ -85,6 +85,7 @@ header nav a::after{content:"";position:absolute;left:0;right:0;bottom:-4px;heig
   header{position:relative}
   .nav-toggle{display:flex;order:1}
   .logo{order:2}
+  .logo img{height:30px}
   #site-nav{display:none;order:3;position:absolute;top:100%;right:0;left:0;
     flex-direction:column;gap:0;background:var(--bg);
     border-bottom:1.5px solid var(--line);box-shadow:0 8px 16px rgba(20,17,15,.08)}
