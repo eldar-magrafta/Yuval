@@ -106,7 +106,7 @@
   // 3. Scroll reveals — blur-to-sharp, gently staggered
   // ---------------------------------------------------------
   (function () {
-    var sel = '.row,.ind,.about-grid,.proj,.contact h2,.sec-lead,.cat-title';
+    var sel = '.row,.ind,.about-grid,.proj,.contact h2,.sec-lead,.cat-title,.about-photo';
     var els = Array.prototype.slice.call(document.querySelectorAll(sel));
     if (!els.length) return;
     if (reduce || !('IntersectionObserver' in window)) return; // leave visible
