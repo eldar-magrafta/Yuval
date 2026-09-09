@@ -65,8 +65,8 @@ header{position:sticky;top:var(--frame);z-index:40;background:var(--bg);
   transition:transform .32s cubic-bezier(.22,.61,.36,1),padding .32s,box-shadow .32s}
 header.is-scrolled{padding:12px clamp(20px,5vw,64px);box-shadow:0 1px 0 var(--line)}
 header.is-hidden{transform:translateY(-100%)}
-.logo{order:2;font-family:'Assistant';font-weight:800;font-size:20px;letter-spacing:-.02em}
-.logo b{color:var(--acc)}
+.logo{order:2;display:flex;align-items:center}
+.logo img{height:50px;width:auto;display:block}
 header nav{order:1;display:flex;gap:26px}
 header nav a{position:relative;font-family:'Gladiaclm','Assistant',sans-serif;font-weight:700;font-size:15px;letter-spacing:-.01em;color:var(--mut);transition:color .3s}
 header nav a::after{content:"";position:absolute;left:0;right:0;bottom:-4px;height:1.5px;background:var(--acc);
@@ -252,8 +252,6 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
    Refined & subtle. All motion is disabled under reduced-motion.
    ============================================================ */
 
-/* magnetic logo eases back into place smoothly */
-.logo{transition:transform .35s cubic-bezier(.22,.61,.36,1)}
 
 /* still film grain */
 .grain{

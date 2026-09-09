@@ -139,22 +139,6 @@
   })();
 
   // ---------------------------------------------------------
-  // 3. Magnetic logo — pulls gently toward the cursor
-  // ---------------------------------------------------------
-  (function () {
-    if (reduce || !finePointer) return;
-    document.querySelectorAll('.logo').forEach(function (el) {
-      el.addEventListener('pointermove', function (e) {
-        var r = el.getBoundingClientRect();
-        var x = e.clientX - (r.left + r.width / 2);
-        var y = e.clientY - (r.top + r.height / 2);
-        el.style.transform = 'translate(' + (x * 0.3) + 'px,' + (y * 0.3) + 'px)';
-      });
-      el.addEventListener('pointerleave', function () { el.style.transform = ''; });
-    });
-  })();
-
-  // ---------------------------------------------------------
   // 4a. Contact heading — letters pick up the accent colour
   //     near the cursor, same idea as the hero name.
   // ---------------------------------------------------------
