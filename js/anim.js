@@ -1,5 +1,5 @@
 // ============================================================
-//  Yuval — shared animation layer for every page.
+//  Yuval - shared animation layer for every page.
 //  Intro curtain, film grain, magnetic logo, hero lean, and
 //  blur-to-sharp scroll reveals. All motion is gated behind
 //  prefers-reduced-motion so it degrades to a calm static site.
@@ -11,7 +11,7 @@
   var finePointer = window.matchMedia('(hover:hover) and (pointer:fine)').matches;
 
   // ---------------------------------------------------------
-  // 0a. Mobile nav — hamburger toggles the dropdown menu.
+  // 0a. Mobile nav - hamburger toggles the dropdown menu.
   // ---------------------------------------------------------
   (function () {
     var toggle = document.querySelector('.nav-toggle');
@@ -32,7 +32,7 @@
   })();
 
   // ---------------------------------------------------------
-  // 0b. Pause-all-videos control — the preview grid autoplays
+  // 0b. Pause-all-videos control - the preview grid autoplays
   //     and loops indefinitely, so WCAG 2.2.2 requires a way to
   //     stop it. One toggle button controls every clip on the page.
   // ---------------------------------------------------------
@@ -60,7 +60,7 @@
   */
 
   // ---------------------------------------------------------
-  // 0. Grid preview videos — only play the clips actually in view.
+  // 0. Grid preview videos - only play the clips actually in view.
   //    Mobile browsers cap how many <video> elements can autoplay
   //    at once; with 12 on one page most just sit frozen on frame 1
   //    unless we play/pause them as they enter/leave the viewport.
@@ -79,8 +79,8 @@
   })();
 
   // ---------------------------------------------------------
-  // 1. Hero — letters near the cursor pick up the accent colour
-  //    (colour only — no tilt/movement)
+  // 1. Hero - letters near the cursor pick up the accent colour
+  //    (colour only - no tilt/movement)
   // ---------------------------------------------------------
   (function () {
     if (reduce || !finePointer) return;
@@ -103,7 +103,7 @@
   })();
 
   // ---------------------------------------------------------
-  // 3. Scroll reveals — blur-to-sharp, gently staggered
+  // 3. Scroll reveals - blur-to-sharp, gently staggered
   // ---------------------------------------------------------
   (function () {
     var sel = '.row,.ind,.about-grid,.proj,.contact h2,.sec-lead,.cat-title,.about-photo';
@@ -139,7 +139,7 @@
   })();
 
   // ---------------------------------------------------------
-  // 4a. Contact heading — letters pick up the accent colour
+  // 4a. Contact heading - letters pick up the accent colour
   //     near the cursor, same idea as the hero name.
   // ---------------------------------------------------------
   (function () {
@@ -177,7 +177,7 @@
   })();
 
   // ---------------------------------------------------------
-  // 4b. Sticky header — shrinks and hides on scroll-down,
+  // 4b. Sticky header - shrinks and hides on scroll-down,
   //     reappears on scroll-up.
   // ---------------------------------------------------------
   (function () {
@@ -200,7 +200,7 @@
   })();
 
   // ---------------------------------------------------------
-  // 4c. Page transitions — fade to background before an
+  // 4c. Page transitions - fade to background before an
   //     internal link navigates to another page.
   // ---------------------------------------------------------
   (function () {
@@ -224,12 +224,12 @@
     });
 
     // Bfcache restores (e.g. browser Back) bring the page back exactly as it
-    // was at unload — with the overlay still shown — so clear it on pageshow.
+    // was at unload - with the overlay still shown - so clear it on pageshow.
     window.addEventListener('pageshow', function () { pt.classList.remove('show'); });
   })();
 
   // ---------------------------------------------------------
-  // 4. Grain overlay — a still film-grain texture over everything
+  // 4. Grain overlay - a still film-grain texture over everything
   // ---------------------------------------------------------
   (function () {
     var grain = document.createElement('div');
@@ -239,7 +239,7 @@
   })();
 
   // ---------------------------------------------------------
-  // 4d. Page frame — a thin accent-colour border around the
+  // 4d. Page frame - a thin accent-colour border around the
   //     whole viewport, fixed on top of everything.
   // ---------------------------------------------------------
   (function () {
@@ -255,7 +255,7 @@
   })();
 
   // ---------------------------------------------------------
-  // 5. Intro curtain — exit handling (markup lives in index.html)
+  // 5. Intro curtain - exit handling (markup lives in index.html)
   //    CSS auto-hides it too, so it works even without JS.
   // ---------------------------------------------------------
   (function () {
