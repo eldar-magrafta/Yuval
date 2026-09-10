@@ -228,7 +228,8 @@ section{padding:clamp(19px,3vw,37px) 0 clamp(4px,.67vw,8px)}
 .cat-title.proj-title{font-size:clamp(14px,3.25vw,37.5px)}
 .cat-hero-row{display:flex;align-items:center;justify-content:flex-start;gap:clamp(20px,4vw,48px)}
 .about-photo{width:clamp(120px,18vw,200px);height:clamp(120px,18vw,200px);object-fit:cover;flex-shrink:0;margin-inline-start:clamp(-90px,-9vw,-70px);position:relative;z-index:1}
-@media(max-width:600px){.cat-hero-row{flex-direction:column-reverse;align-items:flex-start}}
+@media(max-width:600px){.cat-hero-row{flex-direction:column-reverse;align-items:flex-start}
+  .about-photo{margin-inline-start:0}}
 .cat-sub{margin-top:20px;max-width:620px;font-size:clamp(17px,2.2vw,21px);color:var(--text-color)}
 
 .proj{
@@ -317,4 +318,4 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
 .frame-bottom{bottom:0;left:0;right:0;height:clamp(11px,1.7vw,20px)}
 .frame-left{top:0;bottom:0;left:0;width:clamp(11px,1.7vw,20px)}
 .frame-right{top:0;bottom:0;right:0;width:clamp(11px,1.7vw,20px)}
-@media(max-width:640px){:root{--frame:0px}}
+@media(max-width:640px){:root{--frame:0px}.page-frame{display:none}.hero-bg-video{display:none}}
