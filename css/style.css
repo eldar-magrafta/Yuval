@@ -120,7 +120,7 @@ header nav a::after{content:"";position:absolute;left:0;right:0;bottom:-4px;heig
   #site-nav a{padding:16px clamp(20px,5vw,64px);text-align:center;font-size:38px;
     border-top:1px solid rgba(20,17,15,.1)}
   #site-nav a:first-child{border-top:none}
-  .home-menu a span{font-size:clamp(56px,9.6vw,58px)}
+  .home-menu a span{font-size:clamp(112px,19.2vw,116px)}
 }
 
 /* ===== hero ===== */
@@ -236,7 +236,7 @@ section{padding:clamp(19px,3vw,37px) 0 clamp(4px,.67vw,8px)}
 .cat-title.proj-title{font-size:clamp(28px,6.5vw,75px)}
 .cat-hero-row{display:flex;align-items:center;justify-content:flex-start;gap:clamp(20px,4vw,48px)}
 .about-photo{width:clamp(120px,18vw,200px);height:clamp(120px,18vw,200px);object-fit:cover;flex-shrink:0;margin-inline-start:clamp(-90px,-9vw,-70px);position:relative;z-index:1}
-@media(max-width:600px){.cat-hero-row{flex-direction:column-reverse;align-items:flex-start;gap:clamp(7px,1.3vw,16px)}
+@media(max-width:600px){.cat-hero-row{flex-direction:column-reverse;align-items:flex-start;gap:clamp(3.5px,0.65vw,8px)}
   .about-photo{margin-inline-start:0}}
 .cat-sub{margin-top:20px;max-width:620px;font-size:clamp(17px,2.2vw,21px);color:var(--text-color)}
 
