@@ -318,4 +318,5 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
 .frame-bottom{bottom:0;left:0;right:0;height:clamp(11px,1.7vw,20px)}
 .frame-left{top:0;bottom:0;left:0;width:clamp(11px,1.7vw,20px)}
 .frame-right{top:0;bottom:0;right:0;width:clamp(11px,1.7vw,20px)}
+.hero-bg-video{display:block}
 @media(max-width:640px){:root{--frame:0px}.page-frame{display:none}.hero-bg-video{display:none}}
