@@ -117,8 +117,8 @@ header nav a::after{content:"";position:absolute;left:0;right:0;bottom:-4px;heig
     flex-direction:column;gap:0;background:var(--bg);
     border-bottom:1.5px solid var(--line);box-shadow:0 8px 16px rgba(20,17,15,.08)}
   #site-nav.open{display:flex}
-  #site-nav a{padding:16px clamp(20px,5vw,64px);text-align:center;font-size:38px;
-    border-top:1px solid rgba(20,17,15,.1)}
+  #site-nav a{padding:16px clamp(20px,5vw,64px);text-align:center;font-size:30px;
+    border-top:1px solid rgba(20,17,15,.1);color:var(--home-menu-color)}
   #site-nav a:first-child{border-top:none}
   .home-menu a span{font-size:clamp(112px,19.2vw,116px)}
 }
