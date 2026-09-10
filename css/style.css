@@ -18,7 +18,7 @@
   font-weight:300;font-style:normal;font-display:swap;
 }
 :root{
-  --bg: #e2f1d8;
+  --bg: #e9f1e2;
   --ink: #9fda01;
   --acc: #956eda;   /* electric indigo - kept for js/anim.js letter-hover effect */
   --acc2:#FF5C38;  /* warm coral      */
@@ -30,7 +30,7 @@
 
   /* ---- per-component colour controls (split out from --ink/--acc so each
      piece can be retuned independently without affecting the others) ---- */
-  --frame-color:#d0ff00;
+  --frame-color: #d7ef7d;
   --text-color: #3db205;
   --skip-bg:#9fda01;
   --toggle-bg:#9fda01;
