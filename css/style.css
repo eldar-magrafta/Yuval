@@ -164,7 +164,7 @@ section{padding:clamp(19px,3vw,37px) 0 clamp(4px,.67vw,8px)}
 .services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(8px,1.33vw,16px) clamp(18px,3vw,34px)}
 @media(max-width:860px){.services-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:560px){.services-grid{grid-template-columns:1fr}}
-.service .role-big{margin:0 0 0.35px;font-size:clamp(54px,8.6vw,92px);line-height:.7}
+.service .role-big{margin:0 0 0.35px;font-size:clamp(28px,5.32vw,67.2px);line-height:.7}
 .service p:not(.role-big){font-size:clamp(15px,1.7vw,17px);line-height:1.45;color:var(--text-color)}
 
 /* ===== home menu (big centered nav links) ===== */
