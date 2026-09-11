@@ -79,6 +79,28 @@
   })();
 
   // ---------------------------------------------------------
+  // 0c. Grid preview videos - hovering a tile (mouse only) pauses
+  //     its clip in place, dims it, and shows its title; moving
+  //     away resumes playback from that same paused frame.
+  // ---------------------------------------------------------
+  (function () {
+    if (!finePointer) return;
+    var tiles = document.querySelectorAll('.video-tile,.media-tile');
+    tiles.forEach(function (tile) {
+      var video = tile.querySelector('video');
+      if (!video) return;
+      tile.addEventListener('mouseenter', function () {
+        tile.classList.add('is-hovered');
+        video.pause();
+      });
+      tile.addEventListener('mouseleave', function () {
+        tile.classList.remove('is-hovered');
+        if (!videosUserPaused) video.play().catch(function () {});
+      });
+    });
+  })();
+
+  // ---------------------------------------------------------
   // 1. Hero - letters near the cursor pick up the accent colour
   //    (colour only - no tilt/movement)
   // ---------------------------------------------------------
