@@ -228,40 +228,21 @@ section{padding:clamp(19px,3vw,37px) 0 clamp(4px,.67vw,8px)}
   .video-tile .tile-desc{display:block;margin-top:4px;padding:0 16px;font-size:13px;color:var(--mut)}
 }
 
-/* ===== media grid (digital/social video showcase) ===== */
-.media-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(14px,2.4vw,28px)}
+/* ===== media grid (digital/social video showcase) - rounded cards, title + description always shown ===== */
+.media-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
 @media(max-width:860px){.media-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:560px){.media-grid{grid-template-columns:1fr}}
-.media-tile{position:relative;display:block;width:100%;aspect-ratio:9/7;
-  background:var(--wash);cursor:pointer;overflow:hidden}
-.media-tile video{width:100%;height:100%;object-fit:cover;display:block;filter:contrast(1.05);transition:filter .5s}
-.media-tile .tile-title{display:none}
-.media-tile .tile-desc{display:none}
-@media(hover:hover){
-  .media-tile.is-hovered video{filter:contrast(1.05) brightness(.4)}
-  .media-tile .tile-title{
-    display:flex;align-items:center;justify-content:center;text-align:center;
-    position:absolute;inset:0;margin:0;padding:16px;
-    color:#fff;font-family:'Horevclm','Assistant',sans-serif;font-size:48px;font-weight:600;
-    opacity:0;transition:opacity .25s ease;pointer-events:none
-  }
-  .media-tile.is-hovered .tile-title{opacity:1}
-}
-@media(hover:none){.media-tile video{filter:contrast(1.05)}}
+.media-tile{position:relative;display:flex;flex-direction:column;width:100%;
+  background:var(--wash);border-radius:20px;overflow:hidden;padding-bottom:24px;cursor:pointer}
+.media-tile video{width:100%;aspect-ratio:9/16;object-fit:cover;display:block;background:var(--wash);filter:contrast(1.05);transition:filter .5s}
+.media-tile .tile-title{display:block;margin-top:20px;padding:0 24px;font-size:20px;font-weight:600;color:var(--text-color)}
+.media-tile .tile-desc{display:block;margin-top:6px;padding:0 24px;font-size:14px;color:var(--mut)}
+@media(hover:hover){.media-tile:hover video{filter:contrast(1.05) brightness(.85)}}
 
-/* portrait variant - for pages where every clip is a 9:16 phone video,
-   so cover-cropping a landscape-shaped cell would cut off the shot */
+/* portrait variant - for pages where every clip is a 9:16 phone video: sized to match studio-v4.com's card grid */
 .media-grid.portrait-grid{grid-template-columns:repeat(4,1fr)}
-.media-grid.portrait-grid .media-tile{aspect-ratio:9/16}
-@media(max-width:860px){.media-grid.portrait-grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:860px){.media-grid.portrait-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:560px){.media-grid.portrait-grid{grid-template-columns:1fr}}
-@media(max-width:560px){
-  .media-grid{row-gap:32px}
-  .media-tile,.media-grid.portrait-grid .media-tile{aspect-ratio:auto;display:flex;flex-direction:column;background:var(--wash);border-radius:20px;overflow:hidden;padding-bottom:16px}
-  .media-tile video{aspect-ratio:9/16;background:var(--wash)}
-  .media-tile .tile-title{display:block;margin-top:10px;padding:0 16px;font-size:16px;font-weight:600;color:var(--text-color)}
-  .media-tile .tile-desc{display:block;margin-top:4px;padding:0 16px;font-size:13px;color:var(--mut)}
-}
 
 /* ===== category (industry) page ===== */
 .cat-hero{padding:clamp(24px,4vw,48px) 0 clamp(24px,4vw,44px)}
