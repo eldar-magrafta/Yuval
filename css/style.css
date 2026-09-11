@@ -236,6 +236,7 @@ section{padding:clamp(19px,3vw,37px) 0 clamp(4px,.67vw,8px)}
   background:var(--wash);cursor:pointer;overflow:hidden}
 .media-tile video{width:100%;height:100%;object-fit:cover;display:block;filter:contrast(1.05);transition:filter .5s}
 .media-tile .tile-title{display:none}
+.media-tile .tile-desc{display:none}
 @media(hover:hover){
   .media-tile.is-hovered video{filter:contrast(1.05) brightness(.4)}
   .media-tile .tile-title{
@@ -254,6 +255,13 @@ section{padding:clamp(19px,3vw,37px) 0 clamp(4px,.67vw,8px)}
 .media-grid.portrait-grid .media-tile{aspect-ratio:9/16}
 @media(max-width:860px){.media-grid.portrait-grid{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:560px){.media-grid.portrait-grid{grid-template-columns:1fr}}
+@media(max-width:560px){
+  .media-grid{row-gap:32px}
+  .media-tile,.media-grid.portrait-grid .media-tile{aspect-ratio:auto;display:flex;flex-direction:column;background:var(--wash);border-radius:20px;overflow:hidden;padding-bottom:16px}
+  .media-tile video{aspect-ratio:9/16;background:var(--wash)}
+  .media-tile .tile-title{display:block;margin-top:10px;padding:0 16px;font-size:16px;font-weight:600;color:var(--text-color)}
+  .media-tile .tile-desc{display:block;margin-top:4px;padding:0 16px;font-size:13px;color:var(--mut)}
+}
 
 /* ===== category (industry) page ===== */
 .cat-hero{padding:clamp(24px,4vw,48px) 0 clamp(24px,4vw,44px)}
