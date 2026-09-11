@@ -193,6 +193,7 @@ section{padding:clamp(19px,3vw,37px) 0 clamp(4px,.67vw,8px)}
 .video-tile{position:relative;display:block;width:100%;height:100%;background:var(--wash);cursor:pointer;overflow:hidden}
 .video-tile video{width:100%;height:100%;object-fit:cover;display:block;transition:filter .25s ease}
 .video-tile .tile-title{display:none}
+.video-tile .tile-desc{display:none}
 @media(hover:hover){
   .video-tile .tile-title{
     display:flex;align-items:center;justify-content:center;text-align:center;
@@ -220,10 +221,11 @@ section{padding:clamp(19px,3vw,37px) 0 clamp(4px,.67vw,8px)}
   .video-tile{grid-column:auto!important;grid-row:auto!important;height:auto;aspect-ratio:9/16}
 }
 @media(max-width:560px){
-  .video-grid{grid-template-columns:repeat(2,1fr);row-gap:28px}
-  .video-tile{aspect-ratio:auto;display:flex;flex-direction:column;background:none;border:none}
+  .video-grid{grid-template-columns:1fr;row-gap:32px}
+  .video-tile{aspect-ratio:auto;display:flex;flex-direction:column;background:var(--wash);border:none;border-radius:20px;overflow:hidden;padding-bottom:16px}
   .video-tile video{aspect-ratio:4/5;background:var(--wash)}
-  .video-tile .tile-title{display:block;margin-top:4px;font-size:14px;font-weight:600;color:var(--text-color)}
+  .video-tile .tile-title{display:block;margin-top:10px;padding:0 16px;font-size:16px;font-weight:600;color:var(--text-color)}
+  .video-tile .tile-desc{display:block;margin-top:4px;padding:0 16px;font-size:13px;color:var(--mut)}
 }
 
 /* ===== media grid (digital/social video showcase) ===== */
