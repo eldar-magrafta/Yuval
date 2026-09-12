@@ -371,7 +371,7 @@ body.contact-page main{flex:1;min-height:0;display:flex;flex-direction:column}
 @media(max-width:760px){
   .contact-headline{font-size:clamp(48px,10vh,72px)}
 }
-@media(max-width:640px){
+@media(max-width:760px),(max-height:500px) and (orientation:landscape){
   .contact-badges{position:static;display:flex;flex-wrap:wrap;justify-content:center;gap:8px;height:auto;margin-top:14px}
   .c-badge{position:static;font-size:13px;padding:8px 14px}
   .c-badge:nth-of-type(1),.c-badge:nth-of-type(2),.c-badge:nth-of-type(3),.c-badge:nth-of-type(4),.c-badge:nth-of-type(5){
