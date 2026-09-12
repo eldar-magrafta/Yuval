@@ -303,6 +303,45 @@
   })();
 
   // ---------------------------------------------------------
+  // 4f2. Contact page lead form - on submit, silently emails
+  //      magrafta40@gmail.com via Formspree (no visitor-side
+  //      "press send" step needed), and opens a pre-filled
+  //      WhatsApp chat as a bonus channel for the visitor.
+  //
+  //      TODO: replace FORMSPREE_ENDPOINT below with the real
+  //      endpoint from https://formspree.io once the form is
+  //      created and magrafta40@gmail.com is verified there.
+  // ---------------------------------------------------------
+  (function () {
+    var form = document.getElementById('lead-form');
+    var status = document.getElementById('lead-form-status');
+    if (!form) return;
+    var FORMSPREE_ENDPOINT = 'https://formspree.io/f/REPLACE_ME';
+    var WHATSAPP_NUMBER = '972501234567';
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var name = form.elements.name.value.trim();
+      var contact = form.elements.contact.value.trim();
+
+      window.open('https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent('שם: ' + name + '\nפרטי התקשרות: ' + contact), '_blank');
+
+      if (status) status.textContent = 'שולח...';
+      fetch(FORMSPREE_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Accept': 'application/json' },
+        body: new FormData(form)
+      }).then(function (res) {
+        if (!res.ok) throw new Error('bad response');
+        form.reset();
+        if (status) status.textContent = 'הפרטים נשלחו, נדבר בקרוב!';
+      }).catch(function () {
+        if (status) status.textContent = 'משהו השתבש - אפשר לכתוב לנו גם בוואטסאפ או במייל למעלה.';
+      });
+    });
+  })();
+
+  // ---------------------------------------------------------
   // 4f. Contact page - one floating chip at a time turns
   //     accent-coloured, cycling to a new random one every 3s.
   // ---------------------------------------------------------

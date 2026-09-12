@@ -348,7 +348,7 @@ body.contact-page main{flex:1;min-height:0;display:flex;flex-direction:column}
 .contact-hero{position:relative;overflow:hidden;flex:1;min-height:0;display:flex;flex-direction:column;padding:clamp(24px,4vw,48px) 0 0}
 .contact-hero>.wrap{flex:1;min-height:0;display:flex;flex-direction:column;width:100%}
 .contact-hero .back{position:relative;z-index:3;flex-shrink:0}
-.contact-hero-inner{position:relative;z-index:2;flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center;text-align:center}
+.contact-hero-inner{position:relative;z-index:2;flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center;text-align:center;transform:translateY(-60px)}
 .contact-headline{font-family:'FbReading-Black','Almoni',sans-serif;font-weight:700;
   max-width:640px;margin:0 auto;
   font-size:clamp(52px,9.2vh,96px);line-height:1.08;letter-spacing:-.01em;color:var(--ink)}
@@ -389,12 +389,26 @@ body.contact-page main{flex:1;min-height:0;display:flex;flex-direction:column}
 .c-pupil{width:34%;height:34%;background:var(--ink);border-radius:50%;transition:transform .1s linear}
 @media (prefers-reduced-motion:reduce){.c-pupil{transition:none}}
 
-.contact-write{background:var(--acc);padding:clamp(10px,2vh,20px) 0;position:relative;z-index:2;margin-top:-2px;flex-shrink:0}
-.c-write-label{font-family:'Almoni',sans-serif;font-weight:500;font-size:12px;letter-spacing:.1em;
-  text-transform:uppercase;color:#fff;opacity:.85;margin-bottom:4px}
-.c-write-email a{font-family:'FbReading-Black','Almoni',sans-serif;font-weight:700;
-  font-size:clamp(18px,3vh,26px);color:#fff;transition:opacity .3s var(--ease-lux)}
-.c-write-email a:hover{opacity:.7}
+.contact-write{background:var(--acc);padding:clamp(10px,2vh,20px) 0;position:relative;z-index:2;margin-top:-2px;flex-shrink:0;text-align:center}
+.c-contact-info{position:absolute;left:clamp(16px,3vw,32px);top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:2px;
+  font-family:'FbReading-Black','Almoni',sans-serif;font-weight:700;font-size:37.05px;line-height:1.1;color:#fff;opacity:.9;text-align:left}
+.c-contact-info a{transition:opacity .3s var(--ease-lux)}
+.c-contact-info a:hover{opacity:.7}
+@media(max-width:640px){.c-contact-info{display:none}}
+.c-write-label{font-family:'Almoni',sans-serif;font-weight:500;font-size:clamp(19.5px,2.7vh,22.5px);letter-spacing:.02em;
+  color:#fff;opacity:.9;margin-bottom:10px}
+.c-form{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;max-width:640px;margin:0 auto}
+.c-form-input{flex:1;min-width:160px;border:none;border-radius:999px;padding:12px 20px;
+  font-family:'Almoni',sans-serif;font-size:15px;color:var(--ink);background:#fff;
+  box-shadow:var(--shadow-sm);transition:box-shadow .3s var(--ease-lux)}
+.c-form-input::placeholder{color:var(--mut)}
+.c-form-input:focus{outline:none;box-shadow:0 0 0 2px var(--ink)}
+.c-form-submit{flex-shrink:0;border:none;border-radius:999px;padding:12px 26px;cursor:pointer;
+  font-family:'Almoni',sans-serif;font-weight:700;font-size:15px;color:var(--acc);background:#fff;
+  transition:transform .25s var(--ease-lux),box-shadow .25s var(--ease-lux)}
+@media(hover:hover){.c-form-submit:hover{transform:translateY(-2px);box-shadow:var(--shadow-md)}}
+.c-form-submit:active{transform:translateY(0) scale(.97)}
+.c-form-status{margin-top:8px;font-family:'Almoni',sans-serif;font-size:13px;color:#fff;min-height:1em}
 
 /* ===== contact ===== */
 .contact{padding-bottom:clamp(40px,6vw,72px)}

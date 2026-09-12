@@ -58,8 +58,17 @@
 
   <section class="contact-write">
     <div class="wrap">
-      <p class="c-write-label">כתבו לנו</p>
-      <p class="c-write-email"><a href="mailto:hello@yuval.com">hello@yuval.com</a></p>
+      <p class="c-write-label">השאירו פרטים ואני אחזור אליכם</p>
+      <form class="c-form" id="lead-form">
+        <input class="c-form-input" type="text" name="name" placeholder="שם" required>
+        <input class="c-form-input" type="text" name="contact" placeholder="אימייל או טלפון" required>
+        <button class="c-form-submit" type="submit">השאר פרטים</button>
+      </form>
+      <p class="c-form-status" id="lead-form-status" role="status" aria-live="polite"></p>
+    </div>
+    <div class="c-contact-info">
+      <a href="https://wa.me/972501234567" target="_blank" rel="noopener">050-1234567</a>
+      <a href="mailto:yuval@gmail.com">yuval@gmail.com</a>
     </div>
   </section>
 </main>
