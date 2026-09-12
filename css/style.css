@@ -372,7 +372,8 @@ body.contact-page main{flex:1;min-height:0;display:flex;flex-direction:column}
   .contact-headline{font-size:clamp(48px,10vh,72px)}
 }
 @media(max-width:760px),(max-height:500px) and (orientation:landscape){
-  .contact-badges{position:static;display:flex;flex-wrap:wrap;justify-content:center;gap:8px;height:auto;margin-top:14px}
+  .contact-badges{position:static;order:2;display:flex;flex-wrap:wrap;justify-content:center;gap:8px;height:auto;margin-top:10px}
+  .contact-headline{order:1}
   .c-badge{position:static;font-size:13px;padding:8px 14px}
   .c-badge:nth-of-type(1),.c-badge:nth-of-type(2),.c-badge:nth-of-type(3),.c-badge:nth-of-type(4),.c-badge:nth-of-type(5){
     top:auto;left:auto;right:auto;rotate:0deg;
@@ -388,19 +389,20 @@ body.contact-page main{flex:1;min-height:0;display:flex;flex-direction:column}
 @media (prefers-reduced-motion:reduce){.c-pupil{transition:none}}
 
 .contact-write{background:var(--acc);padding:clamp(10px,2vh,20px) 0;position:relative;z-index:2;margin-top:-2px;flex-shrink:0;text-align:center}
-.c-contact-info{position:absolute;left:clamp(16px,3vw,32px);bottom:6px;display:flex;flex-direction:column;gap:2px;
+.c-contact-info{position:absolute;left:clamp(16px,3vw,32px);bottom:26px;display:flex;flex-direction:column;gap:2px;
   font-family:'FbReading-Black','Almoni',sans-serif;font-weight:700;font-size:37.05px;line-height:1.1;color:#fff;opacity:.9;text-align:left}
 .c-contact-info a{transition:opacity .3s var(--ease-lux)}
 .c-contact-info a:hover{opacity:.7}
 .c-write-label{font-family:'Almoni',sans-serif;font-weight:500;font-size:clamp(19.5px,2.7vh,22.5px);letter-spacing:.02em;
   color:#fff;opacity:.9;margin-bottom:10px}
 .c-form{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;max-width:640px;margin:0 auto}
-.c-form-input{flex:0 1 70%;min-width:112px;border:none;border-radius:999px;padding:12px 20px;
+.c-form-input{flex:0 1 calc(50% - 5px);min-width:112px;border:none;border-radius:999px;padding:12px 20px;
   font-family:'Almoni',sans-serif;font-size:15px;color:var(--ink);background:#fff;
   box-shadow:var(--shadow-sm);transition:box-shadow .3s var(--ease-lux)}
 .c-form-input::placeholder{color:var(--mut)}
 .c-form-input:focus{outline:none;box-shadow:0 0 0 2px var(--ink)}
-.c-form-submit{flex-shrink:0;border:none;border-radius:999px;padding:12px 26px;cursor:pointer;
+.c-form-submit{flex:0 0 auto;border:none;border-radius:999px;padding:12px 26px;cursor:pointer;text-align:center;
+  margin-top:4px;
   font-family:'Almoni',sans-serif;font-weight:700;font-size:15px;color:var(--acc);background:#fff;
   transition:transform .25s var(--ease-lux),box-shadow .25s var(--ease-lux)}
 @media(hover:hover){.c-form-submit:hover{transform:translateY(-2px);box-shadow:var(--shadow-md)}}
@@ -408,13 +410,13 @@ body.contact-page main{flex:1;min-height:0;display:flex;flex-direction:column}
 .c-form-status{margin-top:8px;font-family:'Almoni',sans-serif;font-size:13px;color:#fff;min-height:1em}
 
 @media(max-width:640px){
-  .contact-write{display:flex;flex-direction:row;align-items:flex-start;justify-content:space-between;gap:10px;
+  .contact-write{display:flex;flex-direction:row;align-items:flex-end;justify-content:space-between;gap:10px;
     padding:clamp(16px,3vh,24px) clamp(16px,5vw,28px)}
   .contact-write>.wrap{margin:0;padding:0;max-width:none;width:auto;flex:1 1 auto;text-align:right}
   .c-write-label{font-size:14px;margin-bottom:8px}
   .c-form{flex-direction:column;align-items:flex-start;max-width:none;gap:8px;margin:0}
   .c-form-input{min-width:0;width:70%;font-size:14px;padding:10px 16px}
-  .c-form-submit{font-size:14px;padding:10px 18px}
+  .c-form-submit{align-self:flex-start;font-size:14px;padding:10px 18px}
   .c-contact-info{position:static;top:auto;left:auto;bottom:auto;transform:none;flex:0 0 auto;
     align-self:flex-end;font-size:16px;text-align:left}
 }
