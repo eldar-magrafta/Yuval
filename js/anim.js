@@ -156,12 +156,10 @@
     function close() {
       nav.classList.remove('open');
       toggle.setAttribute('aria-expanded', 'false');
-      toggle.textContent = '☰';
     }
     toggle.addEventListener('click', function () {
       var open = nav.classList.toggle('open');
       toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-      toggle.textContent = open ? '✕' : '☰';
     });
     nav.addEventListener('click', function (e) { if (e.target.closest('a')) close(); });
     window.addEventListener('resize', function () { if (window.innerWidth > 640) close(); });
