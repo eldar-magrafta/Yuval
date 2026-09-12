@@ -40,6 +40,85 @@
   })();
 
   // ---------------------------------------------------------
+  // Premium polish pass: custom cursor with a "play" hint over
+  // video tiles, tilt-toward-cursor on cards, a soft cursor-follow
+  // glow behind the hero, and a fade/scale-in for grid videos once
+  // their first frame is actually ready (instead of popping in).
+  // ---------------------------------------------------------
+
+  // -- custom cursor (desktop w/ a real mouse only) --
+  (function () {
+    if (!finePointer || reduce) return;
+    var dot = document.createElement('div');
+    dot.className = 'cursor-dot';
+    dot.setAttribute('aria-hidden', 'true');
+    document.body.appendChild(dot);
+    document.body.classList.add('has-custom-cursor');
+
+    var tx = 0, ty = 0, x = 0, y = 0, shown = false;
+    window.addEventListener('pointermove', function (e) {
+      tx = e.clientX; ty = e.clientY;
+      if (!shown) { dot.classList.add('show'); shown = true; }
+    });
+    document.addEventListener('mouseleave', function () { dot.classList.remove('show'); });
+    (function raf() {
+      x += (tx - x) * .2; y += (ty - y) * .2;
+      dot.style.transform = 'translate(' + x + 'px,' + y + 'px) translate(-50%,-50%)';
+      requestAnimationFrame(raf);
+    })();
+
+    document.querySelectorAll('.video-tile,.media-tile').forEach(function (tile) {
+      tile.addEventListener('mouseenter', function () { dot.classList.add('video'); });
+      tile.addEventListener('mouseleave', function () { dot.classList.remove('video'); });
+    });
+  })();
+
+  // -- tilt-toward-cursor on cards (desktop only) --
+  (function () {
+    if (!finePointer || reduce) return;
+    function initTilt(nodeList, max) {
+      nodeList.forEach(function (el) {
+        el.addEventListener('mousemove', function (e) {
+          var r = el.getBoundingClientRect();
+          var px = (e.clientX - r.left) / r.width - .5;
+          var py = (e.clientY - r.top) / r.height - .5;
+          el.style.transition = 'transform .1s linear';
+          el.style.transform = 'translateY(-4px) perspective(900px) rotateX(' + (-py * max) + 'deg) rotateY(' + (px * max) + 'deg)';
+        });
+        el.addEventListener('mouseleave', function () {
+          el.style.transition = 'transform .5s var(--ease-lux)';
+          el.style.transform = '';
+        });
+      });
+    }
+    initTilt(document.querySelectorAll('.video-tile'), 6);
+    initTilt(document.querySelectorAll('.media-tile'), 5);
+    initTilt(document.querySelectorAll('.service'), 4);
+  })();
+
+  // -- soft glow following the cursor behind the hero text --
+  (function () {
+    var hero = document.querySelector('.hero');
+    if (!hero || !finePointer || reduce) return;
+    hero.addEventListener('mousemove', function (e) {
+      var r = hero.getBoundingClientRect();
+      hero.style.setProperty('--gx', ((e.clientX - r.left) / r.width * 100) + '%');
+      hero.style.setProperty('--gy', ((e.clientY - r.top) / r.height * 100) + '%');
+      hero.classList.add('glow-active');
+    });
+    hero.addEventListener('mouseleave', function () { hero.classList.remove('glow-active'); });
+  })();
+
+  // -- grid videos fade/scale in once their first frame is ready --
+  (function () {
+    document.querySelectorAll('.video-tile video,.media-tile video').forEach(function (v) {
+      v.classList.add('vid-fade');
+      if (v.readyState >= 2) { v.classList.add('loaded'); return; }
+      v.addEventListener('loadeddata', function () { v.classList.add('loaded'); }, { once: true });
+    });
+  })();
+
+  // ---------------------------------------------------------
   // -1. Alpha-transparent video via canvas - works on every
   //     browser including Safari, because the source video has
   //     NO real alpha channel (Safari can't play those anyway).
