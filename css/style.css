@@ -294,6 +294,9 @@ section{padding:clamp(19px,3vw,37px) 0 clamp(4px,.67vw,8px)}
   .media-tile:hover{box-shadow:var(--glow-orange),var(--shadow-lg);transform:translateY(-4px) rotate(-.3deg)}
   .media-tile:hover video{filter:contrast(1.05) brightness(.85);transform:scale(1.04)}
 }
+@media(hover:none){
+  .media-tile{outline:2px solid var(--acc)}
+}
 .media-tile:active{transform:scale(.98)}
 
 /* portrait variant - for pages where every clip is a 9:16 phone video: sized to match studio-v4.com's card grid */
