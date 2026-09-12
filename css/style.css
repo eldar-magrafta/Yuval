@@ -27,11 +27,11 @@
   src:url('../fonts/almoni-tzar-medium-aaa.otf') format('opentype');
   font-weight:500;font-style:normal;font-display:swap;
 }
-/* no real "Almoni Tzar" bold file yet - almoni-bold-aaa.ttf is a different
-   (wider) cut of the family, so weight 700 is deliberately left unregistered.
-   The browser synthesises bold from the medium (500) face instead, which
-   stays visually consistent with the condensed Tzar cut used everywhere else.
-   Swap in a real Almoni Tzar bold file here once you have one. */
+@font-face{
+  font-family:'Almoni';
+  src:url('../fonts/almoni-neue-tzar-aaa-bold.otf') format('opentype');
+  font-weight:700;font-style:normal;font-display:swap;
+}
 :root{
   --bg: #f7f3ec;
   --bg2: #efe6d8;
