@@ -20,8 +20,7 @@
     if (reduce) return;
     var groups = [
       document.querySelectorAll('.proj .credit'),
-      document.querySelectorAll('.proj-content h3, .proj-content > .desc, .proj .case-block'),
-      document.querySelectorAll('.about-hero-text p')
+      document.querySelectorAll('.proj-content h3, .proj-content > .desc, .proj .case-block')
     ];
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
@@ -265,7 +264,7 @@
   // 3. Scroll reveals - blur-to-sharp, gently staggered
   // ---------------------------------------------------------
   (function () {
-    var sel = '.row,.ind,.about-grid,.proj,.contact h2,.sec-lead,.cat-title,.about-photo,.svc-photo,.media-tile,.about-hero-text p';
+    var sel = '.row,.ind,.about-grid,.proj,.contact h2,.sec-lead,.cat-title,.about-photo,.svc-photo,.media-tile';
     var els = Array.prototype.slice.call(document.querySelectorAll(sel));
     if (!els.length) return;
     if (reduce || !('IntersectionObserver' in window)) return; // leave visible
