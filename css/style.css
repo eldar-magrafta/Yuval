@@ -13,6 +13,11 @@
   font-weight:700;font-style:normal;font-display:block;
 }
 @font-face{
+  font-family:'buNotza';
+  src:url('../fonts/buNotza-2.0-BoldBrush.otf') format('opentype');
+  font-weight:400;font-style:normal;font-display:swap;
+}
+@font-face{
   font-family:'Almoni';
   src:url('../fonts/almoni-tzar-aaa-regular.otf') format('opentype');
   font-weight:400;font-style:normal;font-display:swap;
@@ -89,7 +94,8 @@ body{
   padding-top:var(--frame);
 }
 a{color:inherit;text-decoration:none}
-b,strong{font-weight:500;font-size:1.1em}
+b,strong{font-weight:500;font-size:1.2em}
+.f-bunotza{font-family:'buNotza',sans-serif;font-weight:400}
 ::selection{background:var(--wash);color:var(--ink)}
 
 /* ---- accessibility floor ---- */
@@ -124,8 +130,8 @@ header.is-hidden{transform:translateY(-100%)}
 .logo{order:2;display:flex;align-items:center;transition:transform .4s var(--ease-lux)}
 .logo img{height:50px;width:auto;display:block}
 @media(hover:hover){.logo:hover{transform:scale(1.035)}}
-header nav{order:1;display:flex;gap:clamp(22px,3vw,30px)}
-header nav a{position:relative;font-family:'FbReading-Black','Almoni',sans-serif;font-weight:700;font-size:30px;letter-spacing:-.01em;color:var(--mut);transition:color .35s var(--ease-lux)}
+header nav{order:1;display:flex;gap:clamp(12px,2.2vw,30px);flex-wrap:nowrap;min-width:0}
+header nav a{position:relative;flex-shrink:0;font-family:'FbReading-Black','Almoni',sans-serif;font-weight:700;font-size:clamp(15px,2.3vw,30px);letter-spacing:-.01em;color:var(--mut);transition:color .35s var(--ease-lux)}
 header nav a::after{content:"";position:absolute;left:0;right:0;bottom:-6px;height:1.5px;background:var(--nav-underline-color);
   transform:scaleX(0);transform-origin:center;transition:transform .45s var(--ease-lux)}
 @media(hover:hover){
