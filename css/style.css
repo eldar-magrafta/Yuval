@@ -152,7 +152,7 @@ header nav a::after{content:"";position:absolute;left:0;right:0;bottom:-6px;heig
 @media(hover:hover){.nav-toggle:hover{background:var(--wash)}}
 @media(max-width:640px){
   header{position:relative}
-  .nav-toggle{display:flex;order:1}
+  .nav-toggle{display:flex;order:1;font-size:26px;font-weight:700;text-shadow:0 0 1px currentColor,0 0 1px currentColor}
   .logo{order:2}
   .logo img{height:30px}
   #site-nav{display:none;order:3;position:absolute;top:100%;right:0;left:0;
@@ -276,8 +276,20 @@ section{padding:clamp(19px,3vw,37px) 0 clamp(4px,.67vw,8px)}
     box-shadow:var(--shadow-sm);transition:box-shadow .3s var(--ease-lux),transform .15s var(--ease-lux)}
   .video-tile:active{transform:scale(.98);box-shadow:var(--shadow-sm)}
   .video-tile video{aspect-ratio:4/5;background:var(--wash)}
-  .video-tile .tile-title{display:block;margin-top:10px;padding:0 16px;font-size:16px;font-weight:600;color:var(--text-color)}
+  .video-tile .tile-title{display:block;margin-top:10px;padding:0 16px;font-size:16px;font-weight:600;color:var(--acc)}
   .video-tile .tile-desc{display:block;margin-top:4px;padding:0 16px;font-size:13px;color:var(--mut)}
+  .video-tile:nth-child(1){order:7}
+  .video-tile:nth-child(2){order:3}
+  .video-tile:nth-child(3){order:8}
+  .video-tile:nth-child(4){order:1}
+  .video-tile:nth-child(5){order:2}
+  .video-tile:nth-child(6){order:9}
+  .video-tile:nth-child(7){order:6}
+  .video-tile:nth-child(8){order:10}
+  .video-tile:nth-child(9){order:11}
+  .video-tile:nth-child(10){order:5}
+  .video-tile:nth-child(11){order:4}
+  .video-tile:nth-child(12){order:12}
 }
 
 /* ===== media grid (digital/social video showcase) - rounded cards, title + description always shown ===== */
