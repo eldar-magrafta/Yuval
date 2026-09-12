@@ -89,7 +89,7 @@ body{
   padding-top:var(--frame);
 }
 a{color:inherit;text-decoration:none}
-b,strong{font-weight:500}
+b,strong{font-weight:500;font-size:1.1em}
 ::selection{background:var(--wash);color:var(--ink)}
 
 /* ---- accessibility floor ---- */
