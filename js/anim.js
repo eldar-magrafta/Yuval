@@ -11,23 +11,32 @@
   var finePointer = window.matchMedia('(hover:hover) and (pointer:fine)').matches;
 
   // ---------------------------------------------------------
-  // Stagger the project-page credit rows (client/year table) in
-  // as they scroll into view, instead of sitting static.
+  // Generic scroll-in reveal: fades/rises elements up as they
+  // enter the viewport, staggered within their own container.
+  // Used for project credit rows, project copy, and bio text -
+  // sections that otherwise have zero motion after page load.
   // ---------------------------------------------------------
   (function () {
     if (reduce) return;
-    var rows = document.querySelectorAll('.proj .credit');
-    if (!rows.length) return;
-    rows.forEach(function (row) { row.classList.add('reveal'); });
+    var groups = [
+      document.querySelectorAll('.proj .credit'),
+      document.querySelectorAll('.proj-content h3, .proj-content > .desc, .proj .case-block'),
+      document.querySelectorAll('.about-hero-text p')
+    ];
     var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry, i) {
+      entries.forEach(function (entry) {
         if (!entry.isIntersecting) return;
-        var el = entry.target;
-        setTimeout(function () { el.classList.add('in'); }, i * 60);
-        io.unobserve(el);
+        entry.target.classList.add('in');
+        io.unobserve(entry.target);
       });
     }, { threshold: .2 });
-    rows.forEach(function (row) { io.observe(row); });
+    groups.forEach(function (els) {
+      els.forEach(function (el, i) {
+        el.classList.add('reveal-up');
+        el.style.transitionDelay = (i * 70) + 'ms';
+        io.observe(el);
+      });
+    });
   })();
 
   // ---------------------------------------------------------

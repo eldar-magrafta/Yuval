@@ -60,8 +60,14 @@
     <div class="wrap">
       <p class="c-write-label">השאירו פרטים ואני אחזור אליכם</p>
       <form class="c-form" id="lead-form">
-        <input class="c-form-input" type="text" name="name" placeholder="שם" required>
-        <input class="c-form-input" type="text" name="contact" placeholder="אימייל או טלפון" required>
+        <div class="field">
+          <input class="c-form-input" type="text" name="name" id="f-name" placeholder=" " required>
+          <label for="f-name">שם</label>
+        </div>
+        <div class="field">
+          <input class="c-form-input" type="text" name="contact" id="f-contact" placeholder=" " required>
+          <label for="f-contact">אימייל או טלפון</label>
+        </div>
         <button class="c-form-submit" type="submit">השאר פרטים</button>
       </form>
       <p class="c-form-status" id="lead-form-status" role="status" aria-live="polite"></p>
