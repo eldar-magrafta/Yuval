@@ -194,7 +194,7 @@ header nav a::after{content:"";position:absolute;left:0;right:0;bottom:-6px;heig
   animation:heroFloat 7s var(--ease-lux-in) infinite}
 @keyframes heroFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
 @media (prefers-reduced-motion:reduce){.hero-bg-video{animation:none}}
-@media(max-width:640px){.hero-bg-video{width:clamp(112.5px,25vw,300px)}}
+@media(max-width:640px){.hero-bg-video{width:clamp(125px,25vw,300px)}}
 /* ===== section scaffold ===== */
 section{padding:clamp(19px,3vw,37px) 0 clamp(4px,.67vw,8px)}
 .eyebrow{display:flex;align-items:center;gap:20px;color:var(--mut);margin-bottom:16px;
@@ -223,6 +223,10 @@ section{padding:clamp(19px,3vw,37px) 0 clamp(4px,.67vw,8px)}
 .service .role-big{position:relative;z-index:1;margin:0 0 10px;margin-top:-.35em;
   font-size:clamp(19.6px,3.72vw,47px);line-height:.7}
 .service p:not(.role-big){font-size:clamp(15px,1.7vw,17px);line-height:1.45;color:var(--text-color)}
+@media(max-width:640px){
+  #services-content .cat-title,.sec-lead{font-size:clamp(28.8px,5.472vw,69.12px) !important}
+  .service .role-big{font-size:clamp(23.52px,4.464vw,56.4px)}
+}
 
 /* ===== home video grid (bento - same overall footprint, asymmetric cells) ===== */
 .video-grid{display:grid;grid-template-columns:repeat(6,1fr);grid-auto-rows:clamp(50px,13vw,160px);gap:clamp(6px,1vw,10px)}
