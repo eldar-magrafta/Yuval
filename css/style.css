@@ -430,8 +430,9 @@ body.contact-page main{flex:1;min-height:0;display:flex;flex-direction:column}
 .contact-write{background:var(--acc);padding:clamp(10px,2vh,20px) 0;position:relative;z-index:2;margin-top:-2px;flex-shrink:0;text-align:center}
 .c-contact-info{position:absolute;left:clamp(16px,3vw,32px);bottom:26px;display:flex;flex-direction:column;gap:2px;
   font-family:'FbReading-Black','Almoni',sans-serif;font-weight:700;font-size:37.05px;line-height:1.1;color:#fff;opacity:.9;text-align:left}
-.c-contact-info a{transition:opacity .3s var(--ease-lux)}
+.c-contact-info a{display:inline-flex;align-items:center;gap:8px;transition:opacity .3s var(--ease-lux)}
 .c-contact-info a:hover{opacity:.7}
+.c-contact-icon{width:.62em;height:.62em;flex-shrink:0}
 .c-write-label{font-family:'Almoni',sans-serif;font-weight:500;font-size:clamp(19.5px,2.7vh,22.5px);letter-spacing:.02em;
   color:#fff;opacity:.9;margin-bottom:10px}
 .c-form{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;max-width:640px;margin:0 auto}
