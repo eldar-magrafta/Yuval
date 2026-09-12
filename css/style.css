@@ -194,7 +194,7 @@ header nav a::after{content:"";position:absolute;left:0;right:0;bottom:-6px;heig
   animation:heroFloat 7s var(--ease-lux-in) infinite}
 @keyframes heroFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
 @media (prefers-reduced-motion:reduce){.hero-bg-video{animation:none}}
-@media(max-width:640px){.hero-bg-video{width:clamp(125px,25vw,300px)}}
+@media(max-width:640px){.hero-bg-video{width:clamp(250px,50vw,600px)}}
 /* ===== section scaffold ===== */
 section{padding:clamp(19px,3vw,37px) 0 clamp(4px,.67vw,8px)}
 .eyebrow{display:flex;align-items:center;gap:20px;color:var(--mut);margin-bottom:16px;
