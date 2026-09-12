@@ -387,7 +387,7 @@
     var status = document.getElementById('lead-form-status');
     if (!form) return;
     var FORMSPREE_ENDPOINT = 'https://formspree.io/f/REPLACE_ME';
-    var WHATSAPP_NUMBER = '972501234567';
+    var WHATSAPP_NUMBER = '972524748456';
 
     form.addEventListener('submit', function (e) {
       e.preventDefault();

@@ -301,7 +301,8 @@ section{padding:clamp(19px,3vw,37px) 0 clamp(4px,.67vw,8px)}
 .about-hero-text p{margin-top:16px;font-size:clamp(16px,1.8vw,19px);color:var(--text-color)}
 @media(max-width:600px){.cat-hero-row{flex-direction:column-reverse;gap:clamp(20px,4vw,28px)}
   .about-photo{width:100%;flex-basis:auto;aspect-ratio:4/5;position:static}
-  .about-hero-text{width:100%}}
+  .about-hero-text{width:100%}
+  .about-hero-text p{font-size:clamp(20px,2.25vw,23.75px)}}
 .cat-sub{margin-top:20px;max-width:620px;font-size:clamp(17px,2.2vw,21px);color:var(--text-color)}
 
 .proj{
