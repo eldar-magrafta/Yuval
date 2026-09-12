@@ -356,16 +356,26 @@ body.contact-page main{flex:1;min-height:0;display:flex;flex-direction:column}
 .contact-badges{position:relative;width:100%;max-width:1150px;margin:0 auto;height:0;flex-shrink:0}
 .c-badge{position:absolute;display:inline-flex;align-items:center;padding:14px 28px;border-radius:999px;
   background:var(--wash);color:var(--ink);font-family:'Almoni',sans-serif;font-weight:500;font-size:24px;
-  letter-spacing:.02em;white-space:nowrap;box-shadow:var(--shadow-sm);
-  animation:badgeIn .6s var(--ease-lux) backwards}
-.c-badge:nth-of-type(1){top:-10px;right:2%;transform:rotate(-7deg);animation-delay:.05s}
-.c-badge:nth-of-type(2){top:70px;right:0;background:var(--acc);color:#fff;transform:rotate(5deg);animation-delay:.15s}
-.c-badge:nth-of-type(3){top:10px;left:2%;transform:rotate(6deg);animation-delay:.25s}
-.c-badge:nth-of-type(4){top:130px;left:0;transform:rotate(-6deg);animation-delay:.35s}
-.c-badge:nth-of-type(5){top:220px;right:4%;transform:rotate(4deg);animation-delay:.45s}
-@keyframes badgeIn{from{opacity:0;transform:translateY(14px) rotate(0deg)}}
-@media(hover:hover){.c-badge{transition:transform .35s var(--ease-lux)}
-  .c-badge:hover{transform:scale(1.08) rotate(0deg)!important}}
+  letter-spacing:.02em;white-space:nowrap;box-shadow:var(--shadow-sm)}
+.c-badge:nth-of-type(1){top:-58px;right:12%;rotate:-7deg;
+  animation:badgeIn .6s var(--ease-lux) .05s backwards,chipFloat1 8s ease-in-out infinite .05s}
+.c-badge:nth-of-type(2){top:44px;right:-2%;rotate:5deg;
+  animation:badgeIn .6s var(--ease-lux) .15s backwards,chipFloat2 9.5s ease-in-out infinite -2s}
+.c-badge:nth-of-type(3){top:150px;left:8%;rotate:6deg;
+  animation:badgeIn .6s var(--ease-lux) .25s backwards,chipFloat3 7.2s ease-in-out infinite -4.3s}
+.c-badge:nth-of-type(4){top:-26px;left:26%;rotate:-6deg;
+  animation:badgeIn .6s var(--ease-lux) .35s backwards,chipFloat4 10.3s ease-in-out infinite -1.4s}
+.c-badge:nth-of-type(5){top:280px;right:18%;rotate:4deg;
+  animation:badgeIn .6s var(--ease-lux) .45s backwards,chipFloat5 8.7s ease-in-out infinite -3.6s}
+.c-badge.is-accent{background:var(--acc);color:#fff;transition:background-color .5s var(--ease-lux),color .5s var(--ease-lux)}
+@keyframes badgeIn{from{opacity:0;translate:0 14px}}
+@keyframes chipFloat1{0%{translate:0 0}23%{translate:10px -14px}54%{translate:-7px 6px}81%{translate:5px 13px}100%{translate:0 0}}
+@keyframes chipFloat2{0%{translate:0 0}27%{translate:-12px 9px}49%{translate:8px 16px}76%{translate:-9px -8px}100%{translate:0 0}}
+@keyframes chipFloat3{0%{translate:0 0}19%{translate:8px 11px}58%{translate:-11px -6px}84%{translate:6px -13px}100%{translate:0 0}}
+@keyframes chipFloat4{0%{translate:0 0}31%{translate:-9px -12px}62%{translate:12px 5px}88%{translate:-6px 10px}100%{translate:0 0}}
+@keyframes chipFloat5{0%{translate:0 0}25%{translate:13px 7px}53%{translate:-8px -11px}79%{translate:4px 12px}100%{translate:0 0}}
+@media(hover:hover){.c-badge{transition:scale .35s var(--ease-lux)}
+  .c-badge:hover{scale:1.08}}
 @media(max-width:760px){
   .contact-badges{display:none}
   .contact-headline{font-size:clamp(48px,10vh,72px)}

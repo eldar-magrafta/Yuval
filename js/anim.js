@@ -303,6 +303,30 @@
   })();
 
   // ---------------------------------------------------------
+  // 4f. Contact page - one floating chip at a time turns
+  //     accent-coloured, cycling to a new random one every 3s.
+  // ---------------------------------------------------------
+  (function () {
+    if (reduce) return;
+    var badges = document.querySelectorAll('.c-badge');
+    if (!badges.length) return;
+    var current = -1;
+    function pick() {
+      var next = current;
+      if (badges.length > 1) {
+        while (next === current) next = Math.floor(Math.random() * badges.length);
+      } else {
+        next = 0;
+      }
+      if (current >= 0) badges[current].classList.remove('is-accent');
+      badges[next].classList.add('is-accent');
+      current = next;
+    }
+    pick();
+    setInterval(pick, 3000);
+  })();
+
+  // ---------------------------------------------------------
   // 5. Intro curtain - exit handling (markup lives in index.html)
   //    CSS auto-hides it too, so it works even without JS.
   // ---------------------------------------------------------
