@@ -3,6 +3,12 @@
 //  Intro curtain, film grain, magnetic logo, hero lean, and
 //  blur-to-sharp scroll reveals. All motion is gated behind
 //  prefers-reduced-motion so it degrades to a calm static site.
+//
+//  Structure: each concern below is its own named init*()
+//  function, called in order at the bottom of the file. Every
+//  function early-returns when its markup isn't on the page or
+//  its feature is gated (reduced motion / no fine pointer), so
+//  it's safe to call all of them unconditionally.
 // ============================================================
 (function () {
   'use strict';
@@ -10,13 +16,18 @@
   var reduce = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
   var finePointer = window.matchMedia('(hover:hover) and (pointer:fine)').matches;
 
+  // Shared across initGridVideoAutoplay / initGridVideoHoverPause:
+  // true once the visitor has used the (currently disabled) pause-all
+  // control, so hover/visibility handling stops auto-resuming clips.
+  var videosUserPaused = false;
+
   // ---------------------------------------------------------
   // Generic scroll-in reveal: fades/rises elements up as they
   // enter the viewport, staggered within their own container.
   // Used for project credit rows, project copy, and bio text -
   // sections that otherwise have zero motion after page load.
   // ---------------------------------------------------------
-  (function () {
+  function initCreditsRevealUp() {
     if (reduce) return;
     var groups = [
       document.querySelectorAll('.proj .credit'),
@@ -36,16 +47,12 @@
         io.observe(el);
       });
     });
-  })();
+  }
 
   // ---------------------------------------------------------
-  // Premium polish pass: tilt-toward-cursor on cards, and a
-  // fade/scale-in for grid videos once their first frame is
-  // actually ready (instead of popping in).
+  // Tilt-toward-cursor on cards (desktop only).
   // ---------------------------------------------------------
-
-  // -- tilt-toward-cursor on cards (desktop only) --
-  (function () {
+  function initCardTilt() {
     if (!finePointer || reduce) return;
     function initTilt(nodeList, max) {
       nodeList.forEach(function (el) {
@@ -65,29 +72,32 @@
     initTilt(document.querySelectorAll('.video-tile'), 6);
     initTilt(document.querySelectorAll('.media-tile'), 5);
     initTilt(document.querySelectorAll('.service'), 4);
-  })();
+  }
 
-  // -- grid videos fade/scale in once their first frame is ready --
-  (function () {
+  // ---------------------------------------------------------
+  // Grid videos fade/scale in once their first frame is ready,
+  // instead of popping in.
+  // ---------------------------------------------------------
+  function initGridVideoFadeIn() {
     document.querySelectorAll('.video-tile video,.media-tile video').forEach(function (v) {
       v.classList.add('vid-fade');
       if (v.readyState >= 2) { v.classList.add('loaded'); return; }
       v.addEventListener('loadeddata', function () { v.classList.add('loaded'); }, { once: true });
     });
-  })();
+  }
 
   // ---------------------------------------------------------
-  // -1. Alpha-transparent video via canvas - works on every
-  //     browser including Safari, because the source video has
-  //     NO real alpha channel (Safari can't play those anyway).
-  //     The clip is exported as one ordinary video: the color
-  //     frame stacked on top of a grayscale alpha-matte frame
-  //     (white = opaque, black = transparent). Each frame we
-  //     draw the color half normally, then use the matte half's
-  //     brightness as the alpha channel before painting the
-  //     canvas - so the canvas ends up genuinely transparent.
+  // Alpha-transparent video via canvas - works on every browser
+  // including Safari, because the source video has NO real alpha
+  // channel (Safari can't play those anyway). The clip is
+  // exported as one ordinary video: the color frame stacked on
+  // top of a grayscale alpha-matte frame (white = opaque, black =
+  // transparent). Each frame we draw the color half normally,
+  // then use the matte half's brightness as the alpha channel
+  // before painting the canvas - so the canvas ends up genuinely
+  // transparent.
   // ---------------------------------------------------------
-  (function () {
+  function initAlphaVideoCanvases() {
     var canvases = document.querySelectorAll('canvas[data-alpha-video]');
     canvases.forEach(function (canvas) {
       var src = canvas.getAttribute('data-alpha-video');
@@ -144,12 +154,12 @@
       video.addEventListener('pause', function () { running = false; });
       window.addEventListener('resize', size);
     });
-  })();
+  }
 
   // ---------------------------------------------------------
-  // 0a. Mobile nav - hamburger toggles the dropdown menu.
+  // Mobile nav - hamburger toggles the dropdown menu.
   // ---------------------------------------------------------
-  (function () {
+  function initMobileNavToggle() {
     var toggle = document.querySelector('.nav-toggle');
     var nav = document.getElementById('site-nav');
     if (!toggle || !nav) return;
@@ -163,16 +173,17 @@
     });
     nav.addEventListener('click', function (e) { if (e.target.closest('a')) close(); });
     window.addEventListener('resize', function () { if (window.innerWidth > 640) close(); });
-  })();
+  }
 
   // ---------------------------------------------------------
-  // 0b. Pause-all-videos control - the preview grid autoplays
-  //     and loops indefinitely, so WCAG 2.2.2 requires a way to
-  //     stop it. One toggle button controls every clip on the page.
+  // Pause-all-videos control - the preview grid autoplays and
+  // loops indefinitely, so WCAG 2.2.2 requires a way to stop it.
+  // One toggle button controls every clip on the page.
+  //
+  // Currently disabled - not called from initAll() below. Kept
+  // here in case it's re-enabled later.
   // ---------------------------------------------------------
-  var videosUserPaused = false;
-  /*
-  (function () {
+  function initVideoPauseToggle() {
     var vids = document.querySelectorAll('.video-tile video,.media-tile video');
     if (!vids.length) return;
     var btn = document.createElement('button');
@@ -190,16 +201,15 @@
       });
     });
     document.body.appendChild(btn);
-  })();
-  */
+  }
 
   // ---------------------------------------------------------
-  // 0. Grid preview videos - only play the clips actually in view.
-  //    Mobile browsers cap how many <video> elements can autoplay
-  //    at once; with 12 on one page most just sit frozen on frame 1
-  //    unless we play/pause them as they enter/leave the viewport.
+  // Grid preview videos - only play the clips actually in view.
+  // Mobile browsers cap how many <video> elements can autoplay
+  // at once; with 12 on one page most just sit frozen on frame 1
+  // unless we play/pause them as they enter/leave the viewport.
   // ---------------------------------------------------------
-  (function () {
+  function initGridVideoAutoplay() {
     var vids = document.querySelectorAll('.video-tile video,.media-tile video');
     if (!vids.length || !('IntersectionObserver' in window)) return;
     var io = new IntersectionObserver(function (entries) {
@@ -210,14 +220,14 @@
       });
     }, { rootMargin: '50px' });
     vids.forEach(function (v) { io.observe(v); });
-  })();
+  }
 
   // ---------------------------------------------------------
-  // 0c. Grid preview videos - hovering a tile (mouse only) pauses
-  //     its clip in place, dims it, and shows its title; moving
-  //     away resumes playback from that same paused frame.
+  // Grid preview videos - hovering a tile (mouse only) pauses
+  // its clip in place, dims it, and shows its title; moving away
+  // resumes playback from that same paused frame.
   // ---------------------------------------------------------
-  (function () {
+  function initGridVideoHoverPause() {
     if (!finePointer) return;
     var tiles = document.querySelectorAll('.video-tile,.media-tile');
     tiles.forEach(function (tile) {
@@ -232,13 +242,13 @@
         if (!videosUserPaused) video.play().catch(function () {});
       });
     });
-  })();
+  }
 
   // ---------------------------------------------------------
-  // 1. Hero - letters near the cursor pick up the accent colour
-  //    (colour only - no tilt/movement)
+  // Hero - letters near the cursor pick up the accent colour
+  // (colour only - no tilt/movement).
   // ---------------------------------------------------------
-  (function () {
+  function initHeroNameColorFollow() {
     if (reduce || !finePointer) return;
     var name = document.getElementById('name');
     if (!name) return;
@@ -256,12 +266,12 @@
     name.addEventListener('pointerleave', function () {
       letters.forEach(function (l) { l.style.color = ''; });
     });
-  })();
+  }
 
   // ---------------------------------------------------------
-  // 3. Scroll reveals - blur-to-sharp, gently staggered
+  // Scroll reveals - blur-to-sharp, gently staggered.
   // ---------------------------------------------------------
-  (function () {
+  function initScrollReveals() {
     var sel = '.row,.ind,.about-grid,.proj,.contact h2,.sec-lead,.cat-title,.about-photo,.svc-photo,.media-tile';
     var els = Array.prototype.slice.call(document.querySelectorAll(sel));
     if (!els.length) return;
@@ -292,13 +302,13 @@
     }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
 
     els.forEach(function (el) { io.observe(el); });
-  })();
+  }
 
   // ---------------------------------------------------------
-  // 4a. Contact heading - letters pick up the accent colour
-  //     near the cursor, same idea as the hero name.
+  // Contact heading - letters pick up the accent colour near the
+  // cursor, same idea as the hero name.
   // ---------------------------------------------------------
-  (function () {
+  function initContactHeadingColorFollow() {
     if (reduce || !finePointer) return;
     var link = document.querySelector('.contact h2 a');
     if (!link) return;
@@ -330,13 +340,13 @@
     link.addEventListener('pointerleave', function () {
       letters.forEach(function (l) { l.style.color = ''; });
     });
-  })();
+  }
 
   // ---------------------------------------------------------
-  // 4b. Sticky header - shrinks and hides on scroll-down,
-  //     reappears on scroll-up.
+  // Sticky header - shrinks and hides on scroll-down, reappears
+  // on scroll-up.
   // ---------------------------------------------------------
-  (function () {
+  function initStickyHeader() {
     var header = document.querySelector('header');
     if (!header || reduce) return;
     var lastY = window.scrollY;
@@ -353,13 +363,13 @@
         ticking = false;
       });
     });
-  })();
+  }
 
   // ---------------------------------------------------------
-  // 4c. Page transitions - fade to background before an
-  //     internal link navigates to another page.
+  // Page transitions - fade to background before an internal
+  // link navigates to another page.
   // ---------------------------------------------------------
-  (function () {
+  function initPageTransitions() {
     if (reduce) return;
     var pt = document.createElement('div');
     pt.className = 'pt';
@@ -382,23 +392,23 @@
     // Bfcache restores (e.g. browser Back) bring the page back exactly as it
     // was at unload - with the overlay still shown - so clear it on pageshow.
     window.addEventListener('pageshow', function () { pt.classList.remove('show'); });
-  })();
+  }
 
   // ---------------------------------------------------------
-  // 4. Grain overlay - a still film-grain texture over everything
+  // Grain overlay - a still film-grain texture over everything.
   // ---------------------------------------------------------
-  (function () {
+  function initGrainOverlay() {
     var grain = document.createElement('div');
     grain.className = 'grain';
     grain.setAttribute('aria-hidden', 'true');
     document.body.appendChild(grain);
-  })();
+  }
 
   // ---------------------------------------------------------
-  // 4d. Page frame - a thin accent-colour border around the
-  //     whole viewport, fixed on top of everything.
+  // Page frame - a thin accent-colour border around the whole
+  // viewport, fixed on top of everything.
   // ---------------------------------------------------------
-  (function () {
+  function initPageFrame() {
     var frame = document.createElement('div');
     frame.className = 'page-frame';
     frame.setAttribute('aria-hidden', 'true');
@@ -408,12 +418,12 @@
       frame.appendChild(bar);
     });
     document.body.appendChild(frame);
-  })();
+  }
 
   // ---------------------------------------------------------
-  // 4e. Contact page - the peeking eyes follow the pointer.
+  // Contact page - the peeking eyes follow the pointer.
   // ---------------------------------------------------------
-  (function () {
+  function initContactEyes() {
     if (reduce) return;
     var pairs = Array.prototype.map.call(document.querySelectorAll('.c-eye'), function (eye) {
       return { eye: eye, pupil: eye.querySelector('.c-pupil') };
@@ -434,19 +444,19 @@
       });
     }
     window.addEventListener('pointermove', function (e) { update(e.clientX, e.clientY); }, { passive: true });
-  })();
+  }
 
   // ---------------------------------------------------------
-  // 4f2. Contact page lead form - on submit, silently emails
-  //      magrafta40@gmail.com via Formspree (no visitor-side
-  //      "press send" step needed), and opens a pre-filled
-  //      WhatsApp chat as a bonus channel for the visitor.
+  // Contact page lead form - on submit, silently emails
+  // magrafta40@gmail.com via Formspree (no visitor-side "press
+  // send" step needed), and opens a pre-filled WhatsApp chat as
+  // a bonus channel for the visitor.
   //
-  //      TODO: replace FORMSPREE_ENDPOINT below with the real
-  //      endpoint from https://formspree.io once the form is
-  //      created and magrafta40@gmail.com is verified there.
+  // TODO: replace FORMSPREE_ENDPOINT below with the real
+  // endpoint from https://formspree.io once the form is created
+  // and magrafta40@gmail.com is verified there.
   // ---------------------------------------------------------
-  (function () {
+  function initLeadForm() {
     var form = document.getElementById('lead-form');
     var status = document.getElementById('lead-form-status');
     if (!form) return;
@@ -473,13 +483,13 @@
         if (status) status.textContent = 'משהו השתבש - אפשר לכתוב לנו גם בוואטסאפ או במייל למעלה.';
       });
     });
-  })();
+  }
 
   // ---------------------------------------------------------
-  // 4f. Contact page - one floating chip at a time turns
-  //     accent-coloured, cycling to a new random one every 3s.
+  // Contact page - one floating chip at a time turns
+  // accent-coloured, cycling to a new random one every 3s.
   // ---------------------------------------------------------
-  (function () {
+  function initContactBadgeCycle() {
     if (reduce) return;
     var badges = document.querySelectorAll('.c-badge');
     if (!badges.length) return;
@@ -515,18 +525,44 @@
     }
     pick();
     setInterval(pick, 3000);
-  })();
+  }
 
   // ---------------------------------------------------------
-  // 5. Intro curtain - exit handling (markup lives in index.html)
-  //    CSS auto-hides it too, so it works even without JS.
+  // Intro curtain - exit handling (markup lives in index.html).
+  // CSS auto-hides it too, so it works even without JS.
   // ---------------------------------------------------------
-  (function () {
+  function initIntroCurtain() {
     var intro = document.querySelector('.intro');
     if (!intro) return;
     try { sessionStorage.setItem('yuval-seen', '1'); } catch (e) {}
     intro.addEventListener('animationend', function (e) {
       if (e.animationName === 'introOut') intro.remove();
     });
-  })();
+  }
+
+  // ---------------------------------------------------------
+  // Run everything.
+  // ---------------------------------------------------------
+  function initAll() {
+    initCreditsRevealUp();
+    initCardTilt();
+    initGridVideoFadeIn();
+    initAlphaVideoCanvases();
+    initMobileNavToggle();
+    initGridVideoAutoplay();
+    initGridVideoHoverPause();
+    initHeroNameColorFollow();
+    initScrollReveals();
+    initContactHeadingColorFollow();
+    initStickyHeader();
+    initPageTransitions();
+    initGrainOverlay();
+    initPageFrame();
+    initContactEyes();
+    initLeadForm();
+    initContactBadgeCycle();
+    initIntroCurtain();
+  }
+
+  initAll();
 })();
