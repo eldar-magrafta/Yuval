@@ -19,7 +19,7 @@
 <link rel="icon" href="apple-touch-icon.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 </head>
-<body>
+<body class="contact-page">
 <header>
   <nav id="site-nav">
     <a href="index.html">ראשי</a>
@@ -33,24 +33,36 @@
   <button class="nav-toggle" type="button" aria-label="תפריט" aria-expanded="false" aria-controls="site-nav">☰</button>
 </header>
 
-<main class="wrap">
-  <section class="cat-hero">
-    <a class="back mono" href="index.html">→ חזרה לדף הבית</a>
-    <h1 class="cat-title">צור <i>קשר</i></h1>
-    <p class="cat-sub">רעיון, בריף, או סתם בא לכם להגיד היי - כתבו.</p>
+<main>
+  <section class="contact-hero">
+    <div class="wrap">
+      <a class="back mono" href="index.html">→ חזרה לדף הבית</a>
+      <div class="contact-hero-inner">
+        <div class="contact-badges" aria-hidden="true">
+          <span class="c-badge">רעיון? מעולה</span>
+          <span class="c-badge">בואו נדבר</span>
+          <span class="c-badge">קריאייטיב</span>
+          <span class="c-badge">תסריט ובימוי</span>
+          <span class="c-badge">כתבו לי</span>
+        </div>
+        <h1 class="contact-headline">בואו<br>נעשה משהו טוב<br><i>יחד</i></h1>
+      </div>
+    </div>
+    <div class="contact-blob" aria-hidden="true">
+      <div class="contact-eyes">
+        <span class="c-eye"><span class="c-pupil"></span></span>
+        <span class="c-eye"><span class="c-pupil"></span></span>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact-write">
+    <div class="wrap">
+      <p class="c-write-label">כתבו לנו</p>
+      <p class="c-write-email"><a href="mailto:hello@yuval.com">hello@yuval.com</a></p>
+    </div>
   </section>
 </main>
-
-<section class="contact" id="contact">
-  <div class="wrap">
-    <div class="links">
-      <a href="mailto:hello@yuval.com">אימייל</a>
-      <a href="#">לינקדאין</a>
-      <a href="#">אינסטגרם</a>
-      <a href="#">קורות חיים</a>
-    </div>
-  </div>
-</section>
 
 <script src="js/anim.js"></script>
 </body>

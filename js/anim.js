@@ -128,7 +128,7 @@
   // 3. Scroll reveals - blur-to-sharp, gently staggered
   // ---------------------------------------------------------
   (function () {
-    var sel = '.row,.ind,.about-grid,.proj,.contact h2,.sec-lead,.cat-title,.about-photo,.svc-photo,.media-tile';
+    var sel = '.row,.ind,.about-grid,.proj,.contact h2,.sec-lead,.cat-title,.about-photo,.svc-photo,.media-tile,.about-hero-text p';
     var els = Array.prototype.slice.call(document.querySelectorAll(sel));
     if (!els.length) return;
     if (reduce || !('IntersectionObserver' in window)) return; // leave visible
@@ -274,6 +274,32 @@
       frame.appendChild(bar);
     });
     document.body.appendChild(frame);
+  })();
+
+  // ---------------------------------------------------------
+  // 4e. Contact page - the peeking eyes follow the pointer.
+  // ---------------------------------------------------------
+  (function () {
+    if (reduce) return;
+    var pairs = Array.prototype.map.call(document.querySelectorAll('.c-eye'), function (eye) {
+      return { eye: eye, pupil: eye.querySelector('.c-pupil') };
+    }).filter(function (p) { return p.pupil; });
+    if (!pairs.length) return;
+
+    function update(x, y) {
+      pairs.forEach(function (p) {
+        var r = p.eye.getBoundingClientRect();
+        var cx = r.left + r.width / 2;
+        var cy = r.top + r.height / 2;
+        var dx = x - cx, dy = y - cy;
+        var dist = Math.hypot(dx, dy) || 1;
+        var max = r.width * 0.18;
+        var move = Math.min(max, dist * 0.15);
+        var angle = Math.atan2(dy, dx);
+        p.pupil.style.transform = 'translate(' + (Math.cos(angle) * move) + 'px,' + (Math.sin(angle) * move) + 'px)';
+      });
+    }
+    window.addEventListener('pointermove', function (e) { update(e.clientX, e.clientY); }, { passive: true });
   })();
 
   // ---------------------------------------------------------
