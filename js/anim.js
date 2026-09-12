@@ -11,6 +11,76 @@
   var finePointer = window.matchMedia('(hover:hover) and (pointer:fine)').matches;
 
   // ---------------------------------------------------------
+  // -1. Alpha-transparent video via canvas - works on every
+  //     browser including Safari, because the source video has
+  //     NO real alpha channel (Safari can't play those anyway).
+  //     The clip is exported as one ordinary video: the color
+  //     frame stacked on top of a grayscale alpha-matte frame
+  //     (white = opaque, black = transparent). Each frame we
+  //     draw the color half normally, then use the matte half's
+  //     brightness as the alpha channel before painting the
+  //     canvas - so the canvas ends up genuinely transparent.
+  // ---------------------------------------------------------
+  (function () {
+    var canvases = document.querySelectorAll('canvas[data-alpha-video]');
+    canvases.forEach(function (canvas) {
+      var src = canvas.getAttribute('data-alpha-video');
+      var video = document.createElement('video');
+      video.src = src;
+      video.muted = true;
+      video.loop = true;
+      video.playsInline = true;
+      video.autoplay = true;
+      video.style.position = 'fixed';
+      video.style.top = '0';
+      video.style.left = '0';
+      video.style.width = '1px';
+      video.style.height = '1px';
+      video.style.opacity = '0';
+      video.style.overflow = 'hidden';
+      video.style.pointerEvents = 'none';
+      video.setAttribute('aria-hidden', 'true');
+      document.body.appendChild(video);
+
+      var ctx = canvas.getContext('2d', { willReadFrequently: true });
+      var matte = document.createElement('canvas');
+      var matteCtx = matte.getContext('2d', { willReadFrequently: true });
+      var w = 0, h = 0, running = false;
+
+      function size() {
+        var rect = canvas.getBoundingClientRect();
+        var dpr = Math.min(window.devicePixelRatio || 1, 2);
+        w = Math.max(1, Math.round((rect.width || 240) * dpr));
+        h = Math.max(1, Math.round((rect.width || 240) * dpr * (video.videoHeight / 2) / video.videoWidth));
+        canvas.width = w; canvas.height = h;
+        matte.width = w; matte.height = h;
+      }
+
+      function draw() {
+        if (!running) return;
+        var vw = video.videoWidth, vh = video.videoHeight / 2;
+        ctx.drawImage(video, 0, 0, vw, vh, 0, 0, w, h);
+        var frame = ctx.getImageData(0, 0, w, h);
+        matteCtx.drawImage(video, 0, vh, vw, vh, 0, 0, w, h);
+        var alpha = matteCtx.getImageData(0, 0, w, h);
+        var d = frame.data, a = alpha.data;
+        for (var i = 3; i < d.length; i += 4) d[i] = a[i - 3];
+        ctx.putImageData(frame, 0, 0);
+        if ('requestVideoFrameCallback' in video) video.requestVideoFrameCallback(draw);
+        else requestAnimationFrame(draw);
+      }
+
+      video.addEventListener('loadedmetadata', function () {
+        size();
+        video.play().catch(function () {});
+      });
+      video.addEventListener('play', function () { running = true; draw(); });
+      video.addEventListener('pause', function () { running = false; });
+      window.addEventListener('resize', size);
+    });
+  })();
+
+  // ---------------------------------------------------------
   // 0a. Mobile nav - hamburger toggles the dropdown menu.
   // ---------------------------------------------------------
   (function () {
