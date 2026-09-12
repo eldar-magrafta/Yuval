@@ -131,12 +131,15 @@ header.is-hidden{transform:translateY(-100%)}
 .logo img{height:50px;width:auto;display:block}
 @media(hover:hover){.logo:hover{transform:scale(1.035)}}
 header nav{order:1;display:flex;gap:clamp(12px,2.2vw,30px);flex-wrap:nowrap;min-width:0}
-header nav a{position:relative;flex-shrink:0;font-family:'FbReading-Black','Almoni',sans-serif;font-weight:700;font-size:clamp(15px,2.3vw,30px);letter-spacing:-.01em;color:var(--mut);transition:color .35s var(--ease-lux)}
+header nav a{position:relative;flex-shrink:0;font-family:'FbReading-Black','Almoni',sans-serif;font-weight:700;font-size:clamp(15px,2.3vw,30px);letter-spacing:-.01em;color:var(--mut);
+  text-shadow:0 0 0 transparent;transition:color .35s var(--ease-lux),text-shadow .35s var(--ease-lux)}
 header nav a::after{content:"";position:absolute;left:0;right:0;bottom:-6px;height:1.5px;background:var(--nav-underline-color);
-  transform:scaleX(0);transform-origin:center;transition:transform .45s var(--ease-lux)}
+  box-shadow:0 0 0 transparent;
+  transform:scaleX(0);transform-origin:center;transition:transform .45s var(--ease-lux),box-shadow .45s var(--ease-lux)}
 @media(hover:hover){
-  header nav a:hover{color:var(--nav-hover-color)}
-  header nav a:hover::after{transform:scaleX(1)}
+  header nav a:hover{color:var(--nav-hover-color);
+    text-shadow:0 0 5.6px rgba(217,99,59,.6),0 0 12.6px rgba(217,99,59,.35),0 0 22.4px rgba(217,99,59,.21)}
+  header nav a:hover::after{transform:scaleX(1);box-shadow:0 0 5.6px .7px rgba(217,99,59,.6),0 0 11.2px 2.1px rgba(217,99,59,.35)}
 }
 
 /* ===== mobile nav (hamburger dropdown) ===== */
@@ -395,6 +398,7 @@ body.contact-page main{flex:1;min-height:0;display:flex;flex-direction:column}
 .c-badge:nth-of-type(5){top:280px;right:18%;rotate:4deg;
   animation:badgeIn .6s var(--ease-lux) .45s backwards,chipFloat5 12s ease-in-out infinite -3.6s}
 .c-badge.is-accent{background:var(--acc);color:#fff;transition:background-color .5s var(--ease-lux),color .5s var(--ease-lux)}
+.c-badge.is-accent-dark{background:var(--ink);color:#fff;transition:background-color .5s var(--ease-lux),color .5s var(--ease-lux)}
 @keyframes badgeIn{from{opacity:0;translate:0 14px}}
 @keyframes chipFloat1{0%{translate:0 0}23%{translate:10px -14px}54%{translate:-7px 6px}81%{translate:5px 13px}100%{translate:0 0}}
 @keyframes chipFloat2{0%{translate:0 0}27%{translate:-12px 9px}49%{translate:8px 16px}76%{translate:-9px -8px}100%{translate:0 0}}

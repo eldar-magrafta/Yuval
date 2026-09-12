@@ -485,6 +485,24 @@
     if (reduce) return;
     var badges = document.querySelectorAll('.c-badge');
     if (!badges.length) return;
+    var blob = document.querySelector('.contact-blob');
+
+    // The blob is a flat-bottomed half-ellipse (border-radius:50% 50% 0 0).
+    // Rather than sampling pixel colours, we can just compute whether a
+    // chip's centre falls inside that ellipse - cheap and exact, since the
+    // background here is only ever flat shapes, not a photo/gradient.
+    function isOverBlob(el) {
+      if (!blob) return false;
+      var b = blob.getBoundingClientRect();
+      var r = el.getBoundingClientRect();
+      var cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+      var halfW = b.width / 2;
+      var dx = cx - (b.left + halfW);
+      if (Math.abs(dx) >= halfW || b.height <= 0) return false;
+      var domeY = b.bottom - b.height * Math.sqrt(1 - (dx / halfW) * (dx / halfW));
+      return cy >= domeY && cy <= b.bottom;
+    }
+
     var current = -1;
     function pick() {
       var next = current;
@@ -493,8 +511,8 @@
       } else {
         next = 0;
       }
-      if (current >= 0) badges[current].classList.remove('is-accent');
-      badges[next].classList.add('is-accent');
+      if (current >= 0) badges[current].classList.remove('is-accent', 'is-accent-dark');
+      badges[next].classList.add(isOverBlob(badges[next]) ? 'is-accent-dark' : 'is-accent');
       current = next;
     }
     pick();
