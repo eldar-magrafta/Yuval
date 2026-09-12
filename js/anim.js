@@ -11,6 +11,26 @@
   var finePointer = window.matchMedia('(hover:hover) and (pointer:fine)').matches;
 
   // ---------------------------------------------------------
+  // Stagger the project-page credit rows (client/year table) in
+  // as they scroll into view, instead of sitting static.
+  // ---------------------------------------------------------
+  (function () {
+    if (reduce) return;
+    var rows = document.querySelectorAll('.proj .credit');
+    if (!rows.length) return;
+    rows.forEach(function (row) { row.classList.add('reveal'); });
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry, i) {
+        if (!entry.isIntersecting) return;
+        var el = entry.target;
+        setTimeout(function () { el.classList.add('in'); }, i * 60);
+        io.unobserve(el);
+      });
+    }, { threshold: .2 });
+    rows.forEach(function (row) { io.observe(row); });
+  })();
+
+  // ---------------------------------------------------------
   // -1. Alpha-transparent video via canvas - works on every
   //     browser including Safari, because the source video has
   //     NO real alpha channel (Safari can't play those anyway).
