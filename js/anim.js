@@ -40,10 +40,9 @@
   })();
 
   // ---------------------------------------------------------
-  // Premium polish pass: tilt-toward-cursor on cards, a soft
-  // cursor-follow glow behind the hero, and a fade/scale-in for
-  // grid videos once their first frame is actually ready (instead
-  // of popping in).
+  // Premium polish pass: tilt-toward-cursor on cards, and a
+  // fade/scale-in for grid videos once their first frame is
+  // actually ready (instead of popping in).
   // ---------------------------------------------------------
 
   // -- tilt-toward-cursor on cards (desktop only) --
@@ -67,19 +66,6 @@
     initTilt(document.querySelectorAll('.video-tile'), 6);
     initTilt(document.querySelectorAll('.media-tile'), 5);
     initTilt(document.querySelectorAll('.service'), 4);
-  })();
-
-  // -- soft glow following the cursor behind the hero text --
-  (function () {
-    var hero = document.querySelector('.hero');
-    if (!hero || !finePointer || reduce) return;
-    hero.addEventListener('mousemove', function (e) {
-      var r = hero.getBoundingClientRect();
-      hero.style.setProperty('--gx', ((e.clientX - r.left) / r.width * 100) + '%');
-      hero.style.setProperty('--gy', ((e.clientY - r.top) / r.height * 100) + '%');
-      hero.classList.add('glow-active');
-    });
-    hero.addEventListener('mouseleave', function () { hero.classList.remove('glow-active'); });
   })();
 
   // -- grid videos fade/scale in once their first frame is ready --
