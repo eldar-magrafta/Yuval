@@ -40,38 +40,11 @@
   })();
 
   // ---------------------------------------------------------
-  // Premium polish pass: custom cursor with a "play" hint over
-  // video tiles, tilt-toward-cursor on cards, a soft cursor-follow
-  // glow behind the hero, and a fade/scale-in for grid videos once
-  // their first frame is actually ready (instead of popping in).
+  // Premium polish pass: tilt-toward-cursor on cards, a soft
+  // cursor-follow glow behind the hero, and a fade/scale-in for
+  // grid videos once their first frame is actually ready (instead
+  // of popping in).
   // ---------------------------------------------------------
-
-  // -- custom cursor (desktop w/ a real mouse only) --
-  (function () {
-    if (!finePointer || reduce) return;
-    var dot = document.createElement('div');
-    dot.className = 'cursor-dot';
-    dot.setAttribute('aria-hidden', 'true');
-    document.body.appendChild(dot);
-    document.body.classList.add('has-custom-cursor');
-
-    var tx = 0, ty = 0, x = 0, y = 0, shown = false;
-    window.addEventListener('pointermove', function (e) {
-      tx = e.clientX; ty = e.clientY;
-      if (!shown) { dot.classList.add('show'); shown = true; }
-    });
-    document.addEventListener('mouseleave', function () { dot.classList.remove('show'); });
-    (function raf() {
-      x += (tx - x) * .2; y += (ty - y) * .2;
-      dot.style.transform = 'translate(' + x + 'px,' + y + 'px) translate(-50%,-50%)';
-      requestAnimationFrame(raf);
-    })();
-
-    document.querySelectorAll('.video-tile,.media-tile').forEach(function (tile) {
-      tile.addEventListener('mouseenter', function () { dot.classList.add('video'); });
-      tile.addEventListener('mouseleave', function () { dot.classList.remove('video'); });
-    });
-  })();
 
   // -- tilt-toward-cursor on cards (desktop only) --
   (function () {

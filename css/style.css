@@ -96,18 +96,6 @@ b,strong{font-weight:700}
 .skip:focus{width:auto;height:auto;overflow:visible;white-space:normal;clip-path:none}
 a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid var(--focus-color);outline-offset:3px;border-radius:2px}
 .visually-hidden{position:absolute;width:1px;height:1px;overflow:hidden;white-space:nowrap;clip-path:inset(50%)}
-
-/* ---- custom cursor (desktop with a real mouse only) ---- */
-.cursor-dot{position:fixed;top:0;left:0;z-index:500;pointer-events:none;
-  width:14px;height:14px;border-radius:50%;background:var(--acc);
-  display:flex;align-items:center;justify-content:center;color:#fff;font-size:0;
-  transform:translate(-50%,-50%);opacity:0;
-  transition:width .3s var(--ease-lux),height .3s var(--ease-lux),opacity .25s var(--ease-lux),background-color .3s var(--ease-lux),font-size .3s var(--ease-lux)}
-.cursor-dot.show{opacity:.85}
-.cursor-dot.video{width:60px;height:60px;background:rgba(33,30,27,.78);font-size:12px}
-.cursor-dot.video::before{content:'▶'}
-body.has-custom-cursor,body.has-custom-cursor a,body.has-custom-cursor button{cursor:none}
-body.has-custom-cursor input,body.has-custom-cursor textarea{cursor:auto}
 .video-pause-toggle{position:fixed;left:var(--frame);bottom:calc(var(--frame) + 12px);z-index:90;
   background:var(--toggle-bg);color:#fff;border:none;border-radius:var(--radius-pill);padding:10px 18px;
   font-size:12px;letter-spacing:.04em;cursor:pointer;box-shadow:var(--shadow-md);
