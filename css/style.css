@@ -535,20 +535,6 @@ body.contact-page main{flex:1;min-height:0;display:flex;flex-direction:column}
   .c-form-status{order:6;flex:1 1 100%}
 }
 
-/* ===== 404 page - desktop reuses the contact page's hero template
-   (headline + blob + eyes, no chips/form); mobile keeps a plain stacked page ===== */
-.nf-desktop{display:none}
-.nf-sub{font-family:'Almoni',sans-serif;font-weight:500;font-size:clamp(16px,1.6vw,20px);
-  color:var(--mut);max-width:520px;margin:16px auto 0}
-@media(min-width:641px){
-  body.notfound-page{height:100vh;overflow:hidden;display:flex;flex-direction:column}
-  body.notfound-page header{flex-shrink:0}
-  body.notfound-page main{flex:1;min-height:0;display:flex;flex-direction:column}
-  .nf-desktop{display:flex}
-  .nf-mobile{display:none}
-  .nf-footer{display:none}
-}
-
 /* ===== contact ===== */
 .contact{padding-bottom:clamp(40px,6vw,72px)}
 .links{display:flex;flex-wrap:wrap;gap:16px 32px;margin-top:40px}
