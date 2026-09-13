@@ -493,7 +493,7 @@ body.contact-page main{flex:1;min-height:0;display:flex;flex-direction:column}
   .contact-write>.wrap{display:contents}
   .c-write-label{order:1;flex:1 1 100%;font-size:14px;margin-bottom:8px;text-align:right}
   .c-form{display:contents}
-  .field{order:2;flex:1 1 100%;width:100%}
+  .field{order:2;flex:0 1 85%;width:85%}
   .field:nth-of-type(2){order:3;margin-top:10px}
   .c-form-input{min-width:0;width:100%;font-size:14px;padding:10px 16px;box-sizing:border-box}
   .c-form-submit{order:4;flex:0 1 auto;font-size:14px;padding:10px 18px}
