@@ -436,17 +436,17 @@ body.contact-page main{flex:1;min-height:0;display:flex;flex-direction:column}
     top:auto;left:auto;right:auto;rotate:0deg;
   }
 }
-@media(max-width:760px) and (min-height:700px){
+@media(max-width:760px) and (min-height:560px){
   .contact-hero-inner{display:grid;align-content:center}
   .contact-badges{position:relative;grid-area:1/1;align-self:stretch;justify-self:stretch;display:block;order:initial;
     width:auto;height:auto;margin:0}
   .contact-headline{grid-area:1/1;align-self:start;order:initial}
-  .c-badge{position:absolute;font-size:clamp(11px,1.6vh,13px);padding:clamp(5px,.9vh,8px) clamp(9px,1.6vh,14px);width:max-content}
+  .c-badge{position:absolute;font-size:clamp(10px,1.6vh,13px);padding:clamp(4px,.9vh,8px) clamp(8px,1.6vh,14px);width:max-content}
   .c-badge:nth-of-type(1){top:10%;right:4%;left:auto;rotate:-5deg}
   .c-badge:nth-of-type(2){top:6%;left:4%;right:auto;rotate:4deg}
-  .c-badge:nth-of-type(3){top:64%;right:6%;left:auto;rotate:5deg}
-  .c-badge:nth-of-type(4){top:68%;left:5%;right:auto;rotate:-4deg}
-  .c-badge:nth-of-type(5){top:clamp(-55px,-42%,-15px);left:32%;right:auto;rotate:2deg}
+  .c-badge:nth-of-type(3){top:58%;right:6%;left:auto;rotate:5deg}
+  .c-badge:nth-of-type(4){top:62%;left:5%;right:auto;rotate:-4deg}
+  .c-badge:nth-of-type(5){top:clamp(-32px,-42%,-15px);left:32%;right:auto;rotate:2deg}
 }
 .contact-blob{position:absolute;left:50%;bottom:0;transform:translateX(-50%);
   width:106vw;height:clamp(120px,20vh,220px);background:var(--acc);border-radius:50% 50% 0 0;z-index:1}
