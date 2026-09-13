@@ -448,19 +448,17 @@
 
   // ---------------------------------------------------------
   // Contact page lead form - on submit, silently emails
-  // magrafta40@gmail.com via Formspree (no visitor-side "press
+  // magrafta40@gmail.com via EmailJS (no visitor-side "press
   // send" step needed), and opens a pre-filled WhatsApp chat as
   // a bonus channel for the visitor.
-  //
-  // TODO: replace FORMSPREE_ENDPOINT below with the real
-  // endpoint from https://formspree.io once the form is created
-  // and magrafta40@gmail.com is verified there.
   // ---------------------------------------------------------
   function initLeadForm() {
     var form = document.getElementById('lead-form');
     var status = document.getElementById('lead-form-status');
     if (!form) return;
-    var FORMSPREE_ENDPOINT = 'https://formspree.io/f/REPLACE_ME';
+    var EMAILJS_PUBLIC_KEY = '8tscJcgUmP_hJxCu-';
+    var EMAILJS_SERVICE_ID = 'service_meyutxa';
+    var EMAILJS_TEMPLATE_ID = 'template_z08j823';
     var WHATSAPP_NUMBER = '972524748456';
 
     form.addEventListener('submit', function (e) {
@@ -471,17 +469,13 @@
       window.open('https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent('שם: ' + name + '\nפרטי התקשרות: ' + contact), '_blank');
 
       if (status) status.textContent = 'שולח...';
-      fetch(FORMSPREE_ENDPOINT, {
-        method: 'POST',
-        headers: { 'Accept': 'application/json' },
-        body: new FormData(form)
-      }).then(function (res) {
-        if (!res.ok) throw new Error('bad response');
-        form.reset();
-        if (status) status.textContent = 'הפרטים נשלחו, נדבר בקרוב!';
-      }).catch(function () {
-        if (status) status.textContent = 'משהו השתבש - אפשר לכתוב לנו גם בוואטסאפ או במייל למעלה.';
-      });
+      emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, { name: name, contact: contact }, EMAILJS_PUBLIC_KEY)
+        .then(function () {
+          form.reset();
+          if (status) status.textContent = 'הפרטים נשלחו, נדבר בקרוב!';
+        }).catch(function () {
+          if (status) status.textContent = 'משהו השתבש - אפשר לכתוב לנו גם בוואטסאפ או במייל למעלה.';
+        });
     });
   }
 
