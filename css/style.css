@@ -503,6 +503,38 @@ body.contact-page main{flex:1;min-height:0;display:flex;flex-direction:column}
   .c-form-status{order:6;flex:1 1 100%}
 }
 
+/* ===== contact page - phone rotated to landscape (short viewport height) ===== */
+@media(orientation:landscape) and (max-height:500px){
+  body.contact-page header{padding:8px clamp(16px,4vw,28px)}
+  body.contact-page .logo img{height:28px}
+  .contact-hero .back{margin-bottom:6px;font-size:12px;gap:4px}
+  .contact-hero{padding-top:6px}
+  .contact-hero-inner{transform:none;justify-content:flex-start;gap:4px}
+  .contact-headline{font-size:clamp(24px,6.6vh,36px);line-height:1.05}
+  .contact-badges{position:static;order:2;display:flex;flex-wrap:wrap;justify-content:center;gap:4px;height:auto;margin-top:4px}
+  .c-badge{position:static;font-size:10px;padding:3px 8px}
+  .c-badge:nth-of-type(1),.c-badge:nth-of-type(2),.c-badge:nth-of-type(3),.c-badge:nth-of-type(4),.c-badge:nth-of-type(5){
+    top:auto;left:auto;right:auto;rotate:0deg;
+  }
+  .contact-blob{height:clamp(30px,10vh,60px)}
+  .contact-eyes{position:absolute;left:50%;top:8px;transform:translateX(-50%);gap:5px}
+  .c-eye{width:clamp(24px,6.4vh,40px);height:clamp(32px,8.4vh,52px)}
+
+  .contact-write{display:flex;flex-direction:row;flex-wrap:wrap;align-items:center;gap:8px;
+    padding:6px clamp(12px,4vw,20px)}
+  .contact-write>.wrap{display:contents}
+  .c-write-label{order:1;flex:1 1 100%;font-size:11px;margin-bottom:2px;text-align:right}
+  .c-form{display:contents}
+  .field{order:2;flex:1 1 45%;width:auto;min-width:90px}
+  .field:nth-of-type(2){order:2;margin-top:0}
+  .c-form-input{min-width:0;width:100%;font-size:12px;padding:6px 12px;box-sizing:border-box}
+  .c-form-submit{order:4;flex:0 1 auto;font-size:12px;padding:6px 14px;margin-top:0}
+  .c-contact-info{position:static;top:auto;left:auto;bottom:auto;transform:none;
+    order:5;flex:1 1 auto;min-width:0;align-self:center;font-size:13px;text-align:left;
+    margin-inline-start:auto;overflow-wrap:anywhere}
+  .c-form-status{order:6;flex:1 1 100%}
+}
+
 /* ===== contact ===== */
 .contact{padding-bottom:clamp(40px,6vw,72px)}
 .links{display:flex;flex-wrap:wrap;gap:16px 32px;margin-top:40px}
