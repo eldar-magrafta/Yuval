@@ -15,11 +15,11 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="preload" href="fonts/FbReading-Black.otf" as="font" type="font/otf" crossorigin>
-<link rel="stylesheet" href="css/style.css?v=15">
+<link rel="stylesheet" href="css/style.css?v=16">
 <link rel="icon" href="apple-touch-icon.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 </head>
-<body>
+<body class="notfound-page">
 <a class="skip" href="#nf-content">דלגו לתוכן</a>
 
 <header>
@@ -35,8 +35,26 @@
   <button class="nav-toggle" type="button" aria-label="תפריט" aria-expanded="false" aria-controls="site-nav"><span class="bar"></span><span class="bar"></span><span class="bar"></span></button>
 </header>
 
-<main class="wrap">
-  <section id="nf-content" class="cat-hero" style="text-align:center;padding-bottom:clamp(24px,4vw,48px)">
+<main class="wrap" id="nf-content">
+  <!-- desktop/tablet: contact page's hero template, text+chips swapped for the 404 copy -->
+  <section class="contact-hero nf-desktop">
+    <div class="wrap">
+      <a class="back mono" href="index.html">→ חזרה לדף הבית</a>
+      <div class="contact-hero-inner">
+        <h1 class="contact-headline">404</h1>
+        <p class="nf-sub">העמוד הזה יצא לחפש את עצמו ולא חזר.<br>כנראה טעות בכתובת, או שהוא נהיה דחיין כמו כולנו.</p>
+      </div>
+    </div>
+    <div class="contact-blob" aria-hidden="true">
+      <div class="contact-eyes">
+        <span class="c-eye"><span class="c-pupil"></span></span>
+        <span class="c-eye"><span class="c-pupil"></span></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- mobile: simple stacked page -->
+  <section class="cat-hero nf-mobile" style="text-align:center;padding-bottom:clamp(24px,4vw,48px)">
     <a class="back mono" href="index.html">→ חזרה לדף הבית</a>
     <h1 class="cat-title" style="margin-top:clamp(24px,4vw,40px);font-size:clamp(64px,12vw,140px);line-height:1">404</h1>
     <p style="font-size:clamp(19px,2.2vw,24px);font-weight:700;margin-top:8px">העמוד הזה יצא לחפש את עצמו ולא חזר.</p>
@@ -55,7 +73,7 @@
   </section>
 </main>
 
-<section class="contact" id="contact">
+<section class="contact nf-footer" id="contact">
   <div class="wrap">
     <p class="eyebrow mono" style="font-size:clamp(28px,4vw,42px)">דברו איתי</p>
     <div class="links">
