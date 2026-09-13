@@ -449,8 +449,8 @@
   // ---------------------------------------------------------
   // Contact page lead form - on submit, silently emails
   // magrafta40@gmail.com via EmailJS (no visitor-side "press
-  // send" step needed), and opens a pre-filled WhatsApp chat as
-  // a bonus channel for the visitor.
+  // send" step needed). WhatsApp is a separate channel, opened
+  // only via the phone number link elsewhere on the page.
   // ---------------------------------------------------------
   function initLeadForm() {
     var form = document.getElementById('lead-form');
@@ -459,14 +459,11 @@
     var EMAILJS_PUBLIC_KEY = '8tscJcgUmP_hJxCu-';
     var EMAILJS_SERVICE_ID = 'service_meyutxa';
     var EMAILJS_TEMPLATE_ID = 'template_z08j823';
-    var WHATSAPP_NUMBER = '972524748456';
 
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       var name = form.elements.name.value.trim();
       var contact = form.elements.contact.value.trim();
-
-      window.open('https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent('שם: ' + name + '\nפרטי התקשרות: ' + contact), '_blank');
 
       if (status) status.textContent = 'שולח...';
       emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, { name: name, contact: contact }, EMAILJS_PUBLIC_KEY)
