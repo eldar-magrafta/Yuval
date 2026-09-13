@@ -243,6 +243,7 @@ section{padding:clamp(19px,3vw,37px) 0 clamp(4px,.67vw,8px)}
 @media(max-width:640px){
   #services-content .cat-title,.sec-lead{font-size:clamp(28.8px,5.472vw,69.12px) !important}
   .service .role-big{font-size:clamp(23.52px,4.464vw,56.4px)}
+  .service p:not(.role-big){font-size:clamp(18px,2.04vw,20.4px)}
 }
 
 /* ===== home video grid (bento - same overall footprint, asymmetric cells) ===== */
