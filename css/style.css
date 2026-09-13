@@ -428,7 +428,7 @@ body.contact-page main{flex:1;min-height:0;display:flex;flex-direction:column}
 @media(max-width:760px){
   .contact-headline{font-size:clamp(34px,7vh,50px)}
 }
-@media(max-width:760px) and (max-height:819px),(max-height:500px) and (orientation:landscape){
+@media(max-width:760px){
   .contact-badges{position:static;order:2;display:flex;flex-wrap:wrap;justify-content:center;gap:8px;height:auto;margin-top:10px}
   .contact-headline{order:1}
   .c-badge{position:static;font-size:13px;padding:8px 14px}
@@ -436,14 +436,17 @@ body.contact-page main{flex:1;min-height:0;display:flex;flex-direction:column}
     top:auto;left:auto;right:auto;rotate:0deg;
   }
 }
-@media(max-width:760px) and (min-height:820px){
-  .contact-badges{display:contents}
-  .c-badge{font-size:13px;padding:8px 14px;width:max-content}
-  .c-badge:nth-of-type(1){top:90px;right:4%;left:auto;rotate:-5deg}
-  .c-badge:nth-of-type(2){top:75px;left:4%;right:auto;rotate:4deg}
-  .c-badge:nth-of-type(3){top:248px;right:6%;left:auto;rotate:5deg}
-  .c-badge:nth-of-type(4){top:238px;left:5%;right:auto;rotate:-4deg}
-  .c-badge:nth-of-type(5){top:60px;left:32%;right:auto;rotate:2deg}
+@media(max-width:760px) and (min-height:700px){
+  .contact-hero-inner{display:grid;align-content:center}
+  .contact-badges{position:relative;grid-area:1/1;align-self:stretch;justify-self:stretch;display:block;order:initial;
+    width:auto;height:auto;margin:0}
+  .contact-headline{grid-area:1/1;align-self:start;order:initial}
+  .c-badge{position:absolute;font-size:clamp(11px,1.6vh,13px);padding:clamp(5px,.9vh,8px) clamp(9px,1.6vh,14px);width:max-content}
+  .c-badge:nth-of-type(1){top:10%;right:4%;left:auto;rotate:-5deg}
+  .c-badge:nth-of-type(2){top:6%;left:4%;right:auto;rotate:4deg}
+  .c-badge:nth-of-type(3){top:64%;right:6%;left:auto;rotate:5deg}
+  .c-badge:nth-of-type(4){top:68%;left:5%;right:auto;rotate:-4deg}
+  .c-badge:nth-of-type(5){top:clamp(-55px,-42%,-15px);left:32%;right:auto;rotate:2deg}
 }
 .contact-blob{position:absolute;left:50%;bottom:0;transform:translateX(-50%);
   width:106vw;height:clamp(120px,20vh,220px);background:var(--acc);border-radius:50% 50% 0 0;z-index:1}
