@@ -76,10 +76,14 @@
 
   // ---------------------------------------------------------
   // Grid videos fade/scale in once their first frame is ready,
-  // instead of popping in.
+  // instead of popping in. Skips videos with a poster attribute -
+  // those already have a real thumbnail to show immediately, so
+  // hiding them behind opacity:0 until the video data itself loads
+  // would just needlessly blank out that poster.
   // ---------------------------------------------------------
   function initGridVideoFadeIn() {
     document.querySelectorAll('.video-tile video,.media-tile video').forEach(function (v) {
+      if (v.hasAttribute('poster')) return;
       v.classList.add('vid-fade');
       if (v.readyState >= 2) { v.classList.add('loaded'); return; }
       v.addEventListener('loadeddata', function () { v.classList.add('loaded'); }, { once: true });
