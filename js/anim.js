@@ -212,9 +212,14 @@
   function initGridVideoAutoplay() {
     var vids = document.querySelectorAll('.video-tile video,.media-tile video');
     if (!vids.length || !('IntersectionObserver' in window)) return;
+    var carouselMq = window.matchMedia('(max-width:560px)');
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         var v = entry.target;
+        // Below 560px the home grid is initHomeCarousel()'s swipe carousel,
+        // which plays exactly one clip (the centred card) at a time - let it
+        // own play/pause there instead of fighting over it.
+        if (carouselMq.matches && v.closest('.video-grid')) return;
         if (entry.isIntersecting) { if (!videosUserPaused) v.play().catch(function () {}); }
         else v.pause();
       });
@@ -232,15 +237,32 @@
   // stay soft glass on the sides. Only active under that breakpoint;
   // switching to desktop width restores the plain grid look.
   //
-  // Endless loop: one clone of the last card is placed before the
-  // first, and one clone of the first card is placed after the last
-  // (hidden outside the mobile carousel via CSS - see .is-clone).
+  // Endless loop: the last few real cards are cloned and placed before
+  // the first, and the first few are cloned and placed after the last
+  // (hidden outside the mobile carousel via CSS - see .is-clone). A
+  // *single* clone on each side isn't enough runway - a hard fling can
+  // carry through several card-widths, and with nothing beyond one
+  // clone the browser simply can't scroll any further, so every hard
+  // fling off either end hit that physical wall and stopped exactly
+  // one card away every time. LOOP_BUFFER clones on each side gives a
+  // fling the same room to travel it has anywhere else in the strip.
   // Swiping onto a clone looks identical to the real card it copies;
   // once the swipe settles there we silently jump scrollLeft to the
   // real card behind it, so the carousel can be swiped past either
   // end forever without ever visibly "running out" of cards.
+  //
+  // Playback: only the centred card's video ever plays. Every other
+  // card - including both clones - is paused and reset to frame 0.
+  // That does double duty: at most one clip decodes at a time instead
+  // of 3+ peeking clips fighting for bandwidth/CPU (which is what was
+  // making the carousel slow to get going), and it's what makes the
+  // loop clones invisible - a clone and the real card it mirrors are
+  // frozen on the exact same first frame whenever they're not the
+  // active one, so handing off between them at the loop boundary
+  // never shows a visible jump in the video content.
   // ---------------------------------------------------------
   function initHomeCarousel() {
+    var LOOP_BUFFER = 6; // clones per side - enough for a hard fling's worth of runway
     var grid = document.querySelector('.video-grid');
     if (!grid) return;
     var tiles = Array.prototype.slice.call(grid.querySelectorAll('.video-tile'));
@@ -250,10 +272,36 @@
     var ticking = false;
     var looped = false;
     var settleTimer = null;
-    var firstReal, lastReal, cloneOfFirst, cloneOfLast;
+    var touching = false;
+    var lastActive = null;
+    var firstReal;
+    var cloneToReal = []; // [{clone, real}, ...] - every loop clone paired with the real card it mirrors
+
+    function playOnly(tile) {
+      if (tile === lastActive) return;
+      lastActive = tile;
+      tiles.forEach(function (t) {
+        var v = t.querySelector('video');
+        if (!v) return;
+        if (t === tile) {
+          if (v.paused) v.play().catch(function () {});
+        } else if (!v.paused || v.currentTime) {
+          v.pause();
+          try { v.currentTime = 0; } catch (e) {}
+        }
+      });
+    }
 
     function refreshTiles() {
       tiles = Array.prototype.slice.call(grid.querySelectorAll('.video-tile'));
+    }
+
+    function addClone(real, order) {
+      var clone = real.cloneNode(true);
+      clone.classList.add('is-clone');
+      clone.style.order = String(order);
+      grid.appendChild(clone); // `order` positions it - append target doesn't matter
+      cloneToReal.push({ clone: clone, real: real });
     }
 
     function buildLoopClones() {
@@ -262,17 +310,27 @@
       var ordered = tiles.slice().sort(function (a, b) {
         return (parseInt(getComputedStyle(a).order, 10) || 0) - (parseInt(getComputedStyle(b).order, 10) || 0);
       });
+      var n = ordered.length;
+      var buffer = Math.min(LOOP_BUFFER, n - 1);
       firstReal = ordered[0];
-      lastReal = ordered[ordered.length - 1];
-      cloneOfLast = lastReal.cloneNode(true);
-      cloneOfLast.classList.add('is-clone');
-      cloneOfLast.style.order = '0';
-      cloneOfFirst = firstReal.cloneNode(true);
-      cloneOfFirst.classList.add('is-clone');
-      cloneOfFirst.style.order = String(ordered.length + 1);
-      grid.appendChild(cloneOfLast);
-      grid.appendChild(cloneOfFirst);
+      // Leading runway: clones of the last `buffer` cards, in their real
+      // order, placed right before the first card.
+      for (var i = 0; i < buffer; i++) {
+        addClone(ordered[n - buffer + i], -buffer + i);
+      }
+      // Trailing runway: clones of the first `buffer` cards, placed
+      // right after the last card.
+      for (var j = 0; j < buffer; j++) {
+        addClone(ordered[j], n + 1 + j);
+      }
       refreshTiles();
+    }
+
+    function realFor(tile) {
+      for (var i = 0; i < cloneToReal.length; i++) {
+        if (cloneToReal[i].clone === tile) return cloneToReal[i].real;
+      }
+      return null;
     }
 
     // Instantly re-centres `tile` with no scroll animation, so the
@@ -300,18 +358,27 @@
         tile.classList.toggle('is-active', isActive);
         if (isActive) current = tile;
       });
+      if (current) playOnly(current);
       return current;
     }
     function handleSettle() {
+      if (touching) return; // finger's still down - a native touch/momentum
+                             // scroll is still "live"; jumping now would fight
+                             // it. Wait for touchend to try again.
       var current = update();
-      if (current === cloneOfFirst) jumpTo(firstReal);
-      else if (current === cloneOfLast) jumpTo(lastReal);
+      var real = current && realFor(current);
+      if (real) jumpTo(real);
     }
-    function onScroll() {
-      if (!ticking) { ticking = true; requestAnimationFrame(update); }
+    function scheduleSettle() {
       clearTimeout(settleTimer);
       settleTimer = setTimeout(handleSettle, 140);
     }
+    function onScroll() {
+      if (!ticking) { ticking = true; requestAnimationFrame(update); }
+      scheduleSettle();
+    }
+    function onTouchStart() { touching = true; }
+    function onTouchEnd() { touching = false; scheduleSettle(); }
     function enable() {
       if (active) return;
       active = true;
@@ -319,18 +386,34 @@
       buildLoopClones();
       if (firstBuild) jumpTo(firstReal); // start on the real front card, not the prepended clone
       grid.addEventListener('scroll', onScroll, { passive: true });
+      grid.addEventListener('scrollend', handleSettle);
+      grid.addEventListener('touchstart', onTouchStart, { passive: true });
+      grid.addEventListener('touchend', onTouchEnd, { passive: true });
+      grid.addEventListener('touchcancel', onTouchEnd, { passive: true });
       update();
     }
     function disable() {
       if (!active) return;
       active = false;
+      lastActive = null;
+      touching = false;
       clearTimeout(settleTimer);
+      grid.removeEventListener('scrollend', handleSettle);
+      grid.removeEventListener('touchstart', onTouchStart);
+      grid.removeEventListener('touchend', onTouchEnd);
+      grid.removeEventListener('touchcancel', onTouchEnd);
       grid.removeEventListener('scroll', onScroll);
       tiles.forEach(function (tile) {
         tile.style.transform = '';
         tile.style.opacity = '';
         tile.style.filter = '';
         tile.classList.remove('is-active');
+        // Hand video control back to initGridVideoAutoplay's visibility
+        // observer, which owns things again once we're above 560px.
+        var v = tile.querySelector('video');
+        if (!v) return;
+        if (tile.classList.contains('is-clone')) v.pause();
+        else if (!videosUserPaused) v.play().catch(function () {});
       });
     }
     function sync() { if (mq.matches) enable(); else disable(); }
