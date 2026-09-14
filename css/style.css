@@ -303,9 +303,14 @@ section{padding:clamp(19px,3vw,37px) 0 clamp(4px,.67vw,8px)}
     border:1px solid rgba(255,255,255,.55);border-radius:var(--radius-lg);
     overflow:hidden;padding-bottom:12px;
     box-shadow:var(--shadow-sm);
-    -webkit-backdrop-filter:blur(14px) saturate(140%);backdrop-filter:blur(14px) saturate(140%);
+    -webkit-backdrop-filter:blur(8px) saturate(140%);backdrop-filter:blur(8px) saturate(140%);
     transform:scale(.9);opacity:.6;filter:blur(1.5px) saturate(.75) brightness(.92);
-    transition:transform .15s linear,opacity .15s linear,filter .15s linear,box-shadow .3s var(--ease-lux);
+    /* transform/opacity/filter are driven every scroll frame by JS with the
+       exact real-time value, so no transition on them - a transition would
+       just make the card visibly lag behind the finger. box-shadow is the
+       one property JS doesn't touch every frame (only is-active toggles it),
+       so it's the only one that benefits from - and needs - a transition. */
+    transition:box-shadow .18s var(--ease-lux);
     will-change:transform,opacity,filter;
   }
   .video-tile.is-active{

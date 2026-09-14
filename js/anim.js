@@ -349,11 +349,34 @@
       ticking = false;
       var rect = grid.getBoundingClientRect();
       var center = rect.left + rect.width / 2;
-      var current = null;
-      tiles.forEach(function (tile) {
+      var reach = rect.width; // ignore tiles further than ~1 container-width from centre
+      // Pass 1: read every position first, with zero style writes in between -
+      // interleaving reads and writes here (as this used to) forces the
+      // browser to re-run layout on every single tile instead of once for
+      // all of them, which is what was making this janky on phones.
+      var infos = tiles.map(function (tile) {
         var tr = tile.getBoundingClientRect();
-        var dist = Math.abs((tr.left + tr.width / 2) - center);
-        var t = Math.min(dist / (tr.width * .78), 1); // 0 = centred, 1 = fully off to the side
+        return { tile: tile, dist: Math.abs((tr.left + tr.width / 2) - center), width: tr.width };
+      });
+      var current = null;
+      // Pass 2: write. Most of the 24 cards (real + loop clones) sit way
+      // outside the peeking window at any given moment - skip touching them
+      // entirely instead of recomputing transform/opacity/filter on all of
+      // them every frame, so the real per-frame cost stays limited to the
+      // 3-4 cards actually visible.
+      infos.forEach(function (info) {
+        var tile = info.tile;
+        if (info.dist > reach) {
+          if (tile.classList.contains('is-jsdriven')) {
+            tile.classList.remove('is-jsdriven', 'is-active');
+            tile.style.transform = '';
+            tile.style.opacity = '';
+            tile.style.filter = '';
+          }
+          return;
+        }
+        tile.classList.add('is-jsdriven');
+        var t = Math.min(info.dist / (info.width * .78), 1); // 0 = centred, 1 = fully off to the side
         tile.style.transform = 'scale(' + (1 - .1 * t).toFixed(3) + ')';
         tile.style.opacity = (1 - .4 * t).toFixed(3);
         tile.style.filter = t < .04 ? 'none' :
