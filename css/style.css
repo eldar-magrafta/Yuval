@@ -256,6 +256,10 @@ section{padding:clamp(19px,3vw,37px) 0 clamp(4px,.67vw,8px)}
 .video-tile video.vid-fade.loaded{opacity:1;transform:scale(1)}
 .video-tile .tile-title{display:none}
 .video-tile .tile-desc{display:none}
+/* Loop clones for the mobile carousel (see initHomeCarousel in anim.js) -
+   duplicated first/last cards that make the swipe feel endless. Irrelevant
+   outside that carousel, so hidden everywhere except inside it. */
+.video-tile.is-clone{display:none}
 @media(hover:hover){
   .video-tile:hover{box-shadow:var(--glow-orange),var(--shadow-lg);transform:translateY(-3px);z-index:1}
   .video-tile:hover video{filter:brightness(.85);transform:scale(1.04)}
@@ -288,10 +292,11 @@ section{padding:clamp(19px,3vw,37px) 0 clamp(4px,.67vw,8px)}
     display:flex;flex-wrap:nowrap;grid-template-columns:none;
     overflow-x:auto;overflow-y:visible;
     scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;
-    gap:14px;padding:10px 19vw 26px;scroll-padding:0 19vw;
+    gap:14px;padding:36px 19vw 96px;scroll-padding:0 19vw;
     scrollbar-width:none;-ms-overflow-style:none;
   }
   .video-grid::-webkit-scrollbar{display:none}
+  .video-tile.is-clone{display:flex}
   .video-tile{
     flex:0 0 62vw;aspect-ratio:auto;scroll-snap-align:center;
     display:flex;flex-direction:column;background:var(--wash);
@@ -305,7 +310,8 @@ section{padding:clamp(19px,3vw,37px) 0 clamp(4px,.67vw,8px)}
   }
   .video-tile.is-active{
     transform:scale(1);opacity:1;filter:none;
-    box-shadow:var(--glow-orange),var(--shadow-lg);z-index:1;
+    box-shadow:0 0 0 1px rgba(217,99,59,.5),0 0 26px 6px rgba(217,99,59,.28),var(--shadow-lg);
+    z-index:1;
   }
   .video-tile:active{transform:scale(.98)}
   .video-tile video{aspect-ratio:4/5;background:var(--wash)}

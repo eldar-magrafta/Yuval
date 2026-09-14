@@ -231,6 +231,14 @@
   // the current project glides into sharp focus while its neighbours
   // stay soft glass on the sides. Only active under that breakpoint;
   // switching to desktop width restores the plain grid look.
+  //
+  // Endless loop: one clone of the last card is placed before the
+  // first, and one clone of the first card is placed after the last
+  // (hidden outside the mobile carousel via CSS - see .is-clone).
+  // Swiping onto a clone looks identical to the real card it copies;
+  // once the swipe settles there we silently jump scrollLeft to the
+  // real card behind it, so the carousel can be swiped past either
+  // end forever without ever visibly "running out" of cards.
   // ---------------------------------------------------------
   function initHomeCarousel() {
     var grid = document.querySelector('.video-grid');
@@ -240,11 +248,46 @@
     var mq = window.matchMedia('(max-width:560px)');
     var active = false;
     var ticking = false;
+    var looped = false;
+    var settleTimer = null;
+    var firstReal, lastReal, cloneOfFirst, cloneOfLast;
+
+    function refreshTiles() {
+      tiles = Array.prototype.slice.call(grid.querySelectorAll('.video-tile'));
+    }
+
+    function buildLoopClones() {
+      if (looped) return;
+      looped = true;
+      var ordered = tiles.slice().sort(function (a, b) {
+        return (parseInt(getComputedStyle(a).order, 10) || 0) - (parseInt(getComputedStyle(b).order, 10) || 0);
+      });
+      firstReal = ordered[0];
+      lastReal = ordered[ordered.length - 1];
+      cloneOfLast = lastReal.cloneNode(true);
+      cloneOfLast.classList.add('is-clone');
+      cloneOfLast.style.order = '0';
+      cloneOfFirst = firstReal.cloneNode(true);
+      cloneOfFirst.classList.add('is-clone');
+      cloneOfFirst.style.order = String(ordered.length + 1);
+      grid.appendChild(cloneOfLast);
+      grid.appendChild(cloneOfFirst);
+      refreshTiles();
+    }
+
+    // Instantly re-centres `tile` with no scroll animation, so the
+    // handoff from a clone to its real counterpart is invisible.
+    function jumpTo(tile) {
+      var gridRect = grid.getBoundingClientRect();
+      var tileRect = tile.getBoundingClientRect();
+      grid.scrollLeft += (tileRect.left + tileRect.width / 2) - (gridRect.left + gridRect.width / 2);
+    }
 
     function update() {
       ticking = false;
       var rect = grid.getBoundingClientRect();
       var center = rect.left + rect.width / 2;
+      var current = null;
       tiles.forEach(function (tile) {
         var tr = tile.getBoundingClientRect();
         var dist = Math.abs((tr.left + tr.width / 2) - center);
@@ -253,23 +296,35 @@
         tile.style.opacity = (1 - .4 * t).toFixed(3);
         tile.style.filter = t < .04 ? 'none' :
           'blur(' + (3 * t).toFixed(2) + 'px) saturate(' + (1 - .3 * t).toFixed(2) + ') brightness(' + (1 - .1 * t).toFixed(2) + ')';
-        tile.classList.toggle('is-active', t < .12);
+        var isActive = t < .12;
+        tile.classList.toggle('is-active', isActive);
+        if (isActive) current = tile;
       });
+      return current;
+    }
+    function handleSettle() {
+      var current = update();
+      if (current === cloneOfFirst) jumpTo(firstReal);
+      else if (current === cloneOfLast) jumpTo(lastReal);
     }
     function onScroll() {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(update);
+      if (!ticking) { ticking = true; requestAnimationFrame(update); }
+      clearTimeout(settleTimer);
+      settleTimer = setTimeout(handleSettle, 140);
     }
     function enable() {
       if (active) return;
       active = true;
+      var firstBuild = !looped;
+      buildLoopClones();
+      if (firstBuild) jumpTo(firstReal); // start on the real front card, not the prepended clone
       grid.addEventListener('scroll', onScroll, { passive: true });
       update();
     }
     function disable() {
       if (!active) return;
       active = false;
+      clearTimeout(settleTimer);
       grid.removeEventListener('scroll', onScroll);
       tiles.forEach(function (tile) {
         tile.style.transform = '';
