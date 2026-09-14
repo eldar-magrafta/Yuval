@@ -276,11 +276,38 @@ section{padding:clamp(19px,3vw,37px) 0 clamp(4px,.67vw,8px)}
   .video-grid{grid-template-columns:repeat(3,1fr);grid-auto-rows:auto}
   .video-tile{grid-column:auto!important;grid-row:auto!important;height:auto;aspect-ratio:9/16}
 }
+/* ----- mobile: liquid-glass swipe carousel instead of a scrolling grid -----
+   Cards sit in a horizontal, snap-scrolling flex row. The active (centered)
+   card is sharp and full scale; neighbours peek in from both sides, softened
+   with a frosted-glass blur/dim so the "current project" reads as front and
+   centre. initHomeCarousel() in anim.js drives the continuous scale/opacity/
+   blur per card as it approaches the centre - CSS alone only sets the resting
+   (off-centre) look, so the effect still degrades gracefully without JS. */
 @media(max-width:560px){
-  .video-grid{grid-template-columns:1fr 1fr;column-gap:12px;row-gap:28px}
-  .video-tile{aspect-ratio:auto;display:flex;flex-direction:column;background:var(--wash);border:none;border-radius:var(--radius-lg);overflow:hidden;padding-bottom:12px;
-    box-shadow:var(--shadow-sm);transition:box-shadow .3s var(--ease-lux),transform .15s var(--ease-lux)}
-  .video-tile:active{transform:scale(.98);box-shadow:var(--shadow-sm)}
+  .video-grid{
+    display:flex;flex-wrap:nowrap;grid-template-columns:none;
+    overflow-x:auto;overflow-y:visible;
+    scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;
+    gap:14px;padding:10px 19vw 26px;scroll-padding:0 19vw;
+    scrollbar-width:none;-ms-overflow-style:none;
+  }
+  .video-grid::-webkit-scrollbar{display:none}
+  .video-tile{
+    flex:0 0 62vw;aspect-ratio:auto;scroll-snap-align:center;
+    display:flex;flex-direction:column;background:var(--wash);
+    border:1px solid rgba(255,255,255,.55);border-radius:var(--radius-lg);
+    overflow:hidden;padding-bottom:12px;
+    box-shadow:var(--shadow-sm);
+    -webkit-backdrop-filter:blur(14px) saturate(140%);backdrop-filter:blur(14px) saturate(140%);
+    transform:scale(.9);opacity:.6;filter:blur(1.5px) saturate(.75) brightness(.92);
+    transition:transform .15s linear,opacity .15s linear,filter .15s linear,box-shadow .3s var(--ease-lux);
+    will-change:transform,opacity,filter;
+  }
+  .video-tile.is-active{
+    transform:scale(1);opacity:1;filter:none;
+    box-shadow:var(--glow-orange),var(--shadow-lg);z-index:1;
+  }
+  .video-tile:active{transform:scale(.98)}
   .video-tile video{aspect-ratio:4/5;background:var(--wash)}
   .video-tile .tile-title{display:block;margin-top:8px;padding:0 10px;font-size:15px;font-weight:600;color:var(--acc)}
   .video-tile .tile-desc{display:block;margin-top:3px;padding:0 10px;font-size:12px;color:var(--mut)}

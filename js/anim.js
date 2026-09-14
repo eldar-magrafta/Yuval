@@ -223,6 +223,69 @@
   }
 
   // ---------------------------------------------------------
+  // Mobile home page - liquid-glass swipe carousel. The CSS media
+  // query (max-width:560px) turns .video-grid into a horizontal
+  // snap-scroller with peeking side cards; this drives the actual
+  // "liquid" part - continuously scaling/fading/blurring each card
+  // by how far it sits from the centre as the visitor swipes, so
+  // the current project glides into sharp focus while its neighbours
+  // stay soft glass on the sides. Only active under that breakpoint;
+  // switching to desktop width restores the plain grid look.
+  // ---------------------------------------------------------
+  function initHomeCarousel() {
+    var grid = document.querySelector('.video-grid');
+    if (!grid) return;
+    var tiles = Array.prototype.slice.call(grid.querySelectorAll('.video-tile'));
+    if (!tiles.length) return;
+    var mq = window.matchMedia('(max-width:560px)');
+    var active = false;
+    var ticking = false;
+
+    function update() {
+      ticking = false;
+      var rect = grid.getBoundingClientRect();
+      var center = rect.left + rect.width / 2;
+      tiles.forEach(function (tile) {
+        var tr = tile.getBoundingClientRect();
+        var dist = Math.abs((tr.left + tr.width / 2) - center);
+        var t = Math.min(dist / (tr.width * .78), 1); // 0 = centred, 1 = fully off to the side
+        tile.style.transform = 'scale(' + (1 - .1 * t).toFixed(3) + ')';
+        tile.style.opacity = (1 - .4 * t).toFixed(3);
+        tile.style.filter = t < .04 ? 'none' :
+          'blur(' + (3 * t).toFixed(2) + 'px) saturate(' + (1 - .3 * t).toFixed(2) + ') brightness(' + (1 - .1 * t).toFixed(2) + ')';
+        tile.classList.toggle('is-active', t < .12);
+      });
+    }
+    function onScroll() {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(update);
+    }
+    function enable() {
+      if (active) return;
+      active = true;
+      grid.addEventListener('scroll', onScroll, { passive: true });
+      update();
+    }
+    function disable() {
+      if (!active) return;
+      active = false;
+      grid.removeEventListener('scroll', onScroll);
+      tiles.forEach(function (tile) {
+        tile.style.transform = '';
+        tile.style.opacity = '';
+        tile.style.filter = '';
+        tile.classList.remove('is-active');
+      });
+    }
+    function sync() { if (mq.matches) enable(); else disable(); }
+    sync();
+    if (mq.addEventListener) mq.addEventListener('change', sync);
+    else if (mq.addListener) mq.addListener(sync);
+    window.addEventListener('resize', function () { if (active) onScroll(); });
+  }
+
+  // ---------------------------------------------------------
   // Grid preview videos - hovering a tile (mouse only) pauses
   // its clip in place, dims it, and shows its title; moving away
   // resumes playback from that same paused frame.
@@ -542,6 +605,7 @@
     initMobileNavToggle();
     initGridVideoAutoplay();
     initGridVideoHoverPause();
+    initHomeCarousel();
     initHeroNameColorFollow();
     initScrollReveals();
     initContactHeadingColorFollow();
