@@ -394,7 +394,18 @@
                              // it. Wait for touchend to try again.
       var current = update();
       var real = current && realFor(current);
-      if (real) jumpTo(real);
+      if (!real) return;
+      jumpTo(real);
+      // Restyle in the SAME task as the jump. jumpTo only moves scrollLeft; the
+      // card it lands on is still wearing the far-from-centre look update() gave
+      // it while it sat 12 card-widths away (scale .9, opacity .6, blurred), and
+      // the clone it replaces still holds .is-active. Without this call the
+      // browser paints that frame as-is - the card you just swiped to appears
+      // shrunken, dim and blurry for a frame before popping sharp, which is the
+      // flicker that showed up on the two cards at the loop seam (the first and
+      // last cards of the mobile order - see the nth-child order rules in the
+      // max-width:560px block of style.css).
+      update();
     }
     function scheduleSettle() {
       clearTimeout(settleTimer);
