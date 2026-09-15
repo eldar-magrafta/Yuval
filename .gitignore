@@ -21,6 +21,7 @@ page-*.png
 screenshot-*.png
 /*.png
 !/apple-touch-icon.png
+!/favicon-144.png
 
 # ---- Dependencies / build ----
 node_modules/
