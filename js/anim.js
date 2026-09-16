@@ -1,8 +1,9 @@
 // ============================================================
 //  Yuval - shared animation layer for every page.
-//  Intro curtain, film grain, magnetic logo, hero lean, and
-//  blur-to-sharp scroll reveals. All motion is gated behind
-//  prefers-reduced-motion so it degrades to a calm static site.
+//  Intro curtain, film grain, page frame, video grid/carousel,
+//  card tilt, scroll reveals and the contact-page toys. All motion
+//  is gated behind prefers-reduced-motion so it degrades to a
+//  calm static site.
 //
 //  Structure: each concern below is its own named init*()
 //  function, called in order at the bottom of the file. Every
@@ -16,11 +17,6 @@
   var reduce = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
   var finePointer = window.matchMedia('(hover:hover) and (pointer:fine)').matches;
 
-  // Shared across initGridVideoAutoplay / initGridVideoHoverPause:
-  // true once the visitor has used the (currently disabled) pause-all
-  // control, so hover/visibility handling stops auto-resuming clips.
-  var videosUserPaused = false;
-
   // ---------------------------------------------------------
   // Generic scroll-in reveal: fades/rises elements up as they
   // enter the viewport, staggered within their own container.
@@ -31,7 +27,7 @@
     if (reduce) return;
     var groups = [
       document.querySelectorAll('.proj .credit'),
-      document.querySelectorAll('.proj-content h3, .proj-content > .desc, .proj .case-block')
+      document.querySelectorAll('.proj-content h3, .proj-content > .desc')
     ];
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
@@ -180,34 +176,6 @@
   }
 
   // ---------------------------------------------------------
-  // Pause-all-videos control - the preview grid autoplays and
-  // loops indefinitely, so WCAG 2.2.2 requires a way to stop it.
-  // One toggle button controls every clip on the page.
-  //
-  // Currently disabled - not called from initAll() below. Kept
-  // here in case it's re-enabled later.
-  // ---------------------------------------------------------
-  function initVideoPauseToggle() {
-    var vids = document.querySelectorAll('.video-tile video,.media-tile video');
-    if (!vids.length) return;
-    var btn = document.createElement('button');
-    btn.type = 'button';
-    btn.className = 'video-pause-toggle mono';
-    btn.setAttribute('aria-pressed', 'false');
-    btn.textContent = 'עצירת סרטונים';
-    btn.addEventListener('click', function () {
-      videosUserPaused = !videosUserPaused;
-      btn.setAttribute('aria-pressed', videosUserPaused ? 'true' : 'false');
-      btn.textContent = videosUserPaused ? 'הפעלת סרטונים' : 'עצירת סרטונים';
-      vids.forEach(function (v) {
-        if (videosUserPaused) v.pause();
-        else v.play().catch(function () {});
-      });
-    });
-    document.body.appendChild(btn);
-  }
-
-  // ---------------------------------------------------------
   // Grid preview videos - only play the clips actually in view.
   // Mobile browsers cap how many <video> elements can autoplay
   // at once; with 12 on one page most just sit frozen on frame 1
@@ -224,7 +192,7 @@
         // which plays exactly one clip (the centred card) at a time - let it
         // own play/pause there instead of fighting over it.
         if (carouselMq.matches && v.closest('.video-grid')) return;
-        if (entry.isIntersecting) { if (!videosUserPaused) v.play().catch(function () {}); }
+        if (entry.isIntersecting) v.play().catch(function () {});
         else v.pause();
       });
     }, { rootMargin: '50px' });
@@ -241,32 +209,32 @@
   // stay soft glass on the sides. Only active under that breakpoint;
   // switching to desktop width restores the plain grid look.
   //
-  // Endless loop: the last few real cards are cloned and placed before
-  // the first, and the first few are cloned and placed after the last
-  // (hidden outside the mobile carousel via CSS - see .is-clone). A
-  // *single* clone on each side isn't enough runway - a hard fling can
-  // carry through several card-widths, and with nothing beyond one
-  // clone the browser simply can't scroll any further, so every hard
-  // fling off either end hit that physical wall and stopped exactly
-  // one card away every time. LOOP_BUFFER clones on each side gives a
-  // fling the same room to travel it has anywhere else in the strip.
-  // Swiping onto a clone looks identical to the real card it copies;
-  // once the swipe settles there we silently jump scrollLeft to the
-  // real card behind it, so the carousel can be swiped past either
-  // end forever without ever visibly "running out" of cards.
+  // Endless loop: the strip is a ring. Every time a swipe settles, the
+  // cards are re-dealt (via flex `order`, no DOM moves) so the card the
+  // visitor landed on sits in the MIDDLE slot of the strip, with the
+  // other 11 wrapped around it in their circular order - and scrollLeft
+  // is nudged by exactly the distance that re-deal shifted the strip, in
+  // the same task, so nothing on screen moves. Only cards far off-screen
+  // ever change slot. That leaves ~5 cards of runway on either side of
+  // wherever you are, so a hard fling can travel as far as it likes in
+  // either direction and never hits the physical end of the scroller.
+  //
+  // This used to be done with cloned first/last cards and a hidden jump
+  // from the clone to its real twin once you settled on it. That was the
+  // source of two visible seams: a clone is a fresh <video> that has to
+  // download its own copy of the clip (so the "first" card looked like
+  // it was loading again every lap), and the clone->real swap restarted
+  // the clip from frame 0 in a different element (a one-frame flicker
+  // every lap). Rotating the real elements keeps each clip in the one
+  // <video> that already has it buffered, and the card under your thumb
+  // is never replaced - so there is no seam to see.
   //
   // Playback: only the centred card's video ever plays. Every other
-  // card - including both clones - is paused and reset to frame 0.
-  // That does double duty: at most one clip decodes at a time instead
-  // of 3+ peeking clips fighting for bandwidth/CPU (which is what was
-  // making the carousel slow to get going), and it's what makes the
-  // loop clones invisible - a clone and the real card it mirrors are
-  // frozen on the exact same first frame whenever they're not the
-  // active one, so handing off between them at the loop boundary
-  // never shows a visible jump in the video content.
+  // card is paused and reset to frame 0, so at most one clip decodes at
+  // a time instead of 3+ peeking clips fighting for bandwidth/CPU (which
+  // is what was making the carousel slow to get going).
   // ---------------------------------------------------------
   function initHomeCarousel() {
-    var LOOP_BUFFER = 6; // clones per side - enough for a hard fling's worth of runway
     var grid = document.querySelector('.video-grid');
     if (!grid) return;
     var tiles = Array.prototype.slice.call(grid.querySelectorAll('.video-tile'));
@@ -274,12 +242,11 @@
     var mq = window.matchMedia('(max-width:560px)');
     var active = false;
     var ticking = false;
-    var looped = false;
     var settleTimer = null;
     var touching = false;
     var lastActive = null;
-    var firstReal;
-    var cloneToReal = []; // [{clone, real}, ...] - every loop clone paired with the real card it mirrors
+    var ring = null;  // tiles in their mobile (CSS `order`) sequence - the fixed circular order
+    var shift = 0;    // how many slots the ring is currently rotated by
 
     function playOnly(tile) {
       if (tile === lastActive) return;
@@ -296,53 +263,44 @@
       });
     }
 
-    function refreshTiles() {
-      tiles = Array.prototype.slice.call(grid.querySelectorAll('.video-tile'));
-    }
-
-    function addClone(real, order) {
-      var clone = real.cloneNode(true);
-      clone.classList.add('is-clone');
-      clone.style.order = String(order);
-      grid.appendChild(clone); // `order` positions it - append target doesn't matter
-      cloneToReal.push({ clone: clone, real: real });
-    }
-
-    function buildLoopClones() {
-      if (looped) return;
-      looped = true;
-      var ordered = tiles.slice().sort(function (a, b) {
+    // Read the mobile order the stylesheet gives each card (the nth-child
+    // order rules in the max-width:560px block of style.css) once, before
+    // we start overriding it inline.
+    function readRing() {
+      if (ring) return;
+      ring = tiles.slice().sort(function (a, b) {
         return (parseInt(getComputedStyle(a).order, 10) || 0) - (parseInt(getComputedStyle(b).order, 10) || 0);
       });
-      var n = ordered.length;
-      var buffer = Math.min(LOOP_BUFFER, n - 1);
-      firstReal = ordered[0];
-      // Leading runway: clones of the last `buffer` cards, in their real
-      // order, placed right before the first card.
-      for (var i = 0; i < buffer; i++) {
-        addClone(ordered[n - buffer + i], -buffer + i);
-      }
-      // Trailing runway: clones of the first `buffer` cards, placed
-      // right after the last card.
-      for (var j = 0; j < buffer; j++) {
-        addClone(ordered[j], n + 1 + j);
-      }
-      refreshTiles();
     }
 
-    function realFor(tile) {
-      for (var i = 0; i < cloneToReal.length; i++) {
-        if (cloneToReal[i].clone === tile) return cloneToReal[i].real;
-      }
-      return null;
+    // Deal the ring into slots 0..n-1, rotated by `shift`.
+    function applyShift(s) {
+      var n = ring.length;
+      shift = ((s % n) + n) % n;
+      for (var i = 0; i < n; i++) ring[i].style.order = String((i + shift) % n);
     }
 
-    // Instantly re-centres `tile` with no scroll animation, so the
-    // handoff from a clone to its real counterpart is invisible.
+    // Instantly re-centres `tile` with no scroll animation.
     function jumpTo(tile) {
       var gridRect = grid.getBoundingClientRect();
       var tileRect = tile.getBoundingClientRect();
       grid.scrollLeft += (tileRect.left + tileRect.width / 2) - (gridRect.left + gridRect.width / 2);
+    }
+
+    // Rotate the ring so `tile` occupies the middle slot, then move
+    // scrollLeft by exactly the amount the re-deal shifted the strip, so
+    // the visible cards stay put to the pixel. Done in one task, so the
+    // browser never paints an in-between state.
+    function recentreRing(tile) {
+      var n = ring.length;
+      var idx = ring.indexOf(tile);
+      if (idx < 0) return;
+      var want = (((Math.floor(n / 2) - idx) % n) + n) % n;
+      if (want === shift) return;
+      var before = tile.getBoundingClientRect().left;
+      applyShift(want);
+      var after = tile.getBoundingClientRect().left; // forces the re-layout now, not at paint time
+      grid.scrollLeft += after - before;
     }
 
     function update() {
@@ -359,11 +317,10 @@
         return { tile: tile, dist: Math.abs((tr.left + tr.width / 2) - center), width: tr.width };
       });
       var current = null;
-      // Pass 2: write. Most of the 24 cards (real + loop clones) sit way
-      // outside the peeking window at any given moment - skip touching them
-      // entirely instead of recomputing transform/opacity/filter on all of
-      // them every frame, so the real per-frame cost stays limited to the
-      // 3-4 cards actually visible.
+      // Pass 2: write. Most cards sit way outside the peeking window at any
+      // given moment - skip touching them entirely instead of recomputing
+      // transform/opacity/filter on all of them every frame, so the real
+      // per-frame cost stays limited to the 3-4 cards actually visible.
       infos.forEach(function (info) {
         var tile = info.tile;
         if (info.dist > reach) {
@@ -393,18 +350,10 @@
                              // scroll is still "live"; jumping now would fight
                              // it. Wait for touchend to try again.
       var current = update();
-      var real = current && realFor(current);
-      if (!real) return;
-      jumpTo(real);
-      // Restyle in the SAME task as the jump. jumpTo only moves scrollLeft; the
-      // card it lands on is still wearing the far-from-centre look update() gave
-      // it while it sat 12 card-widths away (scale .9, opacity .6, blurred), and
-      // the clone it replaces still holds .is-active. Without this call the
-      // browser paints that frame as-is - the card you just swiped to appears
-      // shrunken, dim and blurry for a frame before popping sharp, which is the
-      // flicker that showed up on the two cards at the loop seam (the first and
-      // last cards of the mobile order - see the nth-child order rules in the
-      // max-width:560px block of style.css).
+      if (!current) return;
+      recentreRing(current);
+      // The re-deal can bring a previously far-away card into the peeking
+      // window; give it its proper distance-based look in this same task.
       update();
     }
     function scheduleSettle() {
@@ -420,9 +369,9 @@
     function enable() {
       if (active) return;
       active = true;
-      var firstBuild = !looped;
-      buildLoopClones();
-      if (firstBuild) jumpTo(firstReal); // start on the real front card, not the prepended clone
+      readRing();
+      applyShift(Math.floor(ring.length / 2)); // front card in the middle slot, cards peeking on both sides
+      jumpTo(ring[0]);
       grid.addEventListener('scroll', onScroll, { passive: true });
       grid.addEventListener('scrollend', handleSettle);
       grid.addEventListener('touchstart', onTouchStart, { passive: true });
@@ -442,16 +391,15 @@
       grid.removeEventListener('touchcancel', onTouchEnd);
       grid.removeEventListener('scroll', onScroll);
       tiles.forEach(function (tile) {
+        tile.style.order = ''; // back to the stylesheet's order - the desktop grid also honours `order`
         tile.style.transform = '';
         tile.style.opacity = '';
         tile.style.filter = '';
-        tile.classList.remove('is-active');
+        tile.classList.remove('is-active', 'is-jsdriven');
         // Hand video control back to initGridVideoAutoplay's visibility
         // observer, which owns things again once we're above 560px.
         var v = tile.querySelector('video');
-        if (!v) return;
-        if (tile.classList.contains('is-clone')) v.pause();
-        else if (!videosUserPaused) v.play().catch(function () {});
+        if (v) v.play().catch(function () {});
       });
     }
     function sync() { if (mq.matches) enable(); else disable(); }
@@ -463,8 +411,8 @@
 
   // ---------------------------------------------------------
   // Grid preview videos - hovering a tile (mouse only) pauses
-  // its clip in place, dims it, and shows its title; moving away
-  // resumes playback from that same paused frame.
+  // its clip in place; moving away resumes playback from that
+  // same paused frame. (The dim/zoom on hover is pure CSS.)
   // ---------------------------------------------------------
   function initGridVideoHoverPause() {
     if (!finePointer) return;
@@ -472,38 +420,8 @@
     tiles.forEach(function (tile) {
       var video = tile.querySelector('video');
       if (!video) return;
-      tile.addEventListener('mouseenter', function () {
-        tile.classList.add('is-hovered');
-        video.pause();
-      });
-      tile.addEventListener('mouseleave', function () {
-        tile.classList.remove('is-hovered');
-        if (!videosUserPaused) video.play().catch(function () {});
-      });
-    });
-  }
-
-  // ---------------------------------------------------------
-  // Hero - letters near the cursor pick up the accent colour
-  // (colour only - no tilt/movement).
-  // ---------------------------------------------------------
-  function initHeroNameColorFollow() {
-    if (reduce || !finePointer) return;
-    var name = document.getElementById('name');
-    if (!name) return;
-    var letters = name.querySelectorAll('span');
-    name.addEventListener('pointermove', function (e) {
-      var r = name.getBoundingClientRect();
-      var cx = e.clientX - r.left;
-      letters.forEach(function (l) {
-        var lr = l.getBoundingClientRect();
-        var lc = lr.left - r.left + lr.width / 2;
-        var d = (cx - lc) / r.width;            // -1 .. 1
-        l.style.color = Math.abs(d) < 0.12 ? 'var(--acc)' : '';
-      });
-    });
-    name.addEventListener('pointerleave', function () {
-      letters.forEach(function (l) { l.style.color = ''; });
+      tile.addEventListener('mouseenter', function () { video.pause(); });
+      tile.addEventListener('mouseleave', function () { video.play().catch(function () {}); });
     });
   }
 
@@ -511,7 +429,7 @@
   // Scroll reveals - blur-to-sharp, gently staggered.
   // ---------------------------------------------------------
   function initScrollReveals() {
-    var sel = '.row,.ind,.about-grid,.proj,.contact h2,.sec-lead,.cat-title,.about-photo,.svc-photo,.media-tile';
+    var sel = '.about-grid,.proj,.sec-lead,.cat-title,.about-photo,.svc-photo,.media-tile';
     var els = Array.prototype.slice.call(document.querySelectorAll(sel));
     if (!els.length) return;
     if (reduce || !('IntersectionObserver' in window)) return; // leave visible
@@ -541,44 +459,6 @@
     }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
 
     els.forEach(function (el) { io.observe(el); });
-  }
-
-  // ---------------------------------------------------------
-  // Contact heading - letters pick up the accent colour near the
-  // cursor, same idea as the hero name.
-  // ---------------------------------------------------------
-  function initContactHeadingColorFollow() {
-    if (reduce || !finePointer) return;
-    var link = document.querySelector('.contact h2 a');
-    if (!link) return;
-    var frag = document.createDocumentFragment();
-    Array.prototype.forEach.call(link.childNodes, function (node) {
-      if (node.nodeType === 3) {
-        node.textContent.split('').forEach(function (ch) {
-          var s = document.createElement('span');
-          s.textContent = ch;
-          frag.appendChild(s);
-        });
-      } else {
-        frag.appendChild(node.cloneNode(true));
-      }
-    });
-    link.innerHTML = '';
-    link.appendChild(frag);
-
-    var letters = link.querySelectorAll('span');
-    var radius = 60;
-    link.addEventListener('pointermove', function (e) {
-      letters.forEach(function (l) {
-        var r = l.getBoundingClientRect();
-        var dx = e.clientX - (r.left + r.width / 2);
-        var dy = e.clientY - (r.top + r.height / 2);
-        l.style.color = Math.sqrt(dx * dx + dy * dy) < radius ? 'var(--acc)' : '';
-      });
-    });
-    link.addEventListener('pointerleave', function () {
-      letters.forEach(function (l) { l.style.color = ''; });
-    });
   }
 
   // ---------------------------------------------------------
@@ -782,9 +662,7 @@
     initGridVideoAutoplay();
     initGridVideoHoverPause();
     initHomeCarousel();
-    initHeroNameColorFollow();
     initScrollReveals();
-    initContactHeadingColorFollow();
     initStickyHeader();
     initPageTransitions();
     initGrainOverlay();

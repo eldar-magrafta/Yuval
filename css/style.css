@@ -43,9 +43,7 @@
   --bg: #f7f3ec;
   --bg2: #efe6d8;
   --ink: #211e1b;
-  --acc: #d9633b;   /* terracotta - kept for js/anim.js letter-hover effect */
-  --acc2:#FF5C38;  /* warm coral      */
-  --acc2-text:#C43A1F; /* darker coral - meets 4.5:1 on --bg for small text */
+  --acc: #d9633b;   /* terracotta */
   --mut:#8a8478;
   --line:#211e1b;
   --wash:#f7e4da;  /* faint terracotta wash for hover */
@@ -56,8 +54,6 @@
   --frame-color: #d9633b;
   --text-color: #211e1b;
   --skip-bg:#211e1b;
-  --toggle-bg:#211e1b;
-  --toggle-hover-bg:#d9633b;
   --nav-toggle-color:#211e1b;
   --nav-underline-color:#d9633b;
   --nav-hover-color:#d9633b;
@@ -104,12 +100,6 @@ b,strong{font-weight:500;font-size:1.2em}
 .skip:focus{width:auto;height:auto;overflow:visible;white-space:normal;clip-path:none}
 a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid var(--focus-color);outline-offset:3px;border-radius:2px}
 .visually-hidden{position:absolute;width:1px;height:1px;overflow:hidden;white-space:nowrap;clip-path:inset(50%)}
-.video-pause-toggle{position:fixed;left:var(--frame);bottom:calc(var(--frame) + 12px);z-index:90;
-  background:var(--toggle-bg);color:#fff;border:none;border-radius:var(--radius-pill);padding:10px 18px;
-  font-size:12px;letter-spacing:.04em;cursor:pointer;box-shadow:var(--shadow-md);
-  transition:background-color .3s var(--ease-lux),transform .3s var(--ease-lux),box-shadow .3s var(--ease-lux)}
-@media(hover:hover){.video-pause-toggle:hover{background:var(--toggle-hover-bg);transform:translateY(-2px);box-shadow:var(--shadow-lg)}}
-.video-pause-toggle:active{transform:translateY(0) scale(.96)}
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   *{animation-duration:.001ms!important;transition-duration:.001ms!important}
@@ -157,7 +147,6 @@ header nav a::after{content:"";position:absolute;left:0;right:0;bottom:-6px;heig
 @media(max-width:640px){
   header{position:relative}
   .nav-toggle{display:flex;order:1}
-  .logo{order:2}
   .logo img{height:30px}
   #site-nav{display:none;order:3;position:absolute;top:100%;right:0;left:0;
     flex-direction:column;gap:0;background:var(--bg);
@@ -176,28 +165,12 @@ header nav a::after{content:"";position:absolute;left:0;right:0;bottom:-6px;heig
 
 /* ===== hero ===== */
 .hero{padding:clamp(25px,4.5vw,60px) 0 clamp(18px,3vw,34px)}
-.hero .meta{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;color:var(--mut);margin-bottom:28px}
-.name{
-  font-family:'Almoni';font-weight:300;
-  font-size:clamp(36px,10vw,130px);line-height:.82;letter-spacing:-.045em;
-  cursor:default;user-select:none;
-}
-.name span{display:inline-block;transition:transform .35s var(--ease-lux),color .35s var(--ease-lux);animation:riseIn .8s var(--ease-lux) backwards}
-.name span:nth-child(1){animation-delay:.05s}
-.name span:nth-child(2){animation-delay:.12s}
-.name span:nth-child(3){animation-delay:.19s}
-.name span:nth-child(4){animation-delay:.26s}
-.name span:nth-child(5){animation-delay:.33s}
-.name span:nth-child(6){animation-delay:.40s}
-.name span:nth-child(7){animation-delay:.47s}
-.hero .meta{animation:fadeIn .7s var(--ease-lux) backwards}
-.role{animation:riseIn .8s var(--ease-lux) .42s backwards}
-@keyframes riseIn{from{opacity:0;transform:translateY(46px)}to{opacity:1;transform:none}}
-@keyframes fadeIn{from{opacity:0}to{opacity:1}}
 .role{
   margin-top:26px;max-width:620px;
   font-size:clamp(23px,3.1vw,31px);line-height:1.4;font-weight:300;
+  animation:riseIn .8s var(--ease-lux) .42s backwards;
 }
+@keyframes riseIn{from{opacity:0;transform:translateY(46px)}to{opacity:1;transform:none}}
 .role b{font-weight:500;box-shadow:inset 0 -.5em 0 var(--wash);transition:box-shadow .3s var(--ease-lux)}
 .role-big{
   font-family:'FbReading-Black','Almoni',sans-serif;font-weight:700;
@@ -256,10 +229,6 @@ section{padding:clamp(19px,3vw,37px) 0 clamp(4px,.67vw,8px)}
 .video-tile video.vid-fade.loaded{opacity:1;transform:scale(1)}
 .video-tile .tile-title{display:none}
 .video-tile .tile-desc{display:none}
-/* Loop clones for the mobile carousel (see initHomeCarousel in anim.js) -
-   duplicated first/last cards that make the swipe feel endless. Irrelevant
-   outside that carousel, so hidden everywhere except inside it. */
-.video-tile.is-clone{display:none}
 @media(hover:hover){
   .video-tile:hover{box-shadow:var(--glow-orange),var(--shadow-lg);transform:translateY(-3px);z-index:1}
   .video-tile:hover video{filter:brightness(.85);transform:scale(1.04)}
@@ -296,7 +265,6 @@ section{padding:clamp(19px,3vw,37px) 0 clamp(4px,.67vw,8px)}
     scrollbar-width:none;-ms-overflow-style:none;
   }
   .video-grid::-webkit-scrollbar{display:none}
-  .video-tile.is-clone{display:flex}
   .video-tile{
     flex:0 0 62vw;aspect-ratio:auto;scroll-snap-align:center;
     display:flex;flex-direction:column;background:var(--wash);
@@ -322,6 +290,8 @@ section{padding:clamp(19px,3vw,37px) 0 clamp(4px,.67vw,8px)}
   .video-tile video{aspect-ratio:4/5;background:var(--wash)}
   .video-tile .tile-title{display:block;margin-top:8px;padding:0 10px;font-size:15px;font-weight:600;color:var(--acc)}
   .video-tile .tile-desc{display:block;margin-top:3px;padding:0 10px;font-size:12px;color:var(--mut)}
+  /* Swipe order of the cards. initHomeCarousel() reads this once, then
+     overrides `order` inline to rotate the strip for the endless loop. */
   .video-tile:nth-child(1){order:7}
   .video-tile:nth-child(2){order:3}
   .video-tile:nth-child(3){order:8}
@@ -358,18 +328,12 @@ section{padding:clamp(19px,3vw,37px) 0 clamp(4px,.67vw,8px)}
 }
 .media-tile:active{transform:scale(.98)}
 
-/* portrait variant - for pages where every clip is a 9:16 phone video: sized to match studio-v4.com's card grid */
-.media-grid.portrait-grid{grid-template-columns:repeat(3,1fr)}
-@media(max-width:860px){.media-grid.portrait-grid{grid-template-columns:1fr 1fr}}
-@media(max-width:560px){.media-grid.portrait-grid{grid-template-columns:1fr}}
-
 /* ===== category (industry) page ===== */
 .cat-hero{padding:clamp(24px,4vw,48px) 0 clamp(24px,4vw,44px)}
 .back{display:inline-flex;align-items:center;gap:8px;color:var(--mut);margin-bottom:34px;font-size:18px;transition:color .35s var(--ease-lux),gap .35s var(--ease-lux)}
 .back:hover{color:var(--back-hover-color);gap:13px}
 .cat-title{font-family:'FbReading-Black','Almoni',sans-serif;font-weight:700;font-size:clamp(56px,13vw,150px);line-height:.85;letter-spacing:0;color:var(--title-color);position:relative;z-index:2}
 .cat-title i{color:var(--title-accent-color);font-style:normal}
-.cat-title.proj-title{font-size:clamp(28px,6.5vw,75px)}
 .cat-hero-row{display:flex;align-items:flex-start;gap:clamp(24px,4vw,56px)}
 .about-photo{flex:0 0 42%;width:42%;aspect-ratio:4/5;object-fit:cover;object-position:top;border-radius:var(--radius-lg);position:sticky;top:24px;box-shadow:var(--shadow-md)}
 .about-hero-text{flex:1 1 58%;min-width:0}
@@ -385,7 +349,6 @@ section{padding:clamp(19px,3vw,37px) 0 clamp(4px,.67vw,8px)}
   .about-photo{width:100%;flex-basis:auto;aspect-ratio:4/5;position:static}
   .about-hero-text{width:100%}
   .about-hero-text p{font-size:clamp(20px,2.25vw,23.75px)}}
-.cat-sub{margin-top:20px;max-width:620px;font-size:clamp(17px,2.2vw,21px);color:var(--text-color)}
 
 .proj{
   display:flex;flex-direction:row-reverse;align-items:flex-start;gap:clamp(20px,5vw,64px);
@@ -401,13 +364,10 @@ section{padding:clamp(19px,3vw,37px) 0 clamp(4px,.67vw,8px)}
   transition:transform .6s var(--ease-lux),box-shadow .6s var(--ease-lux)}
 @media(hover:hover){.proj:hover .proj-img{transform:scale(1.03);box-shadow:var(--shadow-md)}}
 .proj h3{font-family:'Almoni';font-weight:300;font-size:clamp(28px,4.2vw,44px);letter-spacing:-.02em;line-height:1.02}
-.proj .kicker{font-family:'Almoni',sans-serif;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--acc2-text);margin-bottom:12px}
 .proj .desc{font-size:clamp(17px,2vw,20px);line-height:1.55;margin-top:16px;max-width:52ch;color:var(--text-color)}
 .reveal-up{opacity:0;transform:translateY(14px);transition:opacity .6s var(--ease-lux),transform .6s var(--ease-lux)}
 .reveal-up.in{opacity:1;transform:none}
 @media (prefers-reduced-motion:reduce){.reveal-up{opacity:1;transform:none;transition:none}}
-.proj .case-block{margin-top:28px}
-.proj .case-block:first-child{margin-top:0}
 .proj .credit{display:flex;justify-content:space-between;gap:16px;padding:11px 4px;border-bottom:1px solid rgba(20,17,15,.15);
   border-radius:var(--radius-sm);transition:background-color .3s var(--ease-lux),padding-right .3s var(--ease-lux)}
 .proj .credit:first-child{border-top:1px solid rgba(20,17,15,.15)}
@@ -465,8 +425,6 @@ body.contact-page main{flex:1;min-height:0;display:flex;flex-direction:column}
   .c-badge:hover{scale:1.08}}
 @media(max-width:760px){
   .contact-headline{font-size:clamp(34px,7vh,50px)}
-}
-@media(max-width:760px){
   .contact-badges{position:static;order:2;display:flex;flex-wrap:wrap;justify-content:center;gap:8px;height:auto;margin-top:10px}
   .contact-headline{order:1}
   .c-badge{position:static;font-size:13px;padding:8px 14px}
@@ -587,10 +545,9 @@ footer{border-top:1.5px solid var(--line);padding:32px 0;color:var(--mut)}
 footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;font-size:13px;letter-spacing:.02em}
 
 /* ============================================================
-   ANIMATION LAYER - intro curtain, film grain, magnetic logo.
-   Refined & subtle. All motion is disabled under reduced-motion.
+   ANIMATION LAYER - intro curtain, film grain, page transition,
+   page frame. All motion is disabled under reduced-motion.
    ============================================================ */
-
 
 /* still film grain */
 .grain{
@@ -604,9 +561,6 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;f
   transition:opacity .3s cubic-bezier(.4,0,.2,1)}
 .pt.show{opacity:1;pointer-events:all}
 @media (prefers-reduced-motion:reduce){.pt{display:none}}
-
-/* contact heading - letters pick up accent colour near the cursor, like the hero name */
-.contact h2 a span{display:inline-block;white-space:pre;transition:color .25s}
 
 /* intro curtain (homepage) */
 .intro{position:fixed;inset:0;z-index:200;background:var(--curtain-color);
