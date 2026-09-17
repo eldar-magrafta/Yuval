@@ -46,6 +46,28 @@
   }
 
   // ---------------------------------------------------------
+  // Contextual "back" link - project pages reachable from more
+  // than one grid (e.g. clb.html from both digital + social) carry
+  // a ?from=home|social|digital on every tile link pointing to them;
+  // swap the back-link's href/text to match wherever the visitor
+  // actually came from, falling back to the HTML's own default
+  // (author's best guess) when the param is missing or unrecognised.
+  // ---------------------------------------------------------
+  function initContextualBackLink() {
+    var link = document.querySelector('.back[data-back-default]');
+    if (!link) return;
+    var targets = {
+      home: ['index.html', '→ חזרה לדף הבית'],
+      social: ['social.html', '→ חזרה לסושיאל'],
+      digital: ['digital.html', '→ חזרה לדיגיטל']
+    };
+    var from = targets[new URLSearchParams(location.search).get('from')];
+    if (!from) return;
+    link.setAttribute('href', from[0]);
+    link.textContent = from[1];
+  }
+
+  // ---------------------------------------------------------
   // Tilt-toward-cursor on cards (desktop only).
   // ---------------------------------------------------------
   function initCardTilt() {
@@ -655,6 +677,7 @@
   // ---------------------------------------------------------
   function initAll() {
     initCreditsRevealUp();
+    initContextualBackLink();
     initCardTilt();
     initGridVideoFadeIn();
     initAlphaVideoCanvases();
