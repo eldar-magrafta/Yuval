@@ -371,8 +371,8 @@ section{padding:clamp(19px,3vw,37px) 0 clamp(4px,.67vw,8px)}
 .proj .credit{display:flex;justify-content:space-between;gap:16px;padding:11px 4px;border-bottom:1px solid rgba(20,17,15,.15);
   border-radius:var(--radius-sm);transition:background-color .3s var(--ease-lux),padding-right .3s var(--ease-lux)}
 .proj .credit:first-child{border-top:1px solid rgba(20,17,15,.15)}
-.proj .credit dt{color:var(--mut);font-family:'Almoni',sans-serif;font-size:11px;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap}
-.proj .credit dd{text-align:right;font-weight:500;font-size:15px}
+.proj .credit dt{color:var(--mut);font-family:'Almoni',sans-serif;font-size:15px;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap}
+.proj .credit dd{text-align:right;font-weight:500;font-size:17px}
 @media(hover:hover){.proj .credit:hover{background:var(--wash);padding-right:10px}}
 
 /* ===== about ===== */
