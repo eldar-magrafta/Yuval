@@ -46,6 +46,23 @@
   }
 
   // ---------------------------------------------------------
+  // Auto-tag outgoing tile links with ?from=<this grid>, so a new
+  // video tile just needs a plain href - no manual ?from= to
+  // remember or get wrong. Runs on index/social/digital only;
+  // initContextualBackLink() below reads what this writes.
+  // ---------------------------------------------------------
+  function initFromTagging() {
+    var page = { 'index.html': 'home', '': 'home', 'social.html': 'social', 'digital.html': 'digital' };
+    var here = page[location.pathname.split('/').pop()];
+    if (!here) return;
+    document.querySelectorAll('.video-tile[href], .media-tile[href]').forEach(function (a) {
+      var url = new URL(a.getAttribute('href'), location.href);
+      url.searchParams.set('from', here);
+      a.setAttribute('href', url.pathname.split('/').pop() + url.search);
+    });
+  }
+
+  // ---------------------------------------------------------
   // Contextual "back" link - project pages reachable from more
   // than one grid (e.g. clb.html from both digital + social) carry
   // a ?from=home|social|digital on every tile link pointing to them;
@@ -677,6 +694,7 @@
   // ---------------------------------------------------------
   function initAll() {
     initCreditsRevealUp();
+    initFromTagging();
     initContextualBackLink();
     initCardTilt();
     initGridVideoFadeIn();
