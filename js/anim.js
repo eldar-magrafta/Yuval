@@ -606,7 +606,7 @@
 
   // ---------------------------------------------------------
   // Contact page lead form - on submit, silently emails
-  // magrafta40@gmail.com via EmailJS (no visitor-side "press
+  // the.idea.girlll@gmail.com via EmailJS (no visitor-side "press
   // send" step needed). WhatsApp is a separate channel, opened
   // only via the phone number link elsewhere on the page.
   // ---------------------------------------------------------
