@@ -15,11 +15,11 @@
   list-style:none;padding:0;margin:16px 0 0;
   display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(12px,2.5vw,32px);
 }
-.lechem-stats li{display:flex;flex-direction:column;gap:6px}
+.lechem-stats li{display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center}  /* label centered under its number */
 .stat-num{
   font-family:'FbReading-Black','Almoni',sans-serif;
   font-size:clamp(36px,5vw,64px);line-height:1;color:var(--acc);
-  text-align:right;            /* dir="ltr" keeps "700K" in order; this keeps it aligned with the RTL text */
+  text-align:center;           /* dir="ltr" keeps "700K" in the right order */
 }
 /* FbReading-Black has no Latin letters, so a bare "K" fell back to Almoni and looked off.
    Draw it explicitly in the heaviest Bricolage Grotesque (already loaded from Google Fonts). */
