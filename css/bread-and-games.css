@@ -99,6 +99,13 @@
 .lechem-insta:focus-visible{outline:2px solid var(--focus-color);outline-offset:3px}
 .lechem-insta-icon{width:24px;height:24px;flex:0 0 auto}
 
+/* Desktop only: columns only as wide as their content, packed from the right edge,
+   so the first stat starts exactly under the start of the heading. */
+@media (min-width:601px){
+  .lechem-stats{grid-template-columns:repeat(3,max-content);justify-content:start;gap:clamp(32px,4.5vw,64px)}
+  .stat-num{font-size:clamp(30.6px,4.25vw,54.4px)}   /* 15% smaller than the base clamp(36px,5vw,64px) */
+}
+
 /* Under 600px the shared .cat-hero-row stacks (phone above the text, like the about photo) */
 @media (max-width:600px){
   .br-desktop{display:none}          /* line break used on desktop only */
