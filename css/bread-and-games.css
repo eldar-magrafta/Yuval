@@ -92,6 +92,8 @@
 
 /* Under 600px the shared .cat-hero-row stacks (phone above the text, like the about photo) */
 @media (max-width:600px){
+  .br-desktop{display:none}          /* line break used on desktop only */
+
   /* Mobile order: text → phone → stats.
      display:contents "unwraps" the text box, so its paragraphs and the stats become
      direct children of the row and can be reordered around the phone with `order`. */
