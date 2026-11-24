@@ -566,9 +566,24 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;f
 .intro{position:fixed;inset:0;z-index:200;background:var(--curtain-color);
   display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(12px,2.4vw,24px);
   padding:0 24px;text-align:center;
-  animation:introOut .9s cubic-bezier(.76,0,.24,1) 2.1s forwards}
-.intro-logo{width:clamp(220px,42vw,520px);height:auto;
+  animation:introOut .9s cubic-bezier(.76,0,.24,1) 2.55s forwards}  /* waits for the dot to finish bouncing */
+.intro-logo{position:relative;width:clamp(220px,42vw,520px);height:auto;
   transform:translateY(115%);animation:introName .95s cubic-bezier(.22,.9,.24,1) .1s forwards}
+.intro-logo-img{display:block;width:100%;height:auto}
+/* The dot after the ה: cut out of the logo (media/intro/dot.png) and placed back on its exact spot.
+   Position/size are percentages of the 674×381 logo: dot box = x 0, y 308, 40×42 px. */
+.intro-dot{position:absolute;left:0;top:80.84%;width:5.935%;height:auto;
+  transform-origin:50% 100%;           /* squash from the bottom, like it's hitting the floor */
+  animation:introDot 1.35s 1s both}
+/* Falls from above the screen, hits, bounces twice (each lower), lands for good on the 3rd hit. */
+@keyframes introDot{
+  0%  {transform:translateY(-110vh);animation-timing-function:cubic-bezier(.55,0,1,.45)}  /* fall: speeds up */
+  40% {transform:translateY(0) scale(1.3,.7);animation-timing-function:cubic-bezier(0,.55,.45,1)} /* hit 1 */
+  58% {transform:translateY(-380%);animation-timing-function:cubic-bezier(.55,0,1,.45)}  /* bounce 1 peak */
+  74% {transform:translateY(0) scale(1.2,.8);animation-timing-function:cubic-bezier(0,.55,.45,1)} /* hit 2 */
+  85% {transform:translateY(-130%);animation-timing-function:cubic-bezier(.55,0,1,.45)}  /* bounce 2 peak */
+  95% {transform:translateY(0) scale(1.1,.9)}                                             /* hit 3: lands */
+  100%{transform:none}}
 .intro-tag{color:var(--bg);opacity:.82;font-size:clamp(19.8px,3.06vw,25.2px);letter-spacing:.16em;font-weight:500;
   animation:introTag .6s cubic-bezier(.22,.9,.24,1) .4s backwards}
 @keyframes introName{to{transform:translateY(0)}}

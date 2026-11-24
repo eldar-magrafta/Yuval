@@ -22,7 +22,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="preload" href="fonts/FbReading-Black.otf" as="font" type="font/otf" crossorigin>
 <link rel="preload" href="fonts/gladiaclm-bold-webfont.woff" as="font" type="font/woff" crossorigin>
-<link rel="stylesheet" href="css/style.css?v=29">
+<link rel="stylesheet" href="css/style.css?v=30">
 <link rel="icon" type="image/png" sizes="144x144" href="favicon-144.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <!-- Skip the intro curtain instantly on repeat visits (before paint, so no flash). -->
@@ -31,7 +31,11 @@
 <body>
 <!-- One-time intro curtain. CSS auto-hides it, so it works even without JS. -->
 <div class="intro" aria-hidden="true">
-  <img class="intro-logo" src="media/yuval_logo_transparent.png" alt="Yuval">
+  <!-- Logo is split in two so the final dot can drop in and bounce on its own (see .intro-dot in style.css) -->
+  <div class="intro-logo">
+    <img class="intro-logo-img" src="media/intro/logo-nodot.png" alt="Yuval">
+    <img class="intro-dot" src="media/intro/dot.png" alt="">
+  </div>
   <span class="intro-tag mono">Creative Director</span>
 </div>
 <a class="skip" href="#video-grid">דלגו לתפריט</a>
