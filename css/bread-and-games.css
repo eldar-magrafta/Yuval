@@ -1,0 +1,85 @@
+/* ===== לחם ושעשועים page: text + swipeable iPhone video feed ===== */
+
+.lechem-row{align-items:center}
+
+/* Stats row: three big numbers with a small label under each */
+.lechem-stats-lead{margin-top:32px}
+.lechem-stats{
+  list-style:none;padding:0;margin:16px 0 0;
+  display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(12px,2.5vw,32px);
+}
+.lechem-stats li{display:flex;flex-direction:column;gap:6px;
+  padding-top:14px;border-top:2px solid var(--acc)}
+.stat-num{
+  font-family:'FbReading-Black','Almoni',sans-serif;
+  font-size:clamp(36px,5vw,64px);line-height:1;color:var(--acc);
+  text-align:right;            /* dir="ltr" keeps "700K" in order; this keeps it aligned with the RTL text */
+}
+.stat-label{font-size:clamp(14px,1.4vw,17px);color:var(--text-color)}
+
+/* The phone body: a dark rounded frame drawn purely in CSS (no image). */
+.phone{
+  flex:0 0 auto;
+  width:clamp(230px,26vw,300px);
+  aspect-ratio:9/19.5;               /* iPhone screen proportions */
+  padding:11px;
+  border-radius:48px;
+  background:#1b1917;
+  box-shadow:var(--shadow-lg), inset 0 0 0 2px #3a3632;
+  position:relative;
+}
+/* Side buttons, purely decorative */
+.phone::before,.phone::after{
+  content:"";position:absolute;width:3px;border-radius:2px;background:#2c2926;
+}
+.phone::before{left:-3px;top:22%;height:12%}
+.phone::after{right:-3px;top:28%;height:18%}
+
+.phone-screen{
+  position:relative;width:100%;height:100%;
+  border-radius:38px;overflow:hidden;background:#000;
+}
+
+/* The "dynamic island" pill at the top of the screen */
+.phone-island{
+  position:absolute;top:10px;left:50%;transform:translateX(-50%);
+  width:32%;height:24px;border-radius:var(--radius-pill);background:#000;z-index:3;
+}
+
+/* The feed: a vertical scroller that "snaps" to one video at a time (like Reels/TikTok). */
+.phone-feed{
+  height:100%;overflow-y:auto;
+  scroll-snap-type:y mandatory;
+  overscroll-behavior:contain;       /* swiping inside the phone doesn't scroll the page */
+  scrollbar-width:none;
+}
+.phone-feed::-webkit-scrollbar{display:none}
+.phone-slide{height:100%;scroll-snap-align:start;scroll-snap-stop:always}
+.phone-slide video{width:100%;height:100%;object-fit:cover;display:block}
+
+/* Mute / unmute button */
+.phone-sound{
+  position:absolute;bottom:18px;left:14px;z-index:3;
+  width:38px;height:38px;border:0;border-radius:50%;
+  background:rgba(0,0,0,.45);color:#fff;font-size:17px;cursor:pointer;
+  backdrop-filter:blur(6px);
+}
+.phone-sound:focus-visible{outline:2px solid var(--focus-color);outline-offset:2px}
+
+/* "Swipe up" hint; fades out after the first swipe (js adds .is-swiped) */
+.phone-hint{
+  position:absolute;bottom:22px;right:50%;transform:translateX(50%);z-index:3;
+  color:#fff;font-size:14px;padding:4px 12px;border-radius:var(--radius-pill);
+  background:rgba(0,0,0,.4);pointer-events:none;
+  animation:phone-hint-bob 1.6s ease-in-out infinite;transition:opacity .4s;
+}
+.phone.is-swiped .phone-hint{opacity:0}
+@keyframes phone-hint-bob{50%{transform:translateX(50%) translateY(-5px)}}
+
+/* Under 600px the shared .cat-hero-row stacks (phone above the text, like the about photo) */
+@media (max-width:600px){
+  .phone{width:min(72vw,280px);margin:0 auto}
+}
+@media (prefers-reduced-motion:reduce){
+  .phone-hint{animation:none}
+}
