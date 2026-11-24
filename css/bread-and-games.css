@@ -78,7 +78,8 @@
 
 /* Under 600px the shared .cat-hero-row stacks (phone above the text, like the about photo) */
 @media (max-width:600px){
-  .phone{width:min(72vw,280px);margin:0 auto}
+  .phone{width:min(72vw,280px);margin:0 auto;
+    aspect-ratio:9/16.575}           /* mobile only: 15% shorter than desktop's 9/19.5 (19.5 × 0.85) */
 }
 @media (prefers-reduced-motion:reduce){
   .phone-hint{animation:none}
