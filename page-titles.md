@@ -8,6 +8,7 @@
 | theideagirl.studio/social.html | סושיאל \| יובל מגרפטה |
 | theideagirl.studio/services.html | שירותים \| יובל מגרפטה |
 | theideagirl.studio/contact.html | צרו קשר \| יובל מגרפטה |
+| theideagirl.studio/bread-and-games.html | לחם ושעשועים | יובל מגרפטה |
 | theideagirl.studio/clb.html | רגע ויראלי \| יובל מגרפטה |
 | theideagirl.studio/bituah-leumi.html | ביטוח לאומי \| יובל מגרפטה |
 | theideagirl.studio/ilanit.html | אילנית \| יובל מגרפטה |
