@@ -78,7 +78,15 @@
 
 /* Under 600px the shared .cat-hero-row stacks (phone above the text, like the about photo) */
 @media (max-width:600px){
-  .phone{width:min(72vw,280px);margin:0 auto;
+  /* Mobile order: text → phone → stats.
+     display:contents "unwraps" the text box, so its paragraphs and the stats become
+     direct children of the row and can be reordered around the phone with `order`. */
+  .lechem-row{flex-direction:column;align-items:stretch;gap:0}
+  .lechem-row .about-hero-text{display:contents}
+  .lechem-row .phone{order:1}
+  .lechem-row .lechem-stats-lead,.lechem-row .lechem-stats{order:2}
+
+  .phone{width:min(72vw,280px);margin:32px auto 0;
     aspect-ratio:9/16.575}           /* mobile only: 15% shorter than desktop's 9/19.5 (19.5 × 0.85) */
 }
 @media (prefers-reduced-motion:reduce){
