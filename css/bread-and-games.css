@@ -3,18 +3,27 @@
 .lechem-row{align-items:center}
 
 /* Stats row: three big numbers with a small label under each */
-.lechem-stats-lead{margin-top:32px}
+/* Stats heading: same font as the page title, smaller, with the second half in terracotta
+   (mirrors the "לחם <i>ושעשועים</i>" title) */
+.lechem-stats-lead{
+  margin:clamp(36px,5vw,56px) 0 0;
+  font-family:'FbReading-Black','Almoni',sans-serif;font-weight:700;
+  font-size:clamp(26px,3.2vw,40px);line-height:1.1;color:var(--title-color);
+}
+.lechem-stats-lead i{font-style:normal;color:var(--title-accent-color)}
 .lechem-stats{
   list-style:none;padding:0;margin:16px 0 0;
   display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(12px,2.5vw,32px);
 }
-.lechem-stats li{display:flex;flex-direction:column;gap:6px;
-  padding-top:14px;border-top:2px solid var(--acc)}
+.lechem-stats li{display:flex;flex-direction:column;gap:6px}
 .stat-num{
   font-family:'FbReading-Black','Almoni',sans-serif;
   font-size:clamp(36px,5vw,64px);line-height:1;color:var(--acc);
   text-align:right;            /* dir="ltr" keeps "700K" in order; this keeps it aligned with the RTL text */
 }
+/* FbReading-Black has no Latin letters, so a bare "K" fell back to Almoni and looked off.
+   Draw it explicitly in the heaviest Bricolage Grotesque (already loaded from Google Fonts). */
+.stat-k{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:.9em;margin-left:.04em}
 .stat-label{font-size:clamp(14px,1.4vw,17px);color:var(--text-color)}
 
 /* The phone body: a dark rounded frame drawn purely in CSS (no image). */
