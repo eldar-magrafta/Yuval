@@ -76,6 +76,20 @@
 .phone.is-swiped .phone-hint{opacity:0}
 @keyframes phone-hint-bob{50%{transform:translateX(50%) translateY(-5px)}}
 
+/* "Continue to Instagram" button at the bottom of the page */
+.lechem-insta-wrap{display:flex;justify-content:center;margin:clamp(40px,6vw,72px) 0 clamp(48px,7vw,88px)}
+.lechem-insta{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:14px 28px;border-radius:var(--radius-pill);
+  background:var(--acc);color:#fff;text-decoration:none;
+  font-size:clamp(17px,1.8vw,20px);font-weight:600;
+  box-shadow:var(--shadow-md);
+  transition:transform .3s var(--ease-lux),box-shadow .3s var(--ease-lux);
+}
+.lechem-insta:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg)}
+.lechem-insta:focus-visible{outline:2px solid var(--focus-color);outline-offset:3px}
+.lechem-insta-icon{width:24px;height:24px;flex:0 0 auto}
+
 /* Under 600px the shared .cat-hero-row stacks (phone above the text, like the about photo) */
 @media (max-width:600px){
   /* Mobile order: text → phone → stats.
