@@ -572,10 +572,42 @@ body.contact-page main{flex:1;min-height:0;display:flex;flex-direction:column}
   .c-badge:nth-of-type(4){top:62%;left:5%;right:auto;rotate:-4deg}
   .c-badge:nth-of-type(5){top:clamp(-32px,-42%,-15px);left:32%;right:auto;rotate:2deg}
 }
+/* Short-screen fix (desktop zoom 125%+, small phones, big phone font
+   settings). The header and form band keep their pixel height, so on a
+   short screen the hero gets squeezed hard. Three things keep it intact:
+   1. --hfs (headline font size) also shrinks with the space actually left
+      for the headline, not just with the full screen height.
+   2. The headline sits on the blob's top edge (padding-bottom = blob
+      height, --blob-h) instead of being centred, so יחד never sinks
+      into the monster.
+   3. Desktop badges 1/4/5 are placed in multiples of the headline size
+      instead of fixed px, so they move with it and don't get cut off.
+   On a normal 1080p desktop at 100% and on a typical phone this renders
+   the same as before. Phones held sideways (height <=500) keep their own
+   layout further down. Short phones (<=600 tall) get extra tightening
+   in a block just above the landscape one. */
+.contact-hero{--blob-h:clamp(120px,20vh,220px)}
+@media(min-height:501px){
+  .contact-hero-inner{justify-content:flex-end;align-content:end;transform:none;padding-bottom:var(--blob-h)}
+  .contact-headline{font-size:var(--hfs)}
+}
+@media(min-width:761px) and (min-height:501px){
+  .contact-hero-inner{--hfs:max(34px, min(clamp(52px,9.2vh,96px), calc((100vh - 270px) * .13)))}
+  .c-badge:nth-of-type(1){top:calc(var(--hfs) * -.66)}
+  .c-badge:nth-of-type(4){top:calc(var(--hfs) * -.3)}
+  .c-badge:nth-of-type(5){top:calc(var(--hfs) * 3.2)}
+}
+@media(max-width:760px) and (min-height:501px){
+  /* blob gets a bit shorter on short phones (its bottom is empty orange) */
+  .contact-hero{--blob-h:min(20vh, max(96px, 40vh - 160px))}
+  /* phone hero is a grid: justify-content would squash the column sideways */
+  .contact-hero-inner{justify-content:normal;
+    --hfs:max(26px, min(clamp(34px,7vh,50px), calc((100vh - 430px - var(--blob-h)) / 3.2)))}
+}
 /* Blob fades from the brand terracotta into a deeper shade, so the form
    band below it can carry white text at real contrast (5.5:1). */
 .contact-blob{position:absolute;left:50%;bottom:0;transform:translateX(-50%);
-  width:106vw;height:clamp(120px,20vh,220px);
+  width:106vw;height:var(--blob-h);
   background:linear-gradient(180deg,var(--acc) 0%,#c95228 100%);
   border-radius:50% 50% 0 0;z-index:1;
   box-shadow:0 -20px 60px -20px rgba(217,99,59,.45)}
@@ -654,6 +686,18 @@ body.contact-page main{flex:1;min-height:0;display:flex;flex-direction:column}
     order:5;flex:1 1 auto;min-width:0;align-self:center;font-size:16px;text-align:left;
     margin-inline-start:auto;overflow-wrap:anywhere}
   .c-form-status{order:6;flex:1 1 100%}
+}
+
+/* ===== contact page - very short phones held upright (e.g. 320x568) =====
+   Not enough height for header + headline + blob + form, so borrow the
+   compact sizes from the landscape layout below. */
+@media(max-width:760px) and (min-height:501px) and (max-height:600px){
+  .contact-hero{padding-top:8px;--blob-h:84px}
+  .contact-hero .back{font-size:12px;gap:4px;padding:4px 10px}
+  .contact-write{padding-top:12px;padding-bottom:12px}
+  .c-write-label{margin-bottom:2px}
+  .c-form-input,.c-form-submit{height:42px}
+  .contact-hero-inner{--hfs:max(24px, calc((100vh - 360px - var(--blob-h)) / 3.3))}
 }
 
 /* ===== contact page - phone rotated to landscape (short viewport height) ===== */
