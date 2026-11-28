@@ -138,6 +138,19 @@
   // ---------------------------------------------------------
   function initAlphaVideoCanvases() {
     var canvases = document.querySelectorAll('canvas[data-alpha-video]');
+    var intro = document.querySelector('.intro');
+    var curtainLifting = new Promise(function (resolve) {
+      if (!intro || getComputedStyle(intro).display === 'none') return resolve(); // no curtain this visit
+      // already lifting by the time this script ran (slow connection)?
+      var running = intro.getAnimations ? intro.getAnimations().filter(function (a) {
+        return a.animationName === 'introOut' && a.currentTime >= 2550;
+      }) : [];
+      if (running.length) return resolve();
+      intro.addEventListener('animationstart', function (e) {
+        if (e.animationName === 'introOut') resolve();
+      });
+      setTimeout(resolve, 5000);
+    });
     canvases.forEach(function (canvas) {
       var src = canvas.getAttribute('data-alpha-video');
       var video = document.createElement('video');
@@ -189,9 +202,30 @@
         size();
         video.play().catch(function () {});
       });
-      video.addEventListener('play', function () { running = true; draw(); });
+      // While the intro curtain covers the page, nobody can see this canvas -
+      // skip the per-pixel work so the curtain's own animation gets the CPU.
+      // Drawing starts as soon as the curtain begins to lift (or after 5s as
+      // a safety net), so the character is already there when revealed.
+      video.addEventListener('play', function () {
+        curtainLifting.then(function () {
+          if (video.paused) return;
+          running = true; draw();
+        });
+      });
       video.addEventListener('pause', function () { running = false; });
       window.addEventListener('resize', size);
+    });
+  }
+
+  // ---------------------------------------------------------
+  // Mark the nav link for the page you're on with
+  // aria-current="page" - screen readers announce it ("current
+  // page"), and the stylesheet uses it to highlight that link.
+  // ---------------------------------------------------------
+  function initActiveNav() {
+    var here = location.pathname.split('/').pop() || 'index.html';
+    document.querySelectorAll('#site-nav a').forEach(function (a) {
+      if (a.getAttribute('href') === here) a.setAttribute('aria-current', 'page');
     });
   }
 
@@ -465,7 +499,12 @@
   }
 
   // ---------------------------------------------------------
-  // Scroll reveals - blur-to-sharp, gently staggered.
+  // Scroll reveals - fade + rise, gently staggered.
+  // Only opacity/transform are animated (the GPU can do those
+  // cheaply; animating a blur filter forced a full repaint every
+  // frame). Once an element has arrived, its inline styles are
+  // removed again, so the stylesheet's own hover transforms and
+  // transitions (e.g. the media-tile lift) work normally.
   // ---------------------------------------------------------
   function initScrollReveals() {
     var sel = '.about-grid,.proj,.sec-lead,.cat-title,.about-photo,.svc-photo,.media-tile';
@@ -473,13 +512,20 @@
     if (!els.length) return;
     if (reduce || !('IntersectionObserver' in window)) return; // leave visible
 
+    var ease = 'cubic-bezier(.16,1,.3,1)';
     els.forEach(function (el) {
       el.style.opacity = '0';
-      el.style.transform = 'translateY(22px)';
-      el.style.filter = 'blur(6px)';
-      el.style.transition = 'opacity .8s cubic-bezier(.22,.61,.36,1),transform .8s cubic-bezier(.22,.61,.36,1),filter .8s cubic-bezier(.22,.61,.36,1)';
+      el.style.transform = 'translateY(28px)';
+      el.style.transition = 'opacity .9s ' + ease + ',transform 1s ' + ease;
       el.style.willChange = 'opacity,transform';
     });
+
+    function cleanUp(el) {
+      el.style.opacity = '';
+      el.style.transform = '';
+      el.style.transition = '';
+      el.style.willChange = '';
+    }
 
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
@@ -491,7 +537,7 @@
         setTimeout(function () {
           el.style.opacity = '1';
           el.style.transform = 'none';
-          el.style.filter = 'none';
+          setTimeout(function () { cleanUp(el); }, 1050);
         }, delay);
         io.unobserve(el);
       });
@@ -699,6 +745,7 @@
     initCardTilt();
     initGridVideoFadeIn();
     initAlphaVideoCanvases();
+    initActiveNav();
     initMobileNavToggle();
     initGridVideoAutoplay();
     initGridVideoHoverPause();

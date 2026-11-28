@@ -17,27 +17,39 @@
 <meta property="og:image" content="media/yuval_logo_terracotta.png">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="media/yuval_logo_terracotta.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<!-- Intro curtain logo + dot: fetch these before anything else (they used to
+     arrive ~0.8s late on a first visit, mid-animation, so the logo "jumped"). -->
+<link rel="preload" href="media/intro/logo-nodot.png" as="image" fetchpriority="high">
+<link rel="preload" href="media/intro/dot.png" as="image" fetchpriority="high">
 <link rel="preload" href="fonts/FbReading-Black.otf" as="font" type="font/otf" crossorigin>
 <link rel="preload" href="fonts/gladiaclm-bold-webfont.woff" as="font" type="font/woff" crossorigin>
-<link rel="stylesheet" href="css/style.css?v=30">
+<link rel="stylesheet" href="css/style.css?v=38">
 <link rel="icon" type="image/png" sizes="144x144" href="favicon-144.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
-<!-- Skip the intro curtain instantly on repeat visits (before paint, so no flash). -->
-<script data-intro>try{if(sessionStorage.getItem('yuval-seen'))document.documentElement.classList.add('seen');}catch(e){}</script>
+<!-- Skip the intro curtain instantly on repeat visits (before paint, so no flash).
+     First visit: add "intro-wait", which holds the curtain's animations at
+     frame 0 until the logo image is ready (see the script right after the
+     curtain markup). Without JS the class is never added, so it just plays. -->
+<script data-intro>try{var h=document.documentElement;if(sessionStorage.getItem('yuval-seen'))h.classList.add('seen');else if(!matchMedia('(prefers-reduced-motion:reduce)').matches)h.classList.add('intro-wait');}catch(e){}</script>
 </head>
 <body>
 <!-- One-time intro curtain. CSS auto-hides it, so it works even without JS. -->
 <div class="intro" aria-hidden="true">
   <!-- Logo is split in two so the final dot can drop in and bounce on its own (see .intro-dot in style.css) -->
   <div class="intro-logo">
-    <img class="intro-logo-img" src="media/intro/logo-nodot.png" alt="Yuval">
-    <img class="intro-dot" src="media/intro/dot.png" alt="">
+    <img class="intro-logo-img" src="media/intro/logo-nodot.png" alt="Yuval" fetchpriority="high" decoding="sync">
+    <img class="intro-dot" src="media/intro/dot.png" alt="" fetchpriority="high" decoding="sync">
   </div>
   <span class="intro-tag mono">Creative Director</span>
 </div>
+<!-- Start the curtain only once the logo + dot are downloaded AND decoded,
+     so the glide-up never begins with an empty spot that fills in halfway.
+     Safety net: start anyway after 1.5s, so a slow image can't stall it. -->
+<script>(function(){var h=document.documentElement;if(!h.classList.contains('intro-wait'))return;
+var done=false;function go(){if(done)return;done=true;requestAnimationFrame(function(){h.classList.remove('intro-wait');});}
+setTimeout(go,1500);
+var imgs=Array.prototype.slice.call(document.querySelectorAll('.intro img'));
+Promise.all(imgs.map(function(i){return i.decode?i.decode().catch(function(){}):Promise.resolve();})).then(go,go);})();</script>
 <a class="skip" href="#video-grid">דלגו לתפריט</a>
 
 <header>
@@ -74,6 +86,16 @@
       <canvas class="hero-bg-video" data-alpha-video="media/yuval-no-bg-stacked.mp4" style="height:auto;flex-shrink:0"></canvas>
     </div>
   </section>
+
+  <!-- Scrolling orange band (decorative; words are the services from services.html) -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track">
+      <span>קריאייטיב</span><span>תסריט</span><span>בימוי</span><span>קופירייטינג</span><span>הפקה</span>
+      <span>קריאייטיב</span><span>תסריט</span><span>בימוי</span><span>קופירייטינג</span><span>הפקה</span>
+      <span>קריאייטיב</span><span>תסריט</span><span>בימוי</span><span>קופירייטינג</span><span>הפקה</span>
+      <span>קריאייטיב</span><span>תסריט</span><span>בימוי</span><span>קופירייטינג</span><span>הפקה</span>
+    </div>
+  </div>
 
   <!-- ===================== VIDEO GRID ===================== -->
   <!-- Each tile's clip is matched to the cell's own proportions:
@@ -145,6 +167,6 @@
   </div>
 </section>
 
-<script src="js/anim.js"></script>
+<script src="js/anim.js?v=4"></script>
 </body>
 </html>
